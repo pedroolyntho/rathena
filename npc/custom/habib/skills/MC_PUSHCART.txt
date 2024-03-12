@@ -1,0 +1,177 @@
+//===== rAthena Script =======================================
+//= Merchant Skills Quests
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for skills: Crazy Uproar, Change Cart, Cart Revolution
+//===== Additional Comments: =================================
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Updated to latest available official file. [Masao]
+//= 1.7 Fixed JobLevel requirements. [Euphy]
+//= 1.8 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//============================================================
+
+alberta,119,221,6	script	Charlron	107,{
+		if (MC_PUSHCART == 10) {
+			mes "[Charlron]";
+			mes "Mmm? I was wondering who was making all";
+			mes "the raucus carrying around a cart.";
+			mes "It was you.";
+			mes "Yes, I remember you.";
+			mes "what do you think? The new cart..good, yeah?";
+			next;
+			mes "[Charlron]";
+			mes "Enjoy life.";
+			mes "Life isn't just simply moving";
+			mes "forward..Slowly, looking around,";
+			mes "dragging a heavy cart is";
+			mes "the way us merchants live.";
+			mes "Then see you next time.";
+			next;
+			mes "[Charlron]";
+			mes "Be healthy~";
+			if (getskilllv("MC_PUSHCART") == 0)	// debug
+			skill "MC_PUSHCART",1,3;
+			close;
+		}
+		if (getskilllv("MC_PUSHCART") == 1) {
+			mes "[Charlron]";
+			mes "Mmm? I was wondering who was making all";
+			mes "the raucus carrying around a cart.";
+			mes "It was you.";
+			mes "Yes, I remember you.";
+			mes "what do you think? The new cart..good, yeah?";
+			next;
+			mes "[Charlron]";
+			mes "Enjoy life.";
+			mes "Life isn't just simply moving";
+			mes "forward..Slowly, looking around,";
+			mes "dragging a heavy cart is";
+			mes "the way us merchants live.";
+			mes "Then see you next time.";
+			next;
+			mes "[Charlron]";
+			mes "Be healthy~";
+			close;
+		}
+		else {
+			mes "[Charlron]";
+			mes "Nice to see you fellow wanderer";
+			mes "If I remember correctly,";
+			mes "you're that famous wanderer";
+			mes "these days.";
+			next;
+			mes "Do you already have a cart to carry";
+			mes "all your stuff?";
+			next;
+			switch (select("That's why I came here.:What about my cart?:Two pairs is pitiful?")) {
+			case 1:
+				if ((countitem(1019) > 49) && (countitem(998) > 9) && (countitem(919) > 19)) {
+					mes "[Charlron]";
+					mes "Haha! Ok, ok!";
+					mes "With the things you brought";
+					mes "I will make your cart.";
+					next;
+									if (SkillPoint < 1){
+				mes "You'll need at least 1 Skill Point to complete this quest.";
+				close;
+				}
+				set SkillPoint, SkillPoint - 1;
+					delitem 1019,50; //Wooden_Block
+					delitem 998,10; //Iron
+					delitem 919,20; //Animal's_Skin
+					skill "MC_PUSHCART",1,3;
+					set MC_PUSHCART,10;
+					mes "[Charlron]";
+					mes "Congratulations.";
+					mes "You may now rent a cart";
+					next;
+					mes "[Charlron]";
+					mes "Convenient, don't you think?";
+					next;
+					mes "[Charlron]";
+					mes "But anyways, it will look very nice on you!";
+					mes "Hahaha! Have a nice day!";
+					close;
+				}
+				mes "[Charlron]";
+				mes "Mmm... It's true that I";
+				mes "craft carts but...";
+				mes "In order to do so, I need";
+				mes "some materials to use.";
+				next;
+				mes "[Charlron]";
+				mes "50 Trunks.";
+				mes "10 Iron.";
+				mes "20 Animal Skins.";
+				mes "I need at least these things";
+				mes "to make your cart.";
+				next;
+				mes "[Charlron]";
+				mes "So come see me when you";
+				mes "have prepared everything.";
+				close;
+			case 2:
+				mes "[Charlron]";
+				mes "Oh no, you don't know at all?(changes tone)";
+				mes "A new way to show off a wanderer's ego!";
+				mes "An expression of an excellent brain!";
+				mes "Pushcart is a skill that";
+				mes "makes a wanderer stand out!";
+				next;
+				mes "[Charlron]";
+				mes "A skill that allows you to";
+				mes "rent a cart.";
+				next;
+				mes "[Charlron]";
+				mes "That is Pushcart!";
+				mes "A basic skill for any wanderer.";
+				mes "I'll teach you how to make";
+				mes "one so watch carefully, and";
+				mes "do exactly what I do to make";
+				mes "your own in the future!";
+				next;
+				mes "[Charlron]";
+				mes "But, since it's the first time";
+				mes "you need to prepare some materials.";
+				mes "50 Trunks!";
+				mes "10 Iron!";
+				mes "20 Animal skins!";
+				mes "-bring these please!";
+				next;
+				mes "[Charlron]";
+				mes "All we have to do is";
+				mes "make one using those materials,";
+				mes "so come back when you are ready.";
+				mes "Ok?";
+				close;
+			case 3:
+				mes "[Charlron]";
+				mes "...it's not 'CARD'!";
+				close;
+			}
+		}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JUMPING_PORING, QMARK_PURPLE, "MC_PUSHCART < 10";
+	end;		
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working
+//= 1.1 Bug fixes
+//= 1.a Now using functions found in "Global_Functions.txt"
+//=     for class checks.[kobra_k88]
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Fixed exploits [Lupus]
+//= 1.4a Fixed some typos [IVBela] 1.4b  Gershaun -> Gershuan
+//=     changed perm. variables to temp ones [Lupus]
+//= 1.4b Added missing 1 Banana Juice requirement to Cart Revolution [DracoRPG]
+//============================================================

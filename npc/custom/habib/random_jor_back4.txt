@@ -1,0 +1,67 @@
+jor_back4,37,149,5	script	Skur#jor_back4	4_EP19_LUNCH,{
+OnTouch:
+	set .@price, (.Price * BaseLevel);
+	if(BaseLevel <= LevelPay){
+		.@price = 0;
+	}
+	if (#BuffCooldown > gettimetick(2)){
+		set .@k,#BuffCooldown - gettimetick(2);
+			set .@m,.@k % 3600 / 60;
+			set .@s,.@k % 60;
+		set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+		set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+		set .@time$,""+((.@m >= 1 )?""+.@m$+" ":"")+""+((.@s >=1 )?""+.@s$+"":"")+"";
+		npctalk strnpcinfo(1)+ ": Please wait "+.@time$+" before you can heal again!",strnpcinfo(0),bc_self;
+		end;
+	}
+
+	if (.@price && !vip_status(1)) {
+		if (Zeny < .@price){
+			message strcharinfo(0), "You will need " + callfunc("F_InsertComma",.@price) + " Zeny for Heal and Buffs.";
+			end;
+		}
+		Zeny -= .@price;
+	}
+
+	specialeffect2 EF_HEAL2;
+	percentheal 100,100;
+	mes "Let me give you a hand... I'll change";
+	mes "location every 10 minutes. Find me again";
+	mes "if you need help.";
+	next;
+	if (.Buffs) {
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,60000,10; //1 min
+		//specialeffect2 EF_BLESSING;
+		//sc_start SC_BLESSING,600000,10;
+	}
+
+	if (.Delay){
+		#BuffCooldown = gettimetick(2) + .Delay;
+	}
+close;
+
+OnInit:
+setarray .coordinate_x,0,300;
+setarray .coordinate_y,0,300;
+	set .LevelPay, 20; 	// Maximum level for free access or else you will pay zeny based on your level.
+	set .Price, 0;		// Zeny required for heal but premium user will not require it.
+	set .Buffs, 1;		// Also buff players? (1: yes / 0: no)
+	set .Delay, 60;		// Heal delay, in seconds
+
+// change every 10 minutes.
+OnMinute00:
+OnMinute10:
+OnMinute20:
+OnMinute30:
+OnMinute40:
+OnMinute50:
+
+.@npc_map$ = strnpcinfo(4);
+do{
+	.@rand_x = rand( .coordinate_x[0],.coordinate_x[1] );
+	.@rand_y = rand( .coordinate_y[0],.coordinate_y[1] );
+}while( !checkcell( .@npc_map$,.@rand_x,.@rand_y,cell_chkpass ) );
+movenpc strnpcinfo(0),.@rand_x,.@rand_y;
+end;
+}

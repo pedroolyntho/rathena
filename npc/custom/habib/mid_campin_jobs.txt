@@ -1,0 +1,518 @@
+// - Barbarian Assistant (Neals)
+// -----------------------------------------------------------------------------
+mid_campin,90,121,5	script	Hale, the Barbarian#ac	4_M_SWORDMAN,{
+	if (Class == Job_Novice && JobLevel >= 5) {
+		mes "[Hale]";
+		mes "As you are at the enough job level, you don't need any more lecturing.";
+		next;
+		if (select("Then I will stop.", "Become a Barbarian right away!") == 1) {
+			mes "[Hale]";
+			mes "Before the training starts, you already raised your level.";
+			mes "Impressive.";
+			close;
+		}
+		mes "[Hale]";
+		mes "It seems that you have fully grown.";
+		mes "Head to the Barbarian Guild to become a Barbarian!";
+		next;
+		mes "[Hale]";
+		mes "The Barbarian Guild is located in Izlude square";
+		mes "From the center, go west.";
+		mes "It should be easy to find.";
+		cutin "", 255;
+		close;
+	} else {
+		if (Class == Job_Swordman) {
+			mes "[Hale]";
+			mes "You are a Barbarian!";
+			mes "There's nothing else special to teach you...";
+			mes "Besides... well. Soon I'll tell you.";
+			close;
+		} else if (Class != Job_Novice) {
+			mes "[Hale]";
+			mes "You already have another job!";
+			mes "Go away!";
+			close;
+		} else {
+				mes "[Hale]";
+				mes "I am Hale, and I am an experienced Barbarian.";
+				mes "Since you're still a young Novice, you have a long journey ahead.";
+				next;
+				while(1) {
+					switch(select("How to become a Barbarian", "Additional Barbarian classes?", "I am fine.")) {
+					case 1:
+						mes "[Hale]";
+						mes "You'll need Job Level 5 to advance, and you'll want to find the trainer location so he can develop you.";
+						mes "I can tell you the location if you come here at Job Level 5.";
+						next;
+						break;
+					case 2:
+						mes "[Hale]";
+						mes "After changing to a Barbarian you can change to a ^0000FFPath of Tyr ^000000or ^0000FFFrost Wolf^000000.";
+						next;
+						mes "[Hale]";
+						mes "Go raise your strength while figuring out if you're offensive or defensive.";
+						mes "This is something you should do.";
+						break;
+					case 3:
+						mes "[Hale]";
+						mes "Ask again anytime.";
+						mes "I'll answer everything!";
+						close;
+					}
+				}
+				mes "[Hale]";
+				mes "Feeble people like you can become a gallant Barbarian soon.";
+				mes "Yes, you can. Be ambitious.";
+				close;
+		}
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOBQUEST, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}
+
+// =============================================================================
+// = Ranger
+// =============================================================================
+
+// - Ranger Teacher (Einar)
+// -----------------------------------------------------------------------------
+mid_campin,94,118,3	script	Einar, the Ranger#ac	4_M_ARCHER,{
+	if (!checkweight(1304,3)) {
+		mes "Why are you carrying so much with you? Unload it somewhere and come back.";
+		close;
+	}
+	if (Class == Job_Archer) {
+		if (nov_3_archer == 0) {
+			cutin "gnor.bmp", 2;
+			mes "[Einar]";
+			mes "Emmm. This is?";
+			next;
+			mes "[Einar]";
+			mes "You were never trained by me.";
+			mes "Then, I have no interest in you.";
+			close2;
+			cutin "", 255;
+			end;
+		} else if (nov_3_archer > 0 && nov_3_archer < 9) {
+			cutin "gnor.bmp", 2;
+			mes "[Einar]";
+			mes "I see you received a complete education in Payon.";
+			next;
+			mes "[Einar]";
+			mes "Then again... you may want to learn more.";
+			next;
+			mes "[Einar]";
+			mes "Either way, there is nothing I can teach you.";
+			close2;
+			cutin "", 255;
+			end;
+		} else {
+			cutin "gsmi.bmp", 2;
+			mes "[Einar]";
+			mes "Ah~ You've become a skilled Ranger.";
+			next;
+			mes "[Einar]";
+			mes "The difference is great now compared to when you were a novice!";
+			next;
+			mes "[Einar]";
+			mes "Because of my teachings, you have grown very fast!";
+			close2;
+			cutin "", 255;
+			end;
+		}
+	} else if (Class == Job_Novice) {
+		//if (isbegin_quest(4269) == 2) {
+			if (nov_3_archer == 0) {
+				cutin "gsmi.bmp", 2;
+				mes "[Einar]";
+				mes "Sniff sniff! It is the smell of a novice!";
+				mes "Nice to meet you!!!";
+				mes "What brought you here?";
+				next;
+				mes "[Einar]";
+				mes "I can guess most, but hehehehe~~";
+				mes "Please feel comfortable and tell me everything you want!";
+				next;
+				cutin "", 255;
+				if (select("I get bored! Play with me!", "Tell me about Rangers.") == 1) {
+					cutin "gbad.bmp", 2;
+					mes "[Einar]";
+					mes "What? Bored? Play with you?";
+					mes "You think this is just some kids playground?";
+					next;
+					mes "[Einar]";
+					mes "If you are bored, walk around and punch a monster in the face and see what happens.";
+					close2;
+					cutin "", 255;
+					end;
+				}
+				cutin "gsmi.bmp", 2;
+				mes "[Einar]";
+				mes "Oh dear~ another sheep here to get a free lesson from me.";
+				next;
+				mes "[Einar]";
+				mes "The main point of Rangers is to use bows to attack enemies quickly from a long distance.";
+				next;
+				mes "[Einar]";
+				mes "Only problem is they are physically weak.";
+				mes "But, it doesn't matter if they are trained correctly.";
+				next;
+				while(1) {
+					cutin "gnor.bmp", 2;
+					mes "[Einar]";
+					mes "What do you want to know about a Ranger? I will tell you everything~";
+					mes "With my full explanation~, you can be an excellent one.";
+					next;
+					switch(select("Ranger's stats", "Ranger's skills", "I want to become a Ranger.", "Nevermind")) {
+					case 1:
+						cutin "gnor.bmp", 2;
+						mes "[Einar]";
+						mes "Are you curious about the Ranger's stats?";
+						mes "Do you know the most necessary stats for Rangers?";
+						next;
+						mes "[Einar]";
+						mes "That is ^0000cdDex^000000.";
+						next;
+						mes "[Einar]";
+						mes "To raise up the attacking power in other jobs, Str should be raised but Rangers vary in accordance with their Dex figures.";
+						next;
+						mes "[Einar]";
+						mes "Here is a simple question! What is the name of the stat determining the Ranger's attacking power?";
+						next;
+						select("Dex!");
+						cutin "gsmi.bmp", 2;
+						mes "[Einar]";
+						mes "You are correct~~";
+						next;
+						cutin "gnor.bmp", 2;
+						mes "[Einar]";
+						mes "If you want to know more about the role of other stats, ^0000cdopen the status window by pressing ALT+Q.^000000";
+						next;
+						mes "[Einar]";
+						mes "If you are curious about stats except Dex, you can check it out.";
+						mes "If you have a job later, you can reset the stats anyway.";
+						next;
+						mes "[Einar]";
+						mes "Hey, just click this and that!";
+						next;
+						cutin "", 255;
+						break;
+					case 2:
+						cutin "gnor.bmp", 2;
+						mes "[Einar]";
+						mes "Hmm. You are interested in skills? Then, let's study ^0000cdskill^000000s.";
+						next;
+						mes "[Einar]";
+						mes "I thought you would better experience the skill than talking, so I prepared the experience of the Ranger's skill in a manual.";
+						next;
+						mes "[Einar]";
+						mes "Ranger have a lot of very useful skills.";
+						mes "But regretfully as most of them are skills useful only with arrows and bows, you can't experience them.";
+						next;
+						mes "[Einar]";
+						mes "There is a useful skill without a bow... Called ^0000cdImprove Concentration^000000";
+						next;
+						mes "[Einar]";
+						mes "At the same time, it will reveal hidden enemies nearby.";
+						next;
+						mes "[Einar]";
+						mes "If you want to know more anout skill, then open the skill window by pressing the key  ^0000cdALT+S^000000";
+						next;
+						mes "[Einar]";
+						mes "When you scoll the mouse on the skill icon, there pops up the details about the skill. Please read it.";
+						next;
+						mes "[Einar]";
+						mes "To use skills, click the skill icon on the skill window. Then drag and register it on the ^0000cdshortcut window^000000 to use conveniently.";
+						//next;
+						//mes "[Einar]";
+						//mes "Will you go and find a hunting teacher on the 1st floor? if you do not want, then no need.";
+						//next;
+						//mes "[Einar]";
+						//mes "But he may train you with a lot of useful hunting skills for you.";
+						//mes "<NAVI>^4D4DFF[Battle Trainer Subino]^000000<INFO>iz_ac01,59,83,</INFO></NAVI>";
+						//mes "You may visit him.";
+						// next;
+						close2;
+						//if (isbegin_quest(14158) != 2) {
+						//	setquest 14158;
+						//	completequest 14158;
+						//	getitem 2822,1;// Archer_Manual
+						//}
+						cutin "", 255;
+						end;
+					case 3:
+						cutin "gnor.bmp", 2;
+						mes "[Einar]";
+						mes "Do you want to become an^0000cd Ranger^000000?";
+						mes "It hasn't been a long time since we met together. But I am sad about saying good bye to you.";
+						next;
+						mes "[Einar]";
+						mes "Let me check a little while, before you change your job you have to be at job level 5.";
+						next;
+						if (JobLevel > 4) {
+							mes "[Einar]";
+							mes "Change conditions satisfied!!";
+							next;
+							mes "[Einar]";
+							mes "Do you really want to become a Ranger?";
+							next;
+							if (select("Yes, change me to a Ranger.", "Let me think of it a little while.") == 1) {
+								mes "[Einar]";
+								mes "First, let me explain some things to you about the Job Change.";
+								next;
+								mes "[Einar]";
+								mes "a Ranger's hometown is ^0000cdPayon^000000; Which has a very long history.";
+								next;
+								mes "[Einar]";
+								mes "When you are feeling fatigued, you can go there.";
+								mes "You will be given a warm hometown welcome.";
+								next;
+								mes "[Einar]";
+								mes "The Rangers Guild is located to the ^0000cdNorth of Payon Ranger Village^000000.";
+								next;
+								mes "[Einar]";
+								//mes "My friend has a caravan that takes you to the gates of Payon.";
+								//mes "I'll ask him to send you there.";
+								mes "I would love to accompany you the rest of the way, but you must do this alone.";
+								mes "I'll give you the directions which you must remember.";
+								next;
+								//cutin "paymap1.bmp", 3;
+								//mes "[Einar]";
+								//mes "Here is where I will send you to.";
+								//mes "Once you arrive, you will see the area marked by this ^0000cdRed Circle^000000. Go through there, then...";
+								//next;
+								cutin "paymap2.bmp", 3;
+								mes "[Einar]";
+								mes "When you reach the village of Payon,";
+								mes "follow the direction of the ^0000cdRed Arrow^000000, you will enter ^0000cdRanger Village^000000.";
+								next;
+								cutin "paymap3.bmp", 3;
+								mes "[Einar]";
+								mes "Once you get there, make your way to the ^0000cdCircled Area^000000. Here you will find the ^0000cdRanger Job Change Guild^000000.";
+								mes "Got it? Easy to find, right?";
+								next;
+								cutin "gnor.bmp", 2;
+								mes "[Einar]";
+								mes "Due to satellite navigation, you shouldn't worry about getting lost.";
+								mes "However, if you are still worried, you can ask the local ^0000cdGuide^000000 where to go.";
+								next;
+								mes "[Einar]";
+								mes "You can find me after your visit to the guild.";
+								//mes "Do you want to go now with my friend?";
+								next;
+								//if (select("Yes, take me to Payon!:Not now.") - 1) end;
+								mes "[Einar]";
+								mes "Now then, I wish you success in becoming a Ranger. Until next time!";
+								close2;
+								cutin "", 255;
+								nov_3_archer = 1;
+								//setquest 14142;
+								//warp "pay_fild01", 339, 346;
+								end;
+							}
+							cutin "gnor.bmp", 2;
+							mes "[Einar]";
+							mes "Yes, come back and see me after reconsideration.";
+							close2;
+							cutin "", 255;
+							end;
+						} else {
+							cutin "gnor.bmp", 2;
+							mes "[Einar]";
+							mes "Hmmm. You are a little bit short of Job Level.";
+							mes "Are you coming back after more training?";
+							//next;
+							//mes "[Einar]";
+							//mes "Visit <NAVI>^4D4DFF[Battle Trainer Subino]^000000<INFO>iz_ac01,59,83,</INFO></NAVI>";
+							//mes "at Armory on the 1st floor.";
+							close2;
+							cutin "", 255;
+							end;
+						}
+					case 4:
+						cutin "gnor.bmp", 2;
+						mes "[Einar]";
+						mes "Really? Then, don't be lazy but get some training.";
+						close2;
+						cutin "", 255;
+						end;
+					}
+				}
+			} else if (nov_3_archer == 1) {
+				cutin "gnor.bmp", 2;
+				mes "[Einar]";
+				mes "Why are you still here? Are you not going to become a Ranger?";
+				mes "Are you going to pursue a different job?";
+				close2;
+				cutin "", 255;
+				end;
+			} else {
+				cutin "gnor.bmp", 2;
+				mes "[Einar]";
+				mes "Well? How is it being a Ranger?";
+				mes "The student has surpassed the teacher, as the saying goes.";
+				close2;
+				cutin "", 255;
+				end;
+			}
+		//} else if (isbegin_quest(4269) == 1) {
+		//	cutin "gnor.bmp", 2;
+		//	mes "[Einar]";
+		//	mes "You don't seem to be fully registered at the Academy yet.";
+		//	mes "Hurry and complete your registration.";
+		//	close2;
+		//	cutin "", 255;
+		//	end;
+		//} else {
+		//	cutin "gnor.bmp", 2;
+		//	mes "[Einar]";
+		//	mes "Did you directly come here without the entrance application for Critura Academy yet?";
+		//	mes "You are too in a hurry. Rush to go to the 1st floor for application, and come back to me.";
+		//	close2;
+		//	cutin "", 255;
+		//	end;
+		//}
+	} else {
+		cutin "gbad.bmp", 2;
+		mes "[Einar]";
+		mes "Why are you of a different job snooping around here?";
+		next;
+		mes "[Einar]";
+		mes "Don't snoop around and get out of here!!";
+		close2;
+		cutin "", 255;
+		end;
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOBQUEST, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}
+
+/////////////
+
+// - Warlock Assistant
+// -----------------------------------------------------------------------------
+mid_campin,85,118,7	script	Dien, the Warlock#ac	4_M_JOB_WIZARD,{
+		if (Class != Job_Novice) {
+			mes "[Warlock Dien]";
+			mes "You're no longer the innocent ^8b4513Novice^000000 who doesn't know anything~?";
+			mes "I don't have anything to teach you~!";
+			close;
+		} else {
+			mes "[Warlock Dien]";
+			mes "I am the one in charge of dark magic studies on this expedition.";
+			mes "^0000FFA genius Warlock^000000~!";
+			mes "^0000FFWarlock Dien^000000.";
+			next;
+			mes "[Warlock Dien]";
+			mes "Someone like you who has magic talent but doesn't know how to become a Warlock.";
+			mes "For a ^FF0000Novice^000000 like you I'm offering my training.";
+			next;
+			mes "[Warlock Dien]";
+			mes "How about it?";
+			mes "Do you wanna try out my priceless lessons?";
+			next;
+			if (select("I will learn.", "No thanks!") == 2) {
+				mes "[Warlock Dien]";
+				mes "If you don't listen to me, you'll regret of it.";
+				next;
+				mes "[Warlock Dien]";
+				mes "When you change your mind, come back to me.";
+				close;
+			} else {
+				mes "[Warlock Dien]";
+				mes "Good! If that's your decision, I will do my best.";
+				mes "How much you learn depends on your own effort.";
+				next;
+				mes "[Warlock Dien]";
+				mes "To become a Warlock, you need to be very studious.";
+				mes "Ask me what you want to learn!";
+				while(1) {
+					next;
+					switch(select("What is a Warlock's primary role?", "I want to ^8B451Cchange job^000000 to Warlock!", "I'll get back to you later")) {
+					case 1:
+						mes "[Warlock Dien]";
+						mes "A Warlock's primary role is to use dark magic to make them fear you!";
+						next;
+						mes "[Warlock Dien]";
+						mes "We have low defense but have various attack ^006400skills^000000.";
+						mes "Be careful about the damage you take as a Warlock.";
+						next;
+						mes "[Warlock Dien]";
+						mes "If you remember these little things you can become a great Warlock.";
+						mes "Walk with pride as you grow in dark magic power~";
+						close;
+					case 2:
+							mes "[Warlock Dien]";
+							mes "Ah~ you want to change to a Warlock?";
+							next;
+							mes "[Warlock Dien]";
+							mes "To change your job to a Warlock, you must visit the Warlock's Guild.";
+							mes "I can send you close to there, but...";
+							next;
+							mes "[Warlock Dien]";
+							mes "You must first reach ^006400Job level 5^000000.";
+							next;
+							if (Class == Job_Novice && JobLevel < 5) {
+								mes "[Warlock Dien]";
+								mes "You don't seem ready!";
+								mes "If you want to change your job, you must first be ^006400Job level 5^000000.";
+								mes "Then come back and see me!";
+								close;
+							} else {
+								mes "[Warlock Dien]";
+								mes "Ah, it seems that you already have those requirements!";
+								mes "Do you want to change your job immediately?";
+								next;
+								if (select("No", "Yes") == 1) {
+									mes "[Warlock Dien]";
+									mes "Okay, when you have decided please come back!";
+									close;
+								} else {
+									mes "[Warlock Dien]";
+									mes "In that case, I'll use magic to send you to ^8B4513Geffen^000000, where the Warlock's Guild is.";
+									mes "It is there that you will be able to become a Warlock.";
+									next;
+									mes "[Warlock Dien]";
+									mes "Once I send you, you will want to find the guild.";
+									mes "To find the Warlock's Guild, go toward 11 o'clock.";
+									mes "Just go inside, and upstairs a little to find the";
+									mes "<NAVI>^4D4DFF[Warlock Guildsman]^000000<INFO>geffen_in,164,124,</INFO></NAVI>";
+									mes "Let's go! I'm ready to send you there!";
+									next;
+									mes "[Warlock Dien]";
+									mes "Whoosh Whoosh";
+									mes "Ooo... Ooo... Hum... Hmm!";
+									mes "Teleport!";
+									cutin "", 255;
+									next;
+									//savepoint "geffen",120,38,1,1;
+									//warp "gef_fild07", 88, 205;
+									warp "geffen", 120, 38;
+									end;
+								}
+							}
+						break;
+					case 3:
+						mes "[Warlock Dien]";
+						mes "Yes~ Go meet other teachers then come back.";
+						mes "Of course, Warlocks are most alluring of them all.~";
+						next;
+						mes "[Warlock Dien]";
+						mes "You'll choose Warlock again I have no doubt about it~~!!";
+						mes "Haha see you later~";
+						close;
+					}
+					break;
+				}
+			}
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOBQUEST, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}

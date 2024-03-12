@@ -1,0 +1,41 @@
+//===== rAthena Script ======================================= 
+//= Isgard
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Habib]
+//============================================================
+
+//** Define a warp point
+//<from map name>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to map name>,<toX>,<toY>
+
+// 
+jor_twig,212,110,0	warp	jor_twig#jor_twice	1,1,jor_twice,47,57
+jor_twice,42,54,0	warp	jor_twice#jor_twig	1,1,jor_twig,212,117
+
+jor_twice,232,112,0	warp	jor_twice#jor_back6	1,1,jor_back6,35,146
+jor_back6,24,144,0	warp	jor_back6#jor_twice	1,1,jor_twice,232,106
+
+jor_back6,392,262,0	warp	jor_back6#jor_back5	1,1,jor_back5,13,239
+jor_back5,5,239,0	warp	jor_back5#jor_back6	1,1,jor_back6,385,262
+
+jor_back5,335,5,0	warp	jor_back5#jor_back4	1,1,jor_back4,12,371
+jor_back4,5,372,0	warp	jor_back4#jor_back5	1,1,jor_back5,338,14
+
+jor_back4,278,18,0	warp	jor_back4#jor_back3	1,1,jor_back3,162,358
+jor_back3,158,365,0	warp	jor_back3#jor_back4	1,1,jor_back4,273,18
+
+jor_back3,370,241,0	warp	jor_back3#jor_back2	1,1,jor_back2,13,247
+jor_back2,9,247,0	warp	jor_back2#jor_back3	1,1,jor_back3,365,241
+
+jor_back2,229,6,0	warp	jor_back2#jor_back1	1,1,jor_back1,222,384
+jor_back1,222,390,0	warp	jor_back1#jor_back2	1,1,jor_back2,227,14
+
+jor_back1,387,232,0	warp	jor_back1#icecastle	1,1,icecastle,9,128
+icecastle,4,128,0	warp	icecastle#jor_back1	1,1,jor_back1,380,231
+
+//
+
+icecastle,214,176,0	warp	icecastle#icas_in	1,1,icas_in,139,186
+icas_in,139,182,0	warp	icas_in#icecastle	1,1,icecastle,210,172
+
+icas_in,158,59,0	warp	icas_in#icas_in_center	1,1,icas_in,189,257
+icas_in,193,257,0	warp	icas_in_center#icas_in	1,1,icas_in,163,59

@@ -1,0 +1,66 @@
+mid_camp,244,240,4	script	Regretty	124,{
+
+	.@ResetStat  = 300000;	// Zeny for stat reset
+	.@ResetSkill = 300000;	// Zeny for skill reset
+	.@ResetBoth  = 500000;	// Zeny for resetting both together
+
+if ( BaseLevel < 16 ) {
+.@ResetStat = 1000;	// Zeny for stat reset
+.@ResetSkill = 1000;	// Zeny for skill reset
+.@ResetBoth = 1500;	// Zeny for resetting both together
+					}	
+	//please use these to reset the lowbie if possible
+	//.@ResetLowbieStat = 0; //Zeny for stat reset - lowbie
+	//.@ResetLowbieSkill = 0; //Zeny for stat reset - lowbie
+
+	//if( i don't know how to get the player's level here, i want to give the free reset to anyone below 80)	
+
+	mes "[Regretty]";
+	mes "I am Regretty, the Reset Girl from this expedition.";
+	mes "If you want to not use Zeny but your Souls, you could go to your friends";
+	mes "inside the castle at Isgard.";
+	next;
+	mes "[Regretty]";
+	mes "Reset Stats: "  + callfunc("F_InsertComma", .@ResetStat)  + "z";
+	mes "Reset Skills: " + callfunc("F_InsertComma", .@ResetSkill) + "z";
+	mes "Reset Both: "   + callfunc("F_InsertComma", .@ResetBoth)  + "z";
+	mes "Please select the service you want:";
+	next;
+	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Cancel")) {
+	case 1:
+		mes "[Regretty]";
+		if (Zeny < .@ResetSkill) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetSkill;
+		sc_end SC_ALL;
+		resetskill;
+		mes "There you go!";
+		close;
+	case 2:
+		mes "[Regretty]";
+		if (Zeny < .@ResetStat) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetStat;
+		resetstatus;
+		mes "There you go!";
+		close;
+	case 3:
+		mes "[Regretty]";
+		if (Zeny < .@ResetBoth) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetBoth;
+		sc_end SC_ALL;
+		resetskill;
+		resetstatus;
+		mes "There you go!";
+		close;
+	case 4:
+		close;
+	}
+}

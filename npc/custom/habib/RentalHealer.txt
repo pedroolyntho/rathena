@@ -1,0 +1,49 @@
+prontera,155,181,5	script	Healer#rent	757,{
+	// item to rent NPC
+	.@item_id = 7539;
+	// rent NPC for how many days
+	.@rent_day = 30;
+	
+	.@aid = getcharid(3);
+	if ( $rent_aid && $rent_duration > gettimetick(2) ) {
+	
+		if ( $rent_aid == .@aid ) {
+			if ( select( "Continue","Set Healer Cost","Collect Zeny" ) == 2 ) {
+				input $rental_cost;
+			}
+			else if ( @menu == 3 ) {
+				Zeny += $rental_accumulate;
+				dispbottom "Collected "+$rental_accumulate+" Zeny";
+				$rental_accumulate = 0;
+			}
+		}
+		
+		if ( $rental_cost ) {
+			dispbottom "Healing Cost: "+$rent_cost+" Zeny";
+			if ( Zeny < $rent_cost ) close;
+			
+			Zeny -= $rental_cost;
+			$rental_accumulate += $rental_cost;
+		}
+		
+		percentheal 100,100;
+		// your desired buff heres
+		
+	}
+	else if ( countitem( .@item_id ) ) {
+		mes "Rent Healer NPC ?";
+		mes "Rental Cost: 1 x "+getitemname( .@item_id );
+		
+		if ( select( "Yes","No" ) == 1 ) {
+			delitem .@item_id,1;
+			$rent_aid = .@aid;
+			$rent_duration = gettimetick(2) + ( .@rent_day * 86400 ); 
+			mes "NPC belong to you.";
+		}
+	}
+	else {
+		mes "NPC isnt available.";
+		mes "Rental Cost: 1 x "+getitemname( .@item_id );
+	}
+	close;
+}

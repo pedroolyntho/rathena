@@ -1,0 +1,813 @@
+//== Starting Point  (iz_int) =================================
+jor_twig,118,149,0	script	jor_twig#intro_start	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	navigateto("jor_twig", 186, 118, NAV_NONE, 1); // Individual map name not required
+	if (getd(".start" + strnpcinfo(1)) == 0) {
+		setd ".start" + strnpcinfo(1), 1;
+		initnpctimer;
+		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+	}
+	end;
+OnTimer9000:
+	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	end;
+OnTimer18000:
+	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "jor_twig", "" ));
+	end;
+OnTimer21000:
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "jor_twig", "" ));
+	end;
+OnTimer24000:
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "jor_twig", "" ));
+	end;
+OnTimer27000:
+	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	stopnpctimer;
+	setd ".start" + strnpcinfo(1), 0;
+	end;
+}
+
+jor_twig,186,118,0	script	jor_twig#intro_evt02	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	navigateto("jor_twice", 91, 274, NAV_NONE, 1);
+	end;
+}
+
+//== Wounded Barbarian (iz_int) =================================
+jor_twig,186,118,3	script	Wounded Barbarian#intro_npc01_isgard_int	4_TOWER_01,5,5,{
+	npctalk "Oh...", "", bc_self;
+	cloakonnpcself();
+	cloakoffnpcself( "Wounded Barbarian#intro_npc02_isgard_int" );
+	end;
+
+OnTouch:
+	npctalk "Urgh... please... help me...", "", bc_self;
+	sleep2 500;
+	npctalk "In order to talk with me.. click my body..", "", bc_self;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(30000) && Class == Job_Novice" );
+	end;
+}
+
+jor_twig,186,118,3	script	Wounded Barbarian#intro_npc02_isgard_int	4_TOWER_02,{
+	if (isbegin_quest(30000) == 0) {
+		mes "[Wounded]";
+		mes "Wow! Thanks a lot!";
+		mes "I don't know how it happened to our town...";
+		mes "but we should find Ran.";
+		next;
+		mes "[Wounded]";
+		mes "... ohh, it seems my body is too injured.";
+		mes "Maybe you can go without me?";
+		setquest 30000;
+		navigateto("jor_twice", 91, 274, NAV_NONE, 1);
+		next;
+		cutin "tutorial02",4;
+		mes "^4d4dff!- Information -!^000000";
+		mes "NPC Quest Received.";
+	}
+	else {
+		mes "[Wounded]";
+		mes "Luckily we are still surviving.";
+		mes "I will wait here, you should go find Ran.";
+		next;
+		mes "[Wounded]";
+		mes "I'm fine! I'm fine!";
+		mes "Don't worry about me, you should really go to Ran!";
+		navigateto("jor_twice", 91, 274, NAV_NONE, 1);
+		next;
+		mes "^4d4dff!- Information -!^000000";
+	}
+	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
+	mes "You can check your quest status there anytime.";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(30000) && Class == Job_Novice" );
+	cloakonnpc();
+	end;
+}
+
+// - Ran (Ship) -- Ran // custom habib
+// -----------------------------------------------------------------------------
+jor_twice,92,279,5	script	Ran#intro_npc03	4_EP19_JUNCEA,{
+	switch( isbegin_quest(30001) ) {
+	case 0:
+		mes "[Ran]";
+		mes "Oh... I've been waiting for you, " + strcharinfo(0) + ".";
+		mes "At least you are safe.";
+		next;
+		if (select("How do you know who I am?", "Who are you?") == 1) {
+			mes "[Ran]";
+			mes "It's " + strcharinfo(0) + ", right?";
+			mes "You're the chosen one.";
+			mes "And I am Ran, the goddess and personification of the sea.";
+			next;
+		} else {
+			mes "[Ran]";
+			mes "... I am Ran! The goddess and personification of the sea. ";
+			mes "My husband Aegir, a Jotunn who also personifies the sea, has nine daughters with me.";
+			mes "And you are the chosen one.";
+			next;
+		}
+		if (select("Chosen One?", "What does that even mean?") == 1) {
+			mes "[Ran]";
+			mes "Yes, " + strcharinfo(0) + ".";
+		} else {
+			mes "[Ran]";
+			mes "Well...";
+		}
+		next;
+		mes "[Ran]";
+		mes "The world as you know has changed drastically.";
+		mes "The Ragnarok has already happened, and during that event, most of the gods perished..";
+		next;
+		mes "[Ran]";
+		mes "I am a survivor... But unfortunately my powers are much weaker now.";
+		mes "We depend on people believing.";
+		if (select("So, are the gods... gone?", "Are the gods dead?") == 1) {
+			mes "[Ran]";
+			mes "Actually...";
+		} else {
+			mes "[Ran]";
+			mes "Well...";
+		}
+		next;
+		mes "Yes, most of them. And now, the world is teetering on the edge of destruction."; 
+		mes "Without the presence and faith in the gods, chaos is spreading unchecked...";
+		next;
+		if (select("What can I do?", "How can I save the world?") == 1) {
+			mes "[Ran]";
+		} else {
+			mes "[Ran]";
+		}
+		mes "You must collect the Einherjar Souls.";
+		mes "These souls contain the remnants of the gods' power and will be the key to restoring faith in the mythology.";
+		mes "They are scattered across the land, hidden within creatures and people alike..."; 
+		next;
+		if (select("How will finding these souls save the world?", "How can I make people believe again?") == 1) {
+			mes "[Ran]";
+		} else {
+			mes "[Ran]";
+		}		
+		mes "By collecting the souls, you will ignite the spark of belief within people's hearts.";
+		mes "The power of mythology will endure, and with it, the world will find balance once again.";
+		mes "I also think... your dad had this plan from the beginning.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Who's my dad?!";
+		next;
+		mes "[Ran]";
+		mes "I will tell you later but first you need to remember a few other stuff...";
+		mes "Let me help you giving you a few souls so I can slowly earn your trust.";
+		next;
+		mes "[Ran]";
+		mes "By the way.";
+		mes "I haven't mentioned but... The higher your collected souls, the stronger you are.";
+		mes "Souls have spiritual power and they can make you stronger.";
+		mes "We still have some gods' servants around Isgard and they can help you with that.";
+		next;
+		mes "[Ran]";
+		mes "Also, make sure you don't... Die. The only way to resurrect is giving all your souls to the world.";
+		mes "So, yes. If you die, you'll lose'em all.";
+		next;
+		getitem 47006,1000;
+		mes "[Ran]";
+		mes "If you're asking how you collect the souls, I will tell you.";
+		mes "Every monster has faith in the gods. They have seen us!";
+		mes "Killing them will give you their souls. The stronger the monster, the higher the souls.";
+		next;
+		mes "[Ran]";
+		mes "Find Friederike at the ^4d4dffIsgard Castle^000000, she is one of my old servants that survived.";
+		mes "She will give you Job Experience if you give her your souls.";
+		next;
+		mes "[Ran]";
+		mes "Ah! Speaking of it, those ^4d4dffBlue Plants^000000 on this island drop Blue Herbs. I could use them, please.";
+		mes "I'll gift you something.";
+		next;
+		mes "[Ran]";
+		mes "^4d4dffKill the Blue Plants and bring 10 Blue Herbs to me^000000.";
+		next;
+		mes "[Ran]";
+		mes "It is an easy task.";
+		specialeffect2 EF_HEAL2;
+		heal 9999,0;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		if (isbegin_quest(30000) == 1) {
+			completequest 30000;
+			Zeny += 100;
+			dispbottom "You've gained 100 Zeny.";
+			getexp 100,0; //reward 1
+		}
+		setquest 30001;
+		next;
+		mes "[Ran]";
+		mes "Speaking of plants and monsters, you have to equip your gears.";
+		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		next;
+		cutin "tutorial03",4;
+		mes "!- Information -!";
+		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
+		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		next;
+		mes "!- Information -!";
+		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
+		mes "Either double click or drag & drop to equip or unequip them.^000000";
+		next;
+		cutin "",255;
+		mes "[Ran]";
+		mes "Did you check all your equipment?";
+		mes "^4d4dffSkill distribution^000000 should be done.";
+		next;
+		mes "[Ran]";
+		mes "For a smooth battle, you have to distribute your abilities properly.";
+		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		break;
+	case 1:
+		if (isbegin_quest(30001) == 1) {
+		if (countitem(510) < 10) {
+			mes "[Ran]";
+			mes "These Blue Plants will help me to craft some important stuff. Can you help me to get them?";
+			mes "There are a few plants on this area.";
+			next;
+			mes "[Ran]";
+			mes "I would really appreciate it if you help me.";
+			mes "I am not allowed to set foot on this area.";
+			mes "That's why I ask for your help~";
+			close;
+		}
+		mes "[Ran]";
+		mes "Unbelievable, perfect!";
+		mes "Enough talking!!";
+		mes "I will create something that will help you in your journey!";
+		mes "Just a second...";
+		next;
+		mes "[Ran]";
+		mes "It's ready! Please, choose one carefully. I've made them with my power.";
+		callfunc("muh_eggpick","Isgard Starter Refillable",47007,47008,47009);
+		next;
+		mes "[Ran]";
+		mes "You can use it for ever! It's my gift to you. It won't consume after using it.";
+		mes "Now, you shall find Friederike and she will help you getting stronger!";
+		mes "She is inside the castle, which is in our village... quite a long journey!";
+		mes "Find our village and she is just inside the castle!";
+		next;
+		mes "[Ran]";
+		mes "And... Don't die! There are a few monsters trying to defend the area, which is sacred.";
+		mes "They don't know you, so a few will attack you.";
+		mes "Also, during the night, a few monsters will attack the village.";
+		mes "Please, help us and kill them if you find them!";
+		mes "They're not strong but they give a lot of souls.";
+		delitem 510,10;
+		getexp 750,0; //reward 2+3
+		completequest 30001;
+		next;
+		mes "[Ran]";
+		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
+		mes "When you fight monsters you can find ^4d4dffunidentified items^000000.";
+		next;
+		getitem 611,5;
+		mes "[Ran]";
+		mes "Using a Magnifier will identify the item.";
+		mes "Anyway... Go and find the Ice Castle!";
+		mes "Good luck! Be careful, there are strong monsters on the way!";
+		mes "Make sure you don't attack them. If you die, you'll lose ALL your souls!";
+		next;
+		mes "[Ran]";
+		mes "You should check the World Map using CTR + ' (if you haven't changed your setup), and look for the castle.";
+		//navigateto("icecastle", 79, 123, NAV_NONE, 1);
+		cloakonnpcself();
+		close;
+	}
+	case 2:
+		mes "[Ran]";
+		mes "You're strong enough to find Friederike.";
+		mes "She's at the castle.";
+		//navigateto("icecastle", 79, 123, NAV_NONE, 1);
+		cloakonnpcself();
+		close;
+	}
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffYou get a stats bonus for every level you raise.";
+	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
+	next;
+	mes "[Ran]";
+	mes "Kill Blue Plants and bring the Herbs to me.";
+	mes "Good luck!";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(30001) && Class == Job_Novice" );
+	//cloakonnpc();
+	end;
+}
+
+// - Ran
+// -----------------------------------------------------------------------------
+icecastle,83,127,3	script	Ran#ice	4_EP19_JUNCEA,5,5,{
+	//cutin "fly_trock.bmp", 2;
+				if (!isbegin_quest(30002)) {
+					mes "[Ran]";
+					mes "So, you've made it.";
+					mes "This is our village.";
+					mes "The place where we are recoverying.";
+					getexp 250,0; //reward 4
+					next;
+					mes "[Ran]";
+					mes "I wanted to make sure you are also strong enough to walk through that cold ice.";
+					mes "Glad to see you.";
+					next;
+					mes "[Ran]";
+					mes "There were those among them who succeeded and failed and went back after being unable to adjust.";
+					mes "I want you to have a successful start with this place.";
+					next;
+					mes "[Ran]";
+					mes "Did you know this?";
+					mes "We were all happy!";
+					mes "Let's work on this together.";
+					next;
+					select("Should I find the castle?");
+					mes "[Ran]";
+					mes "Yes! It's called the ^4d4dffIsgard Castle^000000.";
+					mes "Founded by me and my husband to protect those like you and the other ones.";
+					mes "This place can't be visited by normal people.";
+					next;
+					mes "[Ran]";
+					mes "Friederike, my servant, works inside the castle.";
+					mes "She could make a lot of things easier for you.";
+					next;
+					mes "[Ran]";
+					mes "She usually takes your souls in exchange of your job experience, so you get stronger.";
+					mes "Go and meet her there.";
+					next;
+					mes "[Ran]";
+					mes "There's also something else I would like to ask you.";
+					mes "You need to develop your job level.";
+					mes "You'll slowly become stronger and stronger, and you'll find some job trainers.";
+					next;
+					mes "[Ran]";
+					mes "Right now you're only a Novice but you can become a lot of things!";
+					mes "Specializing will make you unstoppable.";
+					mes "There are a few trainers inside the camp at Midgard Camp.";
+					next;
+					mes "[Ran]";
+					mes "When you arrive there, you should look for them and ask them what they need from you.";
+					mes "They'll be inside the tent. They'll teach you and help you to get stronger.";
+					mes "Just be careful, dying over there also makes you lose your experience and souls.";
+					next;
+					navigateto("icecastle", 211, 172, NAV_NONE, 1);
+					mes "[Ran]";
+					mes "Anyway, go find Friederike and come back to me!";
+					next;
+					if (!isbegin_quest(7473)) {
+						mes "[Ran]";
+						mes "Her name is ^4d4dffFriederike^000000";
+						//mes "I will mark her spot on the map so go to see him.";
+						//viewpoint 1,122,207,0,0x4d4dff;
+						setquest 30002;
+						next;
+						mes "!- Information -!";
+						mes "The ^4d4dffMini map can be seen on the right top of the screen.";
+						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+						next;
+						cutin "tutorial02.bmp", 4;
+						mes "!- Information -!";
+						mes "Received a Quest from ^4d4dffRan.";
+						mes "The quest content can be checked from the quest window.";
+						next;
+						mes "!- Information -!";
+						mes "Quest window can be opened by pressing ^4d4dffAlt + u^000000 keys together.";
+						next;
+						cutin "", 255;
+						mes "[Ran]";
+						mes "Anyway, she will give you some experience.";
+						mes "I hope it can help you for your future.";
+						close;
+					} else {
+						select("I know who you're talking about.");
+						mes "[Ran]";
+						mes "Then there's no worry.";
+						mes "She'll help you a lot.";
+						next;
+						mes "[Ran]";
+						mes "OK. I will show you the direction. You try it again.";
+						mes "By the way, did I tell you her name? Her name is ^4d4dffFriederike^000000";
+						//viewpoint 1,122,207,1,0x4d4dff;
+						next;
+						mes "!- Information -!";
+						mes "^4d4dff Mini map can be seen on the right top of the screen.";
+						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+						next;
+						mes "[Ran]";
+						mes "Anyway, good luck!";
+						mes "I hope it will help you out in your journey";
+						close;
+					}
+				} else if (isbegin_quest(30002) == 1) {
+					mes "[Ran]";
+					mes "If you want, you can step forward to the world right away.";
+					mes "However, I recommend you visit the castle as soon as possible.";
+					mes "I gave you some souls and if you die, you'll lose them all.";
+					mes "Unless you already did. . .";
+					next;
+					mes "[Ran]";
+					mes "The world is a lonely place to be alone.";
+					mes "The castle has people you can make as lifetime companions.";
+					mes "They're part of the history.";
+					next;
+					mes "[Ran]";
+					mes "My friend Friederike will be inside the castle.";
+					//mes "If you don't know the way I'll point it out to you again.";
+					//viewpoint 1,122,207,0,0x4d4dff;
+					next;
+					mes "[Ran]";
+					mes "Anyway, good luck.";
+					mes "I hope it will help you out in your journey.";
+					close;
+				} else {
+					mes "[Ran]";
+					mes "Oh, " + strcharinfo(0) + "!";
+					mes "Still being dilligent?";
+					mes "I've been busy, also.";
+					mes "I was collecting some herbs.";
+					next;
+					mes "[Ran]";
+					mes "I'll be taking off to Midgard as soon as I collect some other stuff I need.";
+					mes "At that time, I'll be teleporting to ^4d4dffMidgard Camp^000000, and you can join.";
+					next;
+					mes "[Ran]";
+					mes "Be excited for it.";
+					mes "You can also go to Midgard through the Dimensional Gap. I am not sure where are the entrances.";
+					mes "Quite dangerous, though.";
+					next;
+				}
+				if (!isbegin_quest(30002)) {
+					mes "[Ran]";
+					mes "Hello.";
+					next;
+					switch(select("Hello?", "Get me to the camp!", "I don't know what to do.")) {
+					case 1:
+						mes "[Ran]";
+						mes "You look strong and able!";
+						mes "I like able people like you!";
+						mes "Always be healthy and strong as you are now.";
+						break;
+					case 2:
+						mes "[Ran]";
+						mes "I usually travel to ^4d4dffMidgard Camp^000000.";
+						mes "But I'm resting up due to some problems.";
+						break;
+					case 3:
+						mes "[Ran]";
+						mes "Hmm? You said you didn't know what to do.";
+						mes "Since you're here, why don't you visit ^4d4dffIsgard Castle^000000?";
+						next;
+						mes "[Ran]";
+						mes "I am sure you'll find something useful there.";
+						mes "You can also go to Midgard and start collecting more souls.";
+						break;
+					}
+				} else if (isbegin_quest(30002) == 1) {
+					mes "[Ran]";
+					mes "Ah, it's you.";
+					next;
+					mes "[Ran]";
+					mes "If you want, you can step forward to the world right away.";
+					mes "Midgard is waiting!";
+					next;
+					mes "[Ran]";
+					mes "My servant Friederike can develop your job skills.";
+					next;
+					mes "[Ran]";
+					mes "Good luck!";
+					close;
+				} else {
+					mes "[Ran]";
+					//mes "Oh, We meet again.";
+					mes "So...";
+					mes "Do you need a trip to Midgard Camp?";
+					switch(select("Go To Midgard Camp!:Can I offer my help again?:Not Now.")) {
+		case 1:
+					mes "[Ran]";
+					mes "Let us travel with the wind in our hair.";
+					warp "mid_camp", 204, 231;
+		case 2:
+if(#RanTaskDelay+86400 > gettimetick(2)) goto Ltdelay;
+mes "[Ran]";
+mes "All right... I'll need more Blue Herbs to keep crafting healthy potions for our warriors.";
+next;
+mes "[Ran]";
+mes "Help me collecting them.";
+next;
+
+mes "[Ran]";
+mes "You are in part (^FF0000"+(#randtq+1)+"^000000/10) of this daily task, this is the quantity you'll need to acquire: ^880000";
+	if(#randtq == 0) mes "Blue Herb (5)";
+	else if(#randtq == 1) mes "Blue Herb (10)";
+	else if(#randtq == 2) mes "Blue Herb (15)";
+	else if(#randtq == 3) mes "Blue Herb (20)";
+	else if(#randtq == 4) mes "Blue Herb (25)";
+	else if(#randtq == 5) mes "Blue Herb (30)";
+	else if(#randtq == 6) mes "Blue Herb (35)";
+	else if(#randtq == 7) mes "Blue Herb (40)";
+	else if(#randtq == 8) mes "Blue Herb (45)";
+	else if(#randtq == 9) mes "Blue Herb (50)";
+mes "^000000";
+next;
+mes "[Ran]";
+mes "For every task you finish, I will reward you with ^0000FFEinherjar Souls^000000 depending on the number of herbs collected on the current task!"; //Edit to the reward that you would be giving
+mes "It'll be up to the double of the number of herbs. So, if you're collecting 25 Blue Herbs, you'll gain up to 50 Einherjar Souls."; //Edit to the reward that you would be giving
+menu "Gotcha!",-,"I have the herbs already!",Lgotit;
+close;
+
+Lgotit:
+	next;
+	if(#randtq == 0 && countitem(510) < 5) goto Lnenough;
+	else if(#randtq == 1 && countitem(510) < 10) goto Lnenough;
+	else if(#randtq == 2 && countitem(510) < 15) goto Lnenough;
+	else if(#randtq == 3 && countitem(510) < 20) goto Lnenough;
+	else if(#randtq == 4 && countitem(510) < 25) goto Lnenough;
+	else if(#randtq == 5 && countitem(510) < 30) goto Lnenough;
+	else if(#randtq == 6 && countitem(510) < 35) goto Lnenough;
+	else if(#randtq == 7 && countitem(510) < 40) goto Lnenough;
+	else if(#randtq == 8 && countitem(510) < 45) goto Lnenough;
+	else if(#randtq == 9 && countitem(510) < 50) goto Lnenough;
+	mes "[Ran]";
+	mes "Thank you, this will save a lot of souls.";
+	if(#randtq == 0) delitem 510,5;
+	else if(#randtq == 1) delitem 510,10;
+	else if(#randtq == 2) delitem 510,15;
+	else if(#randtq == 3) delitem 510,20;
+	else if(#randtq == 4) delitem 510,25;
+	else if(#randtq == 5) delitem 510,30;
+	else if(#randtq == 6) delitem 510,35;
+	else if(#randtq == 7) delitem 510,40;
+	else if(#randtq == 8) delitem 510,45;
+	else if(#randtq == 9) delitem 510,50;
+	getitem 47006,rand(1,(#randtq + 1) * 10); //Edit to the reward that you would be giving
+	set #randtq,#randtq+1;
+	questinfo_refresh;
+	if(#randtq == 10)  
+	{ set #randtq,0;
+	set #RanTaskDelay,gettimetick(2);
+	}
+	close;
+	
+
+Lnenough:
+	mes "[Ran]";	
+	mes "You still need to collect some herbs.";
+	close;
+
+Ltdelay:
+	mes "[Ran]";
+	mes "I don't need any herbs for now, come back again tomorrow.";
+	questinfo_refresh;
+	close;
+		case 3:
+					mes "[Ran]";
+					mes "Then use it next time.";
+					close;
+		}
+				}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && !isbegin_quest(30002) && !isbegin_quest(7473)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && isbegin_quest(30003) == 1" );
+	end;
+
+OnTouch:
+	if (Class == Job_Novice && BaseLevel < 3 && !isbegin_quest(4269))
+		emotion ET_SURPRISE;
+	else
+		emotion ET_SMILE;
+	end;
+}
+
+// - Aegir
+// -----------------------------------------------------------------------------
+mid_camp,205,233,5	script	Aegir#1	4_M_RAGI,{
+
+	if (isbegin_quest(30003) == 1) {
+		mes "[Aegir]";
+		mes "Greetings, traveler. I sense a stirring of destiny within you, a spark that heralds great deeds to come.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Who are you? How do you know me?";
+		next;
+		mes "[Aegir]";
+		mes "Ah, " + strcharinfo(0) +", forgive my cryptic words.";
+		mes "I am Aegir, bard of the seas, and perhaps a friend to those who walk the path of destiny.";
+		mes "As for knowing you, let us say I have a knack for recognizing potential.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ran sent me. She said you might have answers.";
+		next;
+		mes "[Aegir]";
+		mes "Ah, Ran... My beloved wife's voice carries across realms even now.";
+		mes "You seek answers, do you? Answers that lie beyond the veil of mortal comprehension?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I need to understand what's happening to the world, to the gods.";
+		next;
+		mes "[Aegir]";
+		mes "Then you have come to the right place, my friend. But answers are not freely given; they must be earned.";
+		next;
+		mes "[Aegir]";
+		mes "Tell me, do you feel the weight of your purpose pressing upon you?";
+		mes "Do you sense the call to greatness?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I... I'm not sure. I just know that I must do something, that the world is in chaos.";
+		next;
+		mes "[Aegir]";
+		mes "Indeed, chaos reigns where belief falters.";
+		mes "But fear not, for belief can be restored, faith can be renewed.";
+		mes "It is a journey fraught with trials, but one that can lead to enlightenment.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What must I do?";
+		next;
+		mes "[Aegir]";
+		mes "You must embrace your role as the chosen one.";
+		mes "Seek out the fragments of faith scattered across this world, gather them like stars in the night sky.";
+		mes "Only then can the gods reclaim their rightful place in the hearts of mortals.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But how? Where do I begin?";
+		next;
+		mes "[Aegir]";
+		mes "The path ahead is long and treacherous, but fear not, for you do not walk it alone.";
+		mes "Seek out the wise and the brave, for they shall guide you on your journey.";
+		mes "And remember, belief is not just something you possess; it is something you inspire in others.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I understand. I will do whatever it takes to restore faith to the world.";
+		next;
+		mes "[Aegir]";
+		mes "Then go forth, " + strcharinfo(0) +", the chosen one. Your destiny awaits, and with it, the salvation of this world.";
+		mes "We have a group that started an expedition a while ago, it's called the Isgard Group.";
+		mes "You should join them. Go inside the tent and sign up for it.";
+		next;
+		mes "[Aegir]";
+		mes "By the way...";
+		mes "You can start looking for your job change.";
+		mes "We have some trainers inside the tent, talk to them if you wish to no longer be a Novice.";
+		next;
+		mes "[Aegir]";
+		mes "And also I can recommend you a good human, a Bard trainer.";
+		mes "He is a really good singer.";
+		completequest 30003;
+		//Zeny += 10000;
+		//dispbottom "You've gained 10,000 Zeny.";
+		getexp 100,0; //reward 7
+		getitem 47006,5000;
+		next;
+		mes "[Aegir]";
+		mes "Oh, I was about to forget.";
+		mes "Take these. It will help you. You can use it to start a fire and recover yourself.";
+		mes "You can buy a few more from Hansenne, down there.";
+		next;
+		mes "[Aegir]";
+		mes "You'll also find some Tree Root and Wooden Block in the forests.";
+		mes "They can extend the fire and help you to recover on your hunts.";
+		getitem 7035,5;
+		getitem 7850,10;
+		getitem 902,15;
+		next;
+		if (select("Wait, I need a weapon!", "Goodbye!") == 1) {
+			mes "[Aegir]";
+			mes "Hmm... You do. I'll try to help.";
+			next;
+			mes "[Aegir]";
+			mes "I can quickly make you a simple one that will help you for a while.";
+			mes "You'll still need to find your own.";
+			next;
+			mes "[Aegir]";
+			mes "Please, choose one.";
+			next;
+			set .EleFor, 0;
+			set .SCFor, 1;
+			set .name3, getcharid( 0 ) & 65535;
+			set .name4, getcharid( 0 ) >> 16;
+			set .lolface, .EleFor + ( ( .SCFor * 5 ) << 8 );
+		switch (select("A Sword.:A Dagger.:A Mace.:Nevermind.")) {
+		case 1:
+			mes "[Aegir]";
+			mes "Good choice.";
+			mes "I'll give you a Very Strong one.";
+			getitem2 1101, 1, 1, 0, 0, 255, .lolface, .name3, .name4;
+			specialeffect 154;
+			//close;
+		case 2:
+			mes "[Aegir]";
+			mes "Good choice.";
+			mes "I'll give you a Very Strong one.";
+			getitem2 1201, 1, 1, 0, 0, 255, .lolface, .name3, .name4;
+			specialeffect 154;
+			//close;
+		case 3:
+			mes "[Aegir]";
+			mes "Good choice.";
+			mes "I'll give you a Very Strong one.";
+			getitem2 1501, 1, 1, 0, 0, 255, .lolface, .name3, .name4;
+			specialeffect 154;
+			//close;				
+		case 4:
+			mes "[Aegir]";
+			mes "Uhh...";
+			mes "You're so strong that you don't need, huh?!";
+			close;
+		}
+		next;
+		getitem 2102,1;
+		mes "[Aegir]";
+		mes "I have also given you a shield.";
+		mes "Remember to talk to my secretary, Evenor, inside the tent above.";
+		mes "Sign up for our expedition group as soon as possible.";
+		setquest 30004;
+		next;
+		mes "[Aegir]";
+		mes "Good luck!";
+		navigateto "mid_campin", 90, 105;
+		} else {
+			mes "[Aegir]";
+			mes "So... Good luck!";
+			close;
+		}
+		navigateto "mid_campin", 90, 105;
+	} else {
+		mes "[Aegir]";
+		mes "Hello, " + strcharinfo(0) + ", may I help you?";
+		next;
+		if (select("Do you sell something?", "I want to become a Bard!") == 1) {
+			mes "[Aegir]";
+			mes "Hmm... Actually, I can sell you pieces of my battle armor!";
+			//callshop "aegir_equip";
+			callfunc "qshop",6;
+			close;
+		} else {
+				if (Class == Job_Novice && JobLevel >= 5) {
+				mes "[Aegir]";
+				mes "It seems that you have grown.";
+				mes "Head to Comodo and find Lalo, my Bard friend!";
+				next;
+				mes "[Aegir]";
+				mes "He will give you some clothes and an instrument.";
+				mes "It should be easy to find.";
+				cutin "", 255;
+			} else {
+				if (Class != Job_Novice) {
+					mes "[Aegir]";
+					mes "You look so strong!";
+					mes "I am so proud of you.";
+					next;
+				} else {
+						mes "[Aegir]";
+						mes "Since you're still a young Novice, you have a long journey ahead.";
+						mes "You'll need Job Level 5 to advance, and you'll want to find the trainer location so he can develop you.";
+						next;
+						mes "[Aegir]";
+						mes "I can tell you the location if you come here at Job Level 5.";
+						close;
+			}
+			}
+		}
+		mes "[Aegir]";
+		mes "And if you need to walk to Midgard, above this tent";
+		mes "there's a Dimensional Gap, which you can use and";
+		mes "teleport yourself to Morroc, through the South gate.";
+		next;
+		mes "[Aegir]";
+		mes "You'll be teleported to the Dimensional Crack Ruins, just find the Rift Guard";
+		mes "at West side and tell him you'll want to escape to the other side of the Rift.";
+		next;
+		mes "[Aegir]";
+		mes "You'll now go to any extreme side of the map and find a Continental Guard.";
+		mes "They will get you to Morroc.";
+		mes "Good luck! And be careful. You'll need to be.";
+		close;
+		end;
+	}
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && isbegin_quest(30003) == 1" );
+	questinfo QTYPE_JOBQUEST, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice && isbegin_quest(30003) == 2";
+	end;
+	
+}

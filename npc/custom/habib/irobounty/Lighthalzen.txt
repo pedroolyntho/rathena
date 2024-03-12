@@ -1,0 +1,68 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Lighthalzen
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+lighthalzen,194,161,3	script	Bounty Board 16-20#lz1	837,{
+	callfunc "F_Bounty_Board", 16, 20, 9, 1,
+		1613,	62745,	10732,		0,	// METALING
+		1162,	62746,	13162,		0,	// RAFFLESIA
+		1215,	62747,	12150,		0,	// STEM_WORM
+		1692,	62748,	15000,		0,	// BREEZE
+		1627,	62749,	15000,		0;	// ANOPHELES
+	end;
+}
+
+lighthalzen,192,161,3	script	Bounty Board 18-20#lz2	837,{
+	callfunc "F_Bounty_Board", 18, 20, 4, 1,
+		1133,	62750,	15000,		0,	// KOBOLD_1
+		1134,	62751,	15000,		0,	// KOBOLD_2
+		1135,	62752,	15000,		0,	// KOBOLD_3
+		1282,	62753,	15000,		0;	// KOBOLD_ARCHER
+	end;
+}
+
+lighthalzen,190,161,3	script	Bounty Board 18-20#lz3	837,{
+	callfunc "F_Bounty_Board", 18, 20, 10, 1,
+		1682,	62754,	15000,		0,	// REMOVAL
+		1657,	62755,	15000,		0,	// RAWREL
+		1655,	62756,	15000,		0,	// EREND
+		1654,	62757,	15000,		0,	// ARMAIA
+		1653,	62758,	15000,		0,	// WHIKEBAIN
+		1656,	62759,	15000,		0,	// KAVAC
+		1652,	62760,	15000,		0;	// YGNIZEM
+	end;
+}
+
+lighthalzen,188,162,3	script	Bounty Board 18-20#lz4	837,{
+	callfunc "F_Bounty_Board", 18, 20, 1, 4,
+		1639,	62761,	15000,	0,	// KATRINN
+		1637,	62762,	15000,	0,	// MAGALETA
+		1638,	62763,	15000,	0,	// SHECIL
+		1635,	62764,	15000,	0,	// EREMES
+		1634,	62765,	15000,	0,	// SEYREN
+		1636,	62766,	15000,	0,	// HARWORD
+		2227,	62767,	15000,	0,	// TRENTINI
+		2223,	62768,	15000,	0,	// CELIA
+		2226,	62769,	15000,	0,	// ALPHOCCIO
+		2225,	62770,	15000,	0,	// GERTIE
+		2224,	62771,	15000,	0,	// CHEN
+		2222,	62772,	15000,	0,	// FLAMEL
+		2221,	62773,	15000,	0;	// RANDEL
+	end;
+}

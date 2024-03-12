@@ -1,0 +1,188 @@
+//============================================================
+//= Nasagnilac Reset NPC
+//===== By: ==================================================
+//= Nasagnilac
+//===== Current Version: =====================================
+//= 1
+//===== Compatible With: =====================================
+//= rAthena/hercules Project
+//===== Description: =========================================
+//= A npc where similar to official reset npc and customized.
+//===== Contact: =============================================
+//= If there is a problem or request for the script you can
+//= contact me on the following:
+//= Skype: nasagnilac.lerion
+//= Facebook: nl073092
+//===== Description: =========================================
+// Don't forget to add the SQL.
+/*
+DROP TABLE IF EXISTS `reset_date`;
+CREATE TABLE IF NOT EXISTS `reset_date` (
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`date`)
+) ENGINE=MyISAM;
+*/
+//============================================================
+
+icas_in,192,62,2	script	The Great Alchemist::RESET	4_M_ALCHE_B,{
+mes .NpcName$;
+mes "So are you satisfied with your";
+mes "current stat allocation?";
+mes "Of course not, if you want to make";
+mes "a change then listen on.";
+next;
+mes .NpcName$;
+mes "I use the power of the"; 
+mes "^009900"+getitemname(.stoneid)+"^000000 to help adventurers";
+mes "reset their stat choices.";
+mes "Of course the more powerful the";
+mes "adventurer, the more ^009900"+getitemname(.stoneid)+"s^000000";
+mes "I need the perform the reset.";
+next;
+	for(set .@i,0; .@i < getarraysize(.minrange); set .@i,.@i+1) {
+		if(BaseLevel >= .minrange[.@i] && BaseLevel <= .maxrange[.@i]) {
+			set .@stonesreq,.stones[.@i]; 
+		}
+	}
+
+mes .NpcName$;
+mes "For instance you would require.";
+mes "^009900"+getitemname(.stoneid)+" x "+.@stonesreq+"^000000 to reset all your stats to 1 and get all your status points back.";
+next;
+set .@d$, gettimestr("%Y-%m-%d %H:%M:%S", 21);
+query_sql("SELECT * FROM `reset_date` WHERE `date` > '"+.@d$+"'", .@available);
+switch(select("Tell me More!:Lets reset now.:"+((.freereset)?"[ ^FF0000FREE^000000 ] ULIMITED RESET:":"")+":"+((.@available)?"[ ^FF0000EVENT^000000 ] ULIMITED RESET:":"")+"")) {
+	case 1:
+		mes .NpcName$;
+		for(set .@i,0; .@i<getarraysize(.minrange); set .@i,.@i+1) {
+			mes "Base Lvl ^000099"+.minrange[.@i]+" - "+.maxrange[.@i]+"^000000 ^009900["+.stones[.@i]+" "+getitemname(.stoneid)+"]^000000";
+		}
+		close;
+	case 2:
+		mes .NpcName$;
+		mes "Ok let's start checking.";
+		next;
+		if(countitem(.stoneid) >= .@stonesreq) {
+			delitem .stoneid,.@stonesreq;
+			resetstatus;
+			mes .NpcName$;
+			mes "Well Done..";
+			close;
+		}
+		else {
+			mes .NpcName$;
+			mes "You do not have enough ^009900"+getitemname(.stoneid)+"s^000000";
+			close;
+		}
+	case 3:
+		mes .NpcName$;	
+		if(#FreeReset > gettimetick(2)) {
+				set .@k,#FreeReset - gettimetick(2);
+				set .@d,.@k % 2592000 / 86400;
+				set .@h,.@k % 86400 / 3600;
+				set .@m,.@k % 3600 / 60;
+				set .@s,.@k % 60;
+				set .@d$, .@d+" day"+((.@d <= 1)?"":"s");
+				set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+				set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+				set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+				set .@time$,""+.@d$+" "+.@h$+" "+.@m$+" "+.@s$+"";
+				mes "I'm sorry but you have to wait";
+				mes ""+.@time$+" before you can reset again!";
+				close;
+		}else{
+			set #FreeReset,gettimetick(2)+(2592000);
+			mes "You can only avail the free reset once 1 month... Thank you.";
+			resetstatus;
+		}
+	close;
+	
+	case 4:
+		if(!.@available){ goto OnDueDate; end;}
+		
+			mes .NpcName$;
+			mes "As a master, I've been ordered to give you a free reset. Where do I start?";
+			next;
+				switch(select("Stats:Skills")) { 
+					case 1: 
+						mes "[ Ability Master ]";
+						mes "Good Choice..";
+						resetstatus;
+						close; 
+					case 2: 
+						mes "[ Ability Master ]";
+						mes "Good Choice..";
+						resetskill;
+						close2; 
+						end;
+				}
+		
+		break;
+		
+		
+	case 5:
+		mes .NpcName$;	
+		mes "Okay, see you later.";
+		close;
+}
+
+OnDueDate:
+	mes .NpcName$;
+	mes "Sorry but event is available only until "+.mto+"/"+.dto+"/"+gettime(GETTIME_YEAR)+" "+.hto+":00 Server Time.";
+	close;
+end;
+
+OnDoResetDate:
+	if ( compare( .@atcmd_parameters$, "off" ) ) { 
+		set .event,0;
+		dispbottom "Unlimited Skills and Stats Reset is now disabled.";
+		query_sql("TRUNCATE `reset_date`");
+	}else if ( compare( .@atcmd_parameters$, "on" ) ) { 
+		explode(.@sched_to$, .@atcmd_parameters$[1], "-");
+		
+		set .mto, .@sched_to$[0];
+		set .dto, .@sched_to$[1];
+		set .hto, .@sched_to$[2];
+		
+		if(.mto < 1 || .mto > 12){
+			message strcharinfo(0),"Invalid Month Number.";
+			message strcharinfo(0),"Month: 1 ~ 12";
+		}else if(.dto < 1 || .dto > 31){
+			message strcharinfo(0),"Invalid Day Number.";
+			message strcharinfo(0),"Day: 01 ~ 31";
+		}else if(.hto < 1 || .hto > 24){
+			message strcharinfo(0),"Invalid Hour Number.";
+			message strcharinfo(0),"Hour: 01 ~ 24";
+		}else{
+			dispbottom "Unlimited Skills and Stats Reset is now enabled.";
+		}
+		set .schedule$, gettime(DT_YEAR)+"-"+.@sched_to$[0]+"-"+ .@sched_to$[1]+" "+.@sched_to$[2]+":00:00";
+		query_sql("TRUNCATE `reset_date`");
+		query_sql("INSERT INTO `reset_date` (`date`) VALUES ('"+.schedule$+"')");
+		set .event,1;
+	}else{
+		message strcharinfo(0),"@npcreset <on/off> <Month-Day-Hour>";
+		message strcharinfo(0),"@npcreset failed.";
+	}
+end;
+
+OnInit:
+	// --- Don't touch this if dont know what you are doing.
+	set .schedule$,"";
+	set .NpcName$,"["+strnpcinfo(0)+"]";
+	setarray .minrange[0],	1,	5,	9,	13,	16,	19;	// Min Level Required
+	setarray .maxrange[0],	4,	8,	12,	15,	18,	20;	// Max Level Required
+	setarray .stones[0],	400,	800,	1200,	1500,	1800,	2000;  // Number of Stones
+	setarray .month$[1],"January","February","March","April","May","June","July","August","September","October","November","December";
+	// ---
+	
+	set .stoneid,47006;	// Item ID of the item you want to require before doing a reset.
+
+	//- Command for scheduled reset like having a 7 days free reset.
+	.event = 1;	// Dont touch this because this is default.
+	bindatcmd "npcreset","RESET::OnDoResetDate",50,100;	// Event where you can unlimited stats reset. 1 = On | 0 = Off 
+	
+	.freereset = 1;	// Settings for free reset stats and skill. 1 = On | 0 = Off 
+	
+end;
+}

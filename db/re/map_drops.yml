@@ -1,0 +1,2042 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Drop Database
+###########################################################################
+#
+# Map Drop Settings
+#
+###########################################################################
+# - Map                             Name of the map.
+#   GlobalDrops                     Drops for all monsters on this map. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#     - Index                       Unique index of the drop.
+#       Item                        Item name.
+#       Rate                        Drop rate of item, n/100000.
+#       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
+#   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
+#     - Monster                     Monster name.
+#       Drops                       Drops for this specific monster. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#         - Index                   Unique index of the drop.
+#           Item                    Item name.
+#           Rate                    Drop rate of item, n/100000.
+#           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
+###########################################################################
+
+Header:
+  Type: MAP_DROP_DB
+  Version: 2
+
+Body:
+  - Map: tur_d03_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+  - Map: tur_d04_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_TURTLE_GENERAL
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 5000
+          - Index: 1
+            Item: Immaterial_Sword_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Iron_Driver_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Pole_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 5
+            Item: War_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 6
+            Item: Huuma_Bird_Wing_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 7
+            Item: S_Turtle_Is_Box_IL
+            Rate: 150
+  - Map: prt_sewb1
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Falchion_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Guard_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 2
+      Item: Leather_Jacket
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01    
+    - Index: 3
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: prt_sewb2
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Falchion_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02
+    - Index: 1
+      Item: Guard_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01         
+    - Index: 2
+      Item: Leather_Jacket
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 3
+      Item: Hat
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 4
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01        
+    - Index: 4
+      Item: Blade_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02
+  - Map: prt_sewb3
+    GlobalDrops: #region lv 6
+    - Index: 0
+      Item: Falchion_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02
+    - Index: 1
+      Item: Sandals
+      Rate: 1000 #X00 is X% chance in game
+      RandomOptionGroup: SHOES01    
+    - Index: 2
+      Item: Guard_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01         
+    - Index: 3
+      Item: Leather_Jacket
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 4
+      Item: Blade_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02     
+    - Index: 5
+      Item: Slayer_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD02
+    - Index: 6
+      Item: Katana
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD02
+    - Index: 7
+      Item: Hat
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01          
+    - Index: 8
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01        
+  - Map: prt_sewb4
+    GlobalDrops: #region lv 8
+    - Index: 0
+      Item: Sword_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03
+    - Index: 1
+      Item: Sandals
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01
+    - Index: 2
+      Item: Guard_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01         
+    - Index: 3
+      Item: Leather_Jacket
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 4
+      Item: Blade_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03     
+    - Index: 5
+      Item: Slayer_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD03
+    - Index: 6
+      Item: Katana
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD03      
+  - Map: prt_maze01
+    GlobalDrops: #region lv 3
+    - Index: 0
+      Item: Sword_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Knife_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER01
+    - Index: 2
+      Item: Main_Gauche
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER01      
+    - Index: 3
+      Item: Mini_Propeller
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+  - Map: prt_maze02
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02
+  - Map: prt_maze03
+    GlobalDrops: #region lv 8
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03
+    - Index: 1
+      Item: Damascus_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03
+    - Index: 2
+      Item: Tsurugi_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03
+    - Index: 3
+      Item: Guitar_Of_Gentle_Breeze
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT03
+    - Index: 4
+      Item: Halberd_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03
+    - Index: 5
+      Item: Boots
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01
+    - Index: 6
+      Item: Mini_Propeller
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+  - Map: iz_dun00
+    GlobalDrops: #region lv 3
+    - Index: 0
+      Item: Padded_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+  - Map: iz_dun01
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Padded_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 1
+      Item: Shield_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: ARMOR01            
+  - Map: iz_dun02
+    GlobalDrops: #region lv 8
+    - Index: 0
+      Item: Padded_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 1
+      Item: Shield_
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: ARMOR01              
+    - Index: 2
+      Item: Saint_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Fin_Helm
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: ARMOR01   
+    - Index: 4
+      Item: Trident
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03      
+    - Index: 5
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+  - Map: iz_dun03
+    GlobalDrops: #region lv 7    
+    - Index: 0
+      Item: Trident
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR02
+    - Index: 1
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01  
+    - Index: 2
+      Item: Snowy_Horn
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: ARMOR01  
+    - Index: 3
+      Item: Katana_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD02
+    - Index: 4
+      Item: Chain_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: MACE02      
+  - Map: iz_dun04
+    GlobalDrops: #region lv 12
+    - Index: 0
+      Item: Trident
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03
+    - Index: 1
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 2
+      Item: Snowy_Horn
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: ARMOR01    
+    - Index: 3
+      Item: Katana_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD03
+    - Index: 4
+      Item: Chain_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03
+    - Index: 4
+      Item: Trident_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03
+    - Index: 5
+      Item: Chain_Mail_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 6
+      Item: Katar_Of_Cold_Icicle
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03      
+  - Map: iz_dun05
+    GlobalDrops: #region lv 22
+    - Index: 0
+      Item: Spike
+      Rate: 1500 #X000 is X% chance in game
+      RandomOptionGroup: MACE05
+    - Index: 1
+      Item: Electric_Wire
+      Rate: 1500 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT05
+    - Index: 2
+      Item: Electric_Eel
+      Rate: 1500 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT05      
+    - Index: 3
+      Item: Tidal_Shoes
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01
+  - Map: treasure_n1
+    GlobalDrops: #region lv 3      
+    - Index: 0
+      Item: Falchion
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Pirate_Bandana
+      Rate: 500      
+  - Map: treasure_n2
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Falchion
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02    
+    - Index: 1
+      Item: Pirate_Bandana
+      Rate: 500  
+    - Index: 2
+      Item: Brooch
+      Rate: 500
+    - Index: 3
+      Item: Scarlet_Mace
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: MACE02    
+    - Index: 4
+      Item: Chrystal_Pumps
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01 
+    - Index: 5
+      Item: Marionette_Doll
+      Rate: 500      
+    - Index: 6
+      Item: Spirit_Chain
+      Rate: 500      
+    - Index: 7
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 8
+      Item: Rosary_
+      Rate: 500   
+  - Map: gef_dun00
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02
+    - Index: 1
+      Item: Damascus_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02 
+    - Index: 2
+      Item: Mini_Propeller
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+    - Index: 3
+      Item: Hat_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02       
+  - Map: gef_dun01
+    GlobalDrops: #region lv 7
+    - Index: 0
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+    - Index: 1
+      Item: Ghoul_Leg
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: KATAR02      
+    - Index: 2
+      Item: Infiltrator
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: KATAR02   
+    - Index: 3
+      Item: Rosary
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+    - Index: 4
+      Item: Tights_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+  - Map: gef_dun02
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Damascus_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03
+    - Index: 1
+      Item: Mini_Propeller
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02     
+    - Index: 2
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02      
+    - Index: 3
+      Item: Ghoul_Leg
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03
+    - Index: 4
+      Item: Infiltrator
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03   
+    - Index: 5
+      Item: Rosary
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02   
+    - Index: 6
+      Item: Partizan_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03     
+    - Index: 7
+      Item: Scarlet_Mace
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03   
+    - Index: 8
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 9
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+  - Map: gef_dun03
+    GlobalDrops: #region lv 11
+    - Index: 0
+      Item: Wedding_Veil
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER03      
+    - Index: 1
+      Item: Manteau
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01
+    - Index: 2
+      Item: Bone_Wand
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 2
+      Item: Arc_Wand_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03 
+  - Map: gefenia01
+    GlobalDrops: #region lv 15 suffix 04 - 2%
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01   
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04  
+    - Index: 4
+      Item: Katzbalger
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+    - Index: 5
+      Item: Pole_Axe
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04      
+    - Index: 6
+      Item: Strong_Shield
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 7
+      Item: Helm_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 8
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01    
+    - Index: 9
+      Item: Ahlspiess
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04     
+    - Index: 10
+      Item: Satanic_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04   
+    - Index: 11
+      Item: Diamond_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 12
+      Item: Staff_Of_Soul
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04     
+    - Index: 13
+      Item: Horn_Of_Succubus
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 14
+      Item: Carrot_Whip
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 15
+      Item: Ring_Of_Archbishop
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 16
+      Item: Light_Of_Cure
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 16
+      Item: Seal_Of_Cathedral
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04
+    - Index: 17
+      Item: Ring_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 18
+      Item: Gold_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 19
+      Item: Base_Guitar
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 20
+      Item: Scarlet_Viollin
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04       
+  - Map: gefenia02
+    GlobalDrops: #region lv 15 suffix 04 - 2%
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04        
+    - Index: 4
+      Item: Katzbalger
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+    - Index: 5
+      Item: Pole_Axe
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04      
+    - Index: 6
+      Item: Strong_Shield
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 7
+      Item: Helm_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 8
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01        
+    - Index: 9
+      Item: Ahlspiess
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04     
+    - Index: 10
+      Item: Satanic_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 11
+      Item: Diamond_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 12
+      Item: Staff_Of_Soul
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04     
+    - Index: 13
+      Item: Horn_Of_Succubus
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 14
+      Item: Carrot_Whip
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 15
+      Item: Ring_Of_Archbishop
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 16
+      Item: Light_Of_Cure
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 16
+      Item: Seal_Of_Cathedral
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04
+    - Index: 17
+      Item: Ring_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 18
+      Item: Gold_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 19
+      Item: Base_Guitar
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 20
+      Item: Scarlet_Viollin
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04           
+  - Map: gefenia03
+    GlobalDrops: #region lv 15 suffix 04 - 2%
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04        
+    - Index: 4
+      Item: Katzbalger
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+    - Index: 5
+      Item: Pole_Axe
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04      
+    - Index: 6
+      Item: Strong_Shield
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 7
+      Item: Helm_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 8
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01        
+    - Index: 9
+      Item: Ahlspiess
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04     
+    - Index: 10
+      Item: Satanic_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 11
+      Item: Diamond_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 12
+      Item: Staff_Of_Soul
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04     
+    - Index: 13
+      Item: Horn_Of_Succubus
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 14
+      Item: Carrot_Whip
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 15
+      Item: Ring_Of_Archbishop
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 16
+      Item: Light_Of_Cure
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 16
+      Item: Seal_Of_Cathedral
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04
+    - Index: 17
+      Item: Ring_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 18
+      Item: Gold_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 19
+      Item: Base_Guitar
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 20
+      Item: Scarlet_Viollin
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04    
+  - Map: gefenia04
+    GlobalDrops: #region lv 15 suffix 04 - 2%
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04        
+    - Index: 4
+      Item: Katzbalger
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+    - Index: 5
+      Item: Pole_Axe
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04      
+    - Index: 6
+      Item: Strong_Shield
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 7
+      Item: Helm_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 8
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01        
+    - Index: 9
+      Item: Ahlspiess
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04     
+    - Index: 10
+      Item: Satanic_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 11
+      Item: Diamond_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 12
+      Item: Staff_Of_Soul
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04     
+    - Index: 13
+      Item: Horn_Of_Succubus
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04     
+    - Index: 14
+      Item: Carrot_Whip
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 15
+      Item: Ring_Of_Archbishop
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 16
+      Item: Light_Of_Cure
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04       
+    - Index: 16
+      Item: Seal_Of_Cathedral
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04
+    - Index: 17
+      Item: Ring_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 18
+      Item: Gold_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 19
+      Item: Base_Guitar
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04      
+    - Index: 20
+      Item: Scarlet_Viollin
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT04       
+  - Map: orcsdun01
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Falchion_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01    
+    - Index: 2
+      Item: Buster_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: AXE01
+    - Index: 3
+      Item: Viking_Helm
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: orcsdun02
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Buster_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: AXE02    
+    - Index: 1
+      Item: Viking_Helm
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01     
+    - Index: 2
+      Item: Orc_Archer_Bow
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: BOW02      
+  - Map: mjo_dun01
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Falchion_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+  - Map: pay_dun00
+    GlobalDrops: #region lv 3
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER01  
+    - Index: 1
+      Item: Falchion_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 2
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 3
+      Item: Mace_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: MACE01
+    - Index: 4
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+  - Map: pay_dun01
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Great_Bow_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: BOW02 
+    - Index: 1
+      Item: Apple_Of_Archer
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 2
+      Item: Stiletto
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02    
+    - Index: 3
+      Item: Chain_Mail_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 4
+      Item: Dagger_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02  
+    - Index: 5
+      Item: Egg_Shell
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: pay_dun02
+    GlobalDrops: #region lv 6
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02
+    - Index: 1
+      Item: Great_Bow_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: BOW02 
+    - Index: 2
+      Item: Apple_Of_Archer
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 3
+      Item: Stiletto
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02     
+    - Index: 4
+      Item: Chain_Mail_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 5
+      Item: Dagger_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02      
+    - Index: 6
+      Item: Spear_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR02  
+    - Index: 7
+      Item: Whip_Of_Earth
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT02
+    - Index: 7
+      Item: Ninja_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 8
+      Item: Shoes_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01      
+    - Index: 9
+      Item: Munak_Turban
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 10
+      Item: Adventure_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01 
+    - Index: 11
+      Item: Bongun_Hat
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: pay_dun03
+    GlobalDrops: #region lv 8
+    - Index: 0
+      Item: Spear_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR03   
+    - Index: 1
+      Item: Whip_Of_Earth
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: INSTRUMENT03
+    - Index: 2
+      Item: Ninja_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Shoes_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01      
+    - Index: 4
+      Item: Munak_Turban
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 5
+      Item: Adventure_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 6
+      Item: Bongun_Hat
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 7
+      Item: Muffler_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01   
+    - Index: 8
+      Item: Stiletto_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03      
+    - Index: 9
+      Item: Puente_Robe
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01 
+    - Index: 10
+      Item: Nurse_Cap
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 11
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01   
+    - Index: 12
+      Item: Club
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03      
+    - Index: 13
+      Item: Stop_Post
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: pay_dun04
+    GlobalDrops: #region lv 10
+    - Index: 0
+      Item: Great_Bow_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: BOW03 
+    - Index: 1
+      Item: Apple_Of_Archer
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 2
+      Item: Ghost_Bandana
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Sandstorm
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03  
+    - Index: 4
+      Item: Scarlet_Dagger
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03
+    - Index: 5
+      Item: Club
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03      
+    - Index: 6
+      Item: Stop_Post
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 7
+      Item: Mighty_Staff
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 8
+      Item: Sword_Mace_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03 
+    - Index: 9
+      Item: Scarlet_Mace
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03       
+    - Index: 10
+      Item: Puppy_Love
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: lou_dun01
+    GlobalDrops: #region lv 8   
+    - Index: 0
+      Item: Tsurugi_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03 
+  - Map: lou_dun02
+    GlobalDrops: #region lv 8   
+    - Index: 0
+      Item: Ninja_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 1
+      Item: Shoes_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01      
+    - Index: 2
+      Item: Munak_Turban
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 3
+      Item: Adventure_Suit
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01  
+    - Index: 4
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: anthell01
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Falchion_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02
+    - Index: 1
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 2
+      Item: Elven_Ears
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Cap_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 4
+      Item: Mother's_Nightmare
+      Rate: 100 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+  - Map: anthell02
+    GlobalDrops: #region lv 4
+    - Index: 0
+      Item: Falchion_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02     
+    - Index: 1
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 2
+      Item: Elven_Ears
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Cap_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 4
+      Item: Mother's_Nightmare
+      Rate: 100 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: moc_pryd01
+    GlobalDrops: #region lv 2
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER01     
+    - Index: 1
+      Item: Falchion_
+      Rate: 3500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD01
+    - Index: 2
+      Item: Ribbon_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+  - Map: moc_pryd02
+    GlobalDrops: #region lv 6
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02   
+    - Index: 1
+      Item: Stiletto
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02    
+    - Index: 2
+      Item: Chain_Mail_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 3
+      Item: Dagger_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02     
+    - Index: 4
+      Item: Circlet_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+    - Index: 5
+      Item: Necklace
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 6
+      Item: Glove
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 7
+      Item: Silver_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+  - Map: moc_pryd03
+    GlobalDrops: #region lv 6    
+    - Index: 0
+      Item: Glove
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 1
+      Item: Silver_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 2
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Flower_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 4
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 5
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: moc_pryd04
+    GlobalDrops: #region lv 6
+    - Index: 0
+      Item: Circlet_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01         
+    - Index: 1
+      Item: Necklace
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 2
+      Item: Glove
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Silver_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 4
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 5
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 6
+      Item: Glove_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: moc_pryd05
+    GlobalDrops: #region lv 6 
+    - Index: 0
+      Item: Glove
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 1
+      Item: Silver_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01    
+    - Index: 2
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 3
+      Item: Flower_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 4
+      Item: Axe
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03
+    - Index: 5
+      Item: Two_Handed_Axe_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03      
+  - Map: moc_pryd06
+    GlobalDrops: #region lv 6     
+    - Index: 0
+      Item: Skul_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 1
+      Item: Flower_Ring
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 2
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01     
+    - Index: 3
+      Item: Glove_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: in_sphinx1
+    GlobalDrops: #region lv 6    
+    - Index: 0
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 1
+      Item: Mantle_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Cuffs
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01    
+    - Index: 3
+      Item: Ganster_Mask
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01    
+    - Index: 4
+      Item: G_Strings
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+  - Map: in_sphinx2
+    GlobalDrops: #region lv 6     
+    - Index: 0
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Mantle_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01  
+    - Index: 2
+      Item: Cuffs
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: SHOES01      
+    - Index: 3
+      Item: Ganster_Mask
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 4
+      Item: G_Strings
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+  - Map: in_sphinx3
+    GlobalDrops: #region lv 8     
+    - Index: 0
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01 
+    - Index: 1
+      Item: Blessed_Wand
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03  
+    - Index: 2
+      Item: Staff_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03   
+    - Index: 3
+      Item: Mitten_Of_Presbyter
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 4
+      Item: Scarlet_Saber
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03      
+    - Index: 5
+      Item: Scarlet_Dagger
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03     
+    - Index: 6
+      Item: Undershirt
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01        
+  - Map: in_sphinx4
+    GlobalDrops: #region lv 12     
+    - Index: 0
+      Item: Axe
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03  
+    - Index: 1
+      Item: Two_Handed_Axe_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03    
+    - Index: 2
+      Item: Scarlet_Saber
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02      
+    - Index: 3
+      Item: Scarlet_Dagger
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02      
+    - Index: 4
+      Item: Undershirt
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01      
+    - Index: 5
+      Item: Blessed_Wand
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 6
+      Item: Healing_Staff
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 7
+      Item: Mitten_Of_Presbyter
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 8
+      Item: White_Wing_Suits
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+  - Map: in_sphinx5
+    GlobalDrops: #region lv 12     
+    - Index: 0
+      Item: Matyr's_Flea_Guard
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01       
+    - Index: 1
+      Item: Scarlet_Saber
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD02      
+    - Index: 2
+      Item: Scarlet_Dagger
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02      
+    - Index: 3
+      Item: Undershirt
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01  
+    - Index: 4
+      Item: Blessed_Wand
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 5
+      Item: Healing_Staff
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 6
+      Item: Mitten_Of_Presbyter
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 7
+      Item: White_Wing_Suits
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01      
+    - Index: 8
+      Item: Tsurugi_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: 1HSWORD03      
+  - Map: mosk_dun01
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02            
+  - Map: xmas_dun01
+    GlobalDrops: #region lv 5
+    - Index: 0
+      Item: Main_Gauche
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02
+  - Map: gl_chyard
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Damascus_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03  
+    - Index: 1
+      Item: Wedding_Veil
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER03   
+    - Index: 2
+      Item: Manteau
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01   
+    - Index: 3
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: gl_prison
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Damascus_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03      
+  - Map: gl_prison1
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Damascus_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03
+  - Map: gl_step
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Bone_Wand
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 1
+      Item: Arc_Wand_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: STAFF03      
+    - Index: 2
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: gl_in01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Scarlet_Mace
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03  
+  - Map: gl_cas01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 1
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01 
+  - Map: gl_cas02
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04    
+    - Index: 4
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01  
+    - Index: 5
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: gl_knt01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+  - Map: gl_knt02
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Battle_Hook
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 1
+      Item: Clothes_Of_The_Lord
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Ebone_Armor
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+    - Index: 3
+      Item: Scarlet_Twohand_Sword
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04    
+    - Index: 4
+      Item: Katzbalger
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: 2HSWORD04      
+    - Index: 5
+      Item: Pole_Axe
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04      
+    - Index: 6
+      Item: Strong_Shield
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 7
+      Item: Helm_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: SPEAR04      
+    - Index: 8
+      Item: Plate_Armor_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01     
+  - Map: gl_sew01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 1
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01   
+  - Map: gl_church
+    GlobalDrops: #region lv 11
+    - Index: 0
+      Item: Wedding_Veil
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER03 
+    - Index: 1
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 1
+      Item: Manteau
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01            
+  - Map: abbey01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Ghoul_Leg
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03      
+  - Map: ayo_dun01
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Ghoul_Leg
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03
+    - Index: 1
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 2
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01       
+  - Map: ayo_dun02
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 1
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01           
+  - Map: treasure02
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Scarlet_Mace
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: MACE03
+    - Index: 1
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 2
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01   
+    - Index: 3
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: alde_dun04
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 1
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01   
+  - Map: c_tower1
+    GlobalDrops: #region lv 15 grade D SUFFIX 04 chance 2000       
+    - Index: 0
+      Item: Hood_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01
+    - Index: 1
+      Item: Scarlet_Rod
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04
+  - Map: c_tower2
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01  
+    - Index: 1
+      Item: Hood_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: GARMENT01      
+  - Map: c_tower3
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: c_tower4
+    GlobalDrops: #region lv 9
+    - Index: 0
+      Item: Spirit_Chain
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: DAGGER02  
+    - Index: 1
+      Item: Silver_Robe_
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 2
+      Item: Wizardy_Staff
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04  
+    - Index: 3
+      Item: Scarlet_Lance
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: SPEAR04
+    - Index: 4
+      Item: Scarlet_Staff
+      Rate: 2000 #X000 is X% chance in game
+      RandomOptionGroup: STAFF04    
+    - Index: 5
+      Item: Magician_Hat
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: STAFF04      
+  - Map: abyss_01
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+  - Map: abyss_02
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01            
+  - Map: abyss_03
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01            
+  - Map: ama_dun03
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+  - Map: tha_t01
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01     
+  - Map: tha_t02
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+  - Map: tha_t03
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+  - Map: tha_t04
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rosary_
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+################
+##INSTANCES      
+################
+  - Map: 1@begi
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rare_Einherjar_Soul
+      Rate: 700 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Knife_
+      Rate: 3000 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER02
+  - Map: 1@orcs
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rare_Einherjar_Soul
+      Rate: 700 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01
+    - Index: 1
+      Item: Orcish_Axe
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03      
+    - Index: 2
+      Item: Battle_Axe_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03       
+    - Index: 3
+      Item: Round_Buckler
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01 
+    - Index: 4
+      Item: Cigar
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 5
+      Item: Mink_Coat
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 6
+      Item: Durga
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03
+    - Index: 7
+      Item: Scarlet_Dagger
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03     
+    - Index: 8
+      Item: Orc_Archer_Bow
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: BOW03     
+  - Map: 2@orcs
+    GlobalDrops: #region lv 6       
+    - Index: 0
+      Item: Rare_Einherjar_Soul
+      Rate: 700 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01   
+    - Index: 1
+      Item: Orcish_Axe
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03      
+    - Index: 2
+      Item: Battle_Axe_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03       
+    - Index: 3
+      Item: Round_Buckler
+      Rate: 1000 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01 
+    - Index: 4
+      Item: Cigar
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 5
+      Item: Mink_Coat
+      Rate: 1000 #X000 is X% chance in game
+      RandomOptionGroup: ARMOR01
+    - Index: 6
+      Item: Durga
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: KATAR03
+    - Index: 7
+      Item: Scarlet_Dagger
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: DAGGER03     
+    - Index: 8
+      Item: Orc_Archer_Bow
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: BOW03      
+    - Index: 9
+      Item: Viking_Helm
+      Rate: 500 #X000 is X% chance in game
+      #RandomOptionGroup: 1HSWORD01      
+    - Index: 10
+      Item: Buster_
+      Rate: 2500 #X000 is X% chance in game
+      RandomOptionGroup: AXE03

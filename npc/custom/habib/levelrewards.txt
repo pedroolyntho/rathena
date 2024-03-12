@@ -1,0 +1,19 @@
+-	script	rAthena	-1,{
+OnPCBaseLvUpEvent:
+	setarray .@rewards[0],501,502,503,504,505; // change this with your own reward
+		if (BaseLevel == 3 || BaseLevel == 5 || BaseLevel == 7 || 
+		BaseLevel == 9 || BaseLevel == 10){
+			set SkillPoint,SkillPoint+1;
+			getitem .@rewards[0],1;
+			getitem .@rewards[1],1;
+			getitem .@rewards[2],1;
+			getitem .@rewards[3],1;
+			getitem .@rewards[4],1;
+			dispbottom "Congrats! You reached level "+BaseLevel+"! You've earned an extra Skill Point!";
+			end;
+		}
+		else {
+			end;
+		}
+	end;
+}

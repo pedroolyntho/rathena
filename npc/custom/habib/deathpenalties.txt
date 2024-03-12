@@ -1,0 +1,16 @@
+-	script	Dead	-1,{
+
+OnPCDieEvent:
+
+announce strcharinfo(0)+" was killed by a "+ rid2name( killerrid )+" at "+strcharinfo(3)+" and lost his Souls! ",bc_all,0xFF0000;
+dispbottom "You have been killed by a "+((getmonsterinfo(killerrid,0)=="Dummy")?"player":"monster")+" and lost all your EXP and Souls.";
+
+if( countitem(47006) ){
+getmapxy( .@Map$,.@X,.@Y,BL_PC );
+makeitem 47006,countitem(47006),.@Map$,.@X,.@Y;
+delitem 47006,countitem(47006);
+}
+
+end;
+
+}

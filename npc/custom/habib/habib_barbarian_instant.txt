@@ -1,0 +1,93 @@
+//===== rAthena Script ======================================= 
+//= Renewal Swordman Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Swordman Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//= 1.2 changed and adapted to Barbarian from T9WRO. [Habib]
+//============================================================ 
+izlude_in,74,172,4	script	Barbarian#swd	119,{
+	mes "[Barbarian Guildsman]";
+	mes "This is the Barbarian Guild.";
+	mes "Why are you here?";
+	next;
+	switch(select("Tell me about being a Barbarian.:I want to be a Barbarian.:Nothing.")) {
+	case 1:
+		mes "[Barbarian Guildsman]";
+		mes "So you wish to know more about the mighty Barbarian? Okay!";
+		next;
+		mes "[Barbarian Guildsman]";
+		mes "The most distinctive feature of the Barbarian is that the Barbarian can show us his/her real abilities in close combat.";
+		mes "There are three reasons!";
+		next;
+		mes "[Barbarian Guildsman]";
+		mes "First, Barbarian has higher HP than other jobs.";
+		mes "Second, except for Bows and Rods, Barbarian can use all other weapons so they can fight at their optimal ability.";
+		mes "And third, most of the skills of the Barbarian give powerful physical attacks.";
+		next;
+		mes "[Barbarian Guildsman]";
+		mes "Though I gave you a simple explanation, I believe you understand the core meaning of what it is to be a Barbarian.";
+		mes "In my opinion, Barbarian is the best job ever!";
+		close;
+	case 2:
+		mes "[Barbarian Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Swordman) {
+				mes "You are already an excellent Barbarian, aren't you?";
+				mes "Just devote yourself to be a great Barbarian.";
+			}else{
+				mes "You already have one of the other jobs, don't you?";
+				mes "You've gone too far with that joke.";
+			}
+			close;
+		}else{
+			//if (!callfunc("F_CanChangeJob")) {
+			if (JobLevel < 5) {
+				mes "I'm sorry to tell you this but to be a Barbarian, you must reach at least ^4A4AFFJob Level 5^000000.";
+				//mes "and ^4A4AFFBasic Skill Level 9^000000.";
+				next;
+				mes "[Barbarian Guildsman]";
+				mes "Want to be a Barbarian without having the minimum requirement?";
+				mes "Do you think being a Barbarian is that easy?";
+				close;
+			}
+			mes "Hmm, your Job Level checks out.";
+			mes "Good. Do you want to be a Barbarian right away?";
+			next;
+			if(select("Yes, I do.:I'll consider it again.") == 2) {
+				mes "[Barbarian Guildsman]";
+				mes "Yeah. Prudent decision is needed for choosing a job.";
+				mes "But I feel sorry... that you consider it again after overcoming all the hardships....";
+				close;
+			}
+			mes "[Barbarian Guildsman]";
+			mes "Congratulations! From now on, you are going to live a Barbarian's life!";
+			mes "Let's do it right now!";
+			next;
+			mes "[Barbarian Guildsman]";
+			mes "Congratulations again for being a Barbarian and I hope that you participate in many activities for the revival of our guild.";
+			callfunc "Job_Change",Job_Swordman;
+			specialeffect2 EF_ANGEL2;
+			specialeffect2 EF_ELECTRIC;			
+			skill "BB_CORE",1,SKILL_PERM;
+			set SkillPoint, SkillPoint + 1;
+			dispbottom "You've earned 01 Skill Point.";
+			getexp 500,0;
+			getitem 1101,1; // Sword
+			close;
+		}
+	case 3:
+		close;
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOB, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}

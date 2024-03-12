@@ -1,0 +1,1548 @@
+//===== rAthena Script =======================================
+//= XJedi Base Warp Script
+//===== By: ==================================================
+//= w0wZukuBg (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 13.2+
+//===== Description: =========================================
+//= Warp Points for XJedi Base
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//============================================================
+// test ======================================================
+//============================================================
+
+/*
+x_base,90,50,8	script	#xjb_door81	20587,{
+OnInit:
+//	npcspeed 500;
+	while(1) {
+//	enablenpc "#xjb_door81";
+	npcwalkto 85,50;
+	sleep 1000;
+//	disablenpc "#xjb_door81";
+//	movenpc "#xjb_door81",1,1;
+	movenpc "#xjb_door81",90,50;
+	sleep 1000;
+	}
+end;	
+}
+
+x_base,95,52,8	script	#xjb_door82	20591,{
+OnInit:
+//	npcspeed 500;
+	while(1) {
+//	enablenpc "#xjb_door82";
+	npcwalkto 95,50;
+	sleep 1000;
+//	disablenpc "#xjb_door82";
+//	movenpc "#xjb_door82",1,1;
+	movenpc "#xjb_door82",95,52;
+	sleep 1000;
+	}
+end;	
+}
+*/
+
+/*
+//============================================================
+// OnPCDieEvent ============================================
+//============================================================
+-	script	xjb_pc_death	-1,{
+OnPCDieEvent:
+        getmapxy .@mapname$,.@mapx,.@mapy,BL_PC,strcharinfo(0);
+                if (.@mapname$ == "x_base") {
+                        sleep2 2000;
+                        warp "x_base",120,120;
+                }
+end;
+}
+*/
+
+//============================================================
+// x_base - XJedi Base Monsters ==========================
+//============================================================
+//room 1
+x_base,342,70,30,30	monster	Tarou	1175,5,18000,15000
+x_base,334,70,30,30	monster	Familiar	1419,5,18000,15000
+x_base,334,70,30,30	monster	Cramp	1570,1,18000,15000
+//room 2
+x_base,138,296,5,15	monster	Hydra	1579,30,18000,15000
+x_base,138,296,5,15	monster	Penomena	1441,5,18000,15000
+x_base,150,296,5,10	monster	Hydra	1579,15,18000,15000
+x_base,150,296,5,10	monster	Penomena	1441,3,18000,15000
+x_base,160,296,5,5	monster	Hydra	1579,7,18000,15000
+x_base,160,296,5,5	monster	Penomena	1441,1,18000,15000
+
+//============================================================
+// CRYSTAL ===================================================
+//============================================================
+-	script	#xjb_crystal_func	-1,{
+OnInit:
+	monster "x_base",95,28,"",20595,1,"#xjb_crystal_func::OnMobDeath";
+	end;
+
+OnMobDeath:
+	movenpc "#xjb_crystal_2",95,28;
+	donpcevent "#xjb_crystal_2::OnBreak";
+	donpcevent "#xjb_crystal::OnBreak";
+	sleep 1000;
+	areawarp "x_base",90,19,100,30,"x_base",308,247;
+	end;
+}
+
+x_base,95,15,0	script	#xjb_crystal	20570,{
+end;
+
+OnBreak:
+	disablenpc "#xjb_crystal";
+end;
+}
+
+x_base,1,1,0	script	#xjb_crystal_2	139,{
+end;
+
+OnBreak:
+//	specialeffect 18;
+//	specialeffect 65;
+	specialeffect 99;
+	disablenpc "#xjb_crystal_2";
+end;
+}
+
+//============================================================
+// Lone Outside Gate (BUTTON) ================================
+//============================================================
+-	script	xjb_outside_b	-1,{
+	OnInit:
+		setcell "x_base",325,328,330,331,cell_walkable,0;
+		set $@xjb_outside_b,0;
+		end;
+		
+	OnTouch:
+		if($@xjb_outside_b == 0) {
+			set $@xjb_outside_b,1;
+			disablenpc "#xjb_outside_b01";
+			disablenpc "#xjb_outside_b02";
+			donpcevent "#xjb_door1::OnOpen";
+			donpcevent "#xjb_door2::OnOpen";
+			donpcevent "#xjb_door3::OnOpen";
+			donpcevent "#xjb_door4::OnOpen";
+			setcell "x_base",325,328,330,331,cell_walkable,1;
+			sleep2 2500;
+			enablenpc "#xjb_outside_b01";
+			enablenpc "#xjb_outside_b02";
+			end;
+		}
+			set $@xjb_outside_b,0;
+			disablenpc "#xjb_outside_b01";
+			disablenpc "#xjb_outside_b02";
+			areawarp "x_base",325,328,330,329,"x_base",328,327;
+			areawarp "x_base",325,330,330,331,"x_base",327,332;
+			sleep 50;
+			donpcevent "#xjb_door1::OnClose";
+			donpcevent "#xjb_door2::OnClose";
+			donpcevent "#xjb_door3::OnClose";
+			donpcevent "#xjb_door4::OnClose";
+			setcell "x_base",325,328,330,331,cell_walkable,0;
+			sleep2 2500;
+			enablenpc "#xjb_outside_b01";
+			enablenpc "#xjb_outside_b02";
+			end;
+}
+
+x_base,321,328,0	duplicate(xjb_outside_b)	#xjb_outside_b01	139,0,1,{
+x_base,321,331,0	duplicate(xjb_outside_b)	#xjb_outside_b02	139,0,1,{
+
+// 1DOOR =================================================
+x_base,320,330,6	script	#xjb_door1	20571,{
+OnInit:
+disablenpc "#xjb_door1";
+end;
+
+OnOpen:
+	disablenpc "#xjb_door1";
+	movenpc "#xjb_door1",1,1;
+	end;
+
+OnClose:
+	movenpc "#xjb_door1",320,330;
+	enablenpc "#xjb_door1";
+	npcwalkto 323,330;
+	end;
+}
+
+// 2DOOR =================================================
+x_base,335,330,2	script	#xjb_door2	20572,{
+OnInit:
+disablenpc "#xjb_door2";
+end;
+
+OnOpen:
+	disablenpc "#xjb_door2";
+	movenpc "#xjb_door2",1,1;
+	end;
+
+OnClose:
+	movenpc "#xjb_door2",335,330;
+	enablenpc "#xjb_door2";
+	npcwalkto 332,330;
+	end;
+}
+
+// 3DOOR =================================================
+x_base,332,330,6	script	#xjb_door3	20573,{
+OnInit:
+end;
+
+OnClose:
+	disablenpc "#xjb_door3";
+	movenpc "#xjb_door3",1,1;
+	end;
+
+OnOpen:
+	movenpc "#xjb_door3",332,330;
+	enablenpc "#xjb_door3";	
+	npcwalkto 335,330;
+	end;
+}
+
+// 4DOOR =================================================
+x_base,323,330,2	script	#xjb_door4	20574,{
+OnInit:
+end;
+
+OnClose:
+	disablenpc "#xjb_door4";
+	movenpc "#xjb_door4",1,1;
+	end;
+
+OnOpen:
+	movenpc "#xjb_door4",323,330;
+	enablenpc "#xjb_door4";
+	npcwalkto 320,330;
+	end;
+}
+
+//============================================================
+// MAIN DOOR =================================================
+//============================================================
+x_base,351,322,0	script	#xjb_main_door	139,{
+OnInit:
+	setcell "x_base",351,319,353,324,cell_walkable,0;
+	setcell "x_base",82,125,84,130,cell_walkable,0;
+	movenpc "#xjb_main_door",351,322;
+	enablenpc "#xjb_main_door";
+	enablenpc "#xjb_door5_1";
+	enablenpc "#xjb_door5_2";
+	monster "x_base",351,322,"",20596,1,"#xjb_main_door::OnMobDeath";
+	end;
+	
+OnMobDeath:
+	specialeffect 170;
+	specialeffect 194;
+	specialeffect 262;
+	specialeffect 79;
+	donpcevent "#xjb_md::OnEvent";
+	setcell "x_base",351,319,353,324,cell_walkable,1;
+	setcell "x_base",82,125,84,130,cell_walkable,1;
+	disablenpc "#xjb_door5_1";
+	disablenpc "#xjb_door5_2";
+	sleep 500;
+	movenpc "xjb_in02",353,322;
+	movenpc "xjb_out02",82,128;
+	enablenpc "xjb_in02";
+	enablenpc "xjb_out02";
+	disablenpc "#xjb_main_door";
+	movenpc "#xjb_main_door",1,1;
+	end;
+}
+
+x_base,84,128,0	script	#xjb_md	139,{
+OnInit:
+	movenpc "#xjb_md",84,128;
+	enablenpc "#xjb_md";
+	end;
+
+OnEvent:
+	specialeffect 170;
+	specialeffect 194;
+	specialeffect 262;
+	specialeffect 79;
+	disablenpc "#xjb_md";
+	movenpc "#xjb_md",1,1;
+	end;
+}
+	
+x_base,351,327,8	script	#xjb_door5_1	20575,{
+end;
+}
+
+x_base,85,133,8	script	#xjb_door5_2	20575,{
+end;
+}
+
+x_base,1,1,0	script	xjb_in02	45,2,3,{
+		OnInit:
+		disablenpc "xjb_in02";
+		end;
+		
+		OnTouch:
+		warp "x_base",86,128;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out02	45,2,3,{
+		OnInit:
+		disablenpc "xjb_out02";
+		end;
+		
+		OnTouch:
+		warp "x_base",348,322;
+		end;
+}
+
+//============================================================
+// MANHOLE ===================================================
+//============================================================
+x_base,220,47,0	script	#xjb_manhole	139,{
+OnInit:
+	movenpc "#xjb_manhole",220,47;
+	enablenpc "#xjb_manhole";
+	enablenpc "#xjb_door6";
+	monster "x_base",220,47,"",20597,1,"#xjb_manhole::OnMobDeath";
+	end;
+
+OnMobDeath:
+	specialeffect 170;
+	specialeffect 194;
+	specialeffect 262;
+	specialeffect 79;
+	disablenpc "#xjb_door6";
+	enablenpc "xjb_man01";
+	disablenpc "#xjb_manhole";
+	movenpc "#xjb_manhole",1,1;
+	end;
+}
+
+x_base,226,46,0	script	#xjb_door6	20576,0,0,{
+OnInit:
+end;
+}
+
+x_base,221,46,0	script	xjb_man01	139,1,1,{
+	OnInit:
+		disablenpc "xjb_man01";
+		end;
+		
+	OnTouch:
+		warp "x_base",314,46;
+	close;
+}
+
+//x_base,352,322,0	warp	xjb_in02	1,1,x_base,86,128
+//x_base,82,128,0	warp	xjb_out02	1,1,x_base,348,322
+
+//============================================================
+// BUTTON (Press) ============================================
+//============================================================
+
+x_base,101,96,0	script	xjb_p_button	139,1,0,{
+	OnInit:
+		setcell "x_base",92,84,98,107,cell_walkable,1;
+		end;
+
+	OnTouch:
+		disablenpc "xjb_p_button";
+		donpcevent "#xjb_press1::OnDown";
+		donpcevent "#xjb_press2::OnDown";
+		enablenpc "#xjb_press_k1";
+		enablenpc "#xjb_press_k2";
+		donpcevent "#xjb_press_k1::OnDown";
+		donpcevent "#xjb_press_k2::OnDown";
+		movenpc "#xjb_press_k1",95,89;
+		movenpc "#xjb_press_k2",95,102;
+//		sleep2 500;
+		setcell "x_base",92,84,98,107,cell_walkable,0;
+		sleep2 1000;		
+		donpcevent "#xjb_press1::OnUp";
+		donpcevent "#xjb_press2::OnUp";
+		disablenpc "#xjb_press_k1";
+		disablenpc "#xjb_press_k2";
+		movenpc "#xjb_press_k1",1,1;
+		movenpc "#xjb_press_k2",1,1;
+		sleep2 500;		
+		setcell "x_base",92,84,98,107,cell_walkable,1;
+		sleep2 1250;
+		enablenpc "xjb_p_button";
+		end;
+}
+
+/*
+x_base,101,96,0	script	xjb_p_button	139,1,0,{
+	OnInit:
+		setcell "x_base",92,84,98,107,cell_walkable,1;
+		end;
+
+	OnTouch:
+		while(1) {
+		disablenpc "xjb_p_button";
+		donpcevent "#xjb_press1::OnDown";
+		donpcevent "#xjb_press2::OnDown";
+		donpcevent "#xjb_press3::OnDown";
+		donpcevent "#xjb_press4::OnDown";
+		enablenpc "#xjb_press_k1";
+		enablenpc "#xjb_press_k2";
+		donpcevent "#xjb_press_k1::OnDown";
+		donpcevent "#xjb_press_k2::OnDown";
+		movenpc "#xjb_press_k1",95,89;
+		movenpc "#xjb_press_k2",95,102;
+//		sleep2 250;
+		setcell "x_base",92,84,98,107,cell_walkable,0;
+		sleep2 1000;		
+		donpcevent "#xjb_press1::OnUp";
+		donpcevent "#xjb_press2::OnUp";
+		donpcevent "#xjb_press3::OnUp";
+		donpcevent "#xjb_press4::OnUp";
+		disablenpc "#xjb_press_k1";
+		disablenpc "#xjb_press_k2";
+		movenpc "#xjb_press_k1",1,1;
+		movenpc "#xjb_press_k2",1,1;
+		sleep2 500;		
+		setcell "x_base",92,84,98,107,cell_walkable,1;
+		sleep2 1250;
+		enablenpc "xjb_p_button";
+		}
+		end;
+}
+*/
+
+x_base,1,1,4	script	#xjb_press_k1	139,3,5,{
+OnTouch:
+	areakill "x_base",92,84,98,107;
+	end;
+	
+OnDown:
+	areakill "x_base",92,84,98,107;
+	end;
+}
+
+x_base,1,1,4	script	#xjb_press_k2	139,3,5,{
+OnTouch:
+	areakill "x_base",92,84,98,107;
+	end;
+	
+OnDown:
+	areakill "x_base",92,84,98,107;
+	end;
+}
+
+x_base,1,1,4	script	#xjb_press1	20581,{
+OnInit:
+	npcspeed 500;
+//	disablenpc "#xjb_press1";
+	end;
+	
+OnDown:
+	movenpc "#xjb_press1",100,96;
+	enablenpc "#xjb_press1";
+	npcwalkto 100,95;
+	end;
+	
+OnUp:
+	disablenpc "#xjb_press1";
+	movenpc "#xjb_press2",1,1;
+	end;
+}
+
+x_base,1,1,8	script	#xjb_press2	20582,{
+OnInit:
+	npcspeed 500;
+//	disablenpc "#xjb_press2";
+	end;
+	
+OnDown:
+	disablenpc "#xjb_press2";
+	movenpc "#xjb_press2",1,1;
+	end;
+	
+OnUp:
+	movenpc "#xjb_press2",100,95;
+	enablenpc "#xjb_press2";
+	sleep 50;
+	npcwalkto 100,96;
+	sleep 600;
+	disablenpc "#xjb_press2";
+	end;
+}
+
+x_base,1,1,4	script	#xjb_press3	20581,{
+OnInit:
+	npcspeed 500;
+//	disablenpc "#xjb_press3";
+	end;
+	
+OnDown:
+	movenpc "#xjb_press3",368,290;
+	enablenpc "#xjb_press3";
+	npcwalkto 368,289;
+	end;
+	
+OnUp:
+	disablenpc "#xjb_press3";
+	movenpc "#xjb_press4",1,1;
+	end;
+}
+
+x_base,1,1,8	script	#xjb_press4	20582,{
+OnInit:
+	npcspeed 500;
+//	disablenpc "#xjb_press4";
+	end;
+	
+OnDown:
+	disablenpc "#xjb_press4";
+	movenpc "#xjb_press4",1,1;
+	end;
+	
+OnUp:
+	movenpc "#xjb_press4",368,289;
+	enablenpc "#xjb_press4";
+	sleep 50;
+	npcwalkto 368,290;
+	sleep 600;
+	disablenpc "#xjb_press4";
+	end;
+}
+
+//============================================================
+// CELLAR LADDER =============================================
+//============================================================
+x_base,151,373,0	script	xjb_lad01	139,1,1,{
+	OnTouch:
+		mes "Climb up the stairs?";
+		next;
+		switch(select("Yes","No")) {
+			case 1:
+				warp "x_base",23,361;
+				close;
+			case 2:
+				close;
+			}
+	close;
+}
+
+x_base,20,362,0	script	xjb_lad02	139,1,1,{
+	OnTouch:
+		mes "Climb down the stairs?";
+		next;
+		switch(select("Yes","No")) {
+			case 1:
+				warp "x_base",149,373;
+				close;
+			case 2:
+				close;
+			}
+	close;
+}
+
+//============================================================
+// WINDOWS ===================================================
+//============================================================
+// Window1 ===================================================
+x_base,81,102,0	script	xjb_win01	139,2,1,{
+	OnTouch:
+		warp "x_base",351,296;
+	close;
+}
+
+x_base,352,296,0	script	xjb_wout01	139,0,1,{
+	OnTouch:
+		warp "x_base",84,102;
+	close;
+}
+
+// Window2 ===================================================
+x_base,81,96,0	script	xjb_win02	139,2,1,{
+	OnTouch:
+		warp "x_base",351,290;
+	close;
+}
+
+x_base,352,290,0	script	xjb_wout02	139,0,1,{
+	OnTouch:
+		warp "x_base",84,96;
+	close;
+}
+
+// Window3 ===================================================
+x_base,81,89,0	script	xjb_win03	139,2,1,{
+	OnTouch:
+		warp "x_base",351,283;
+	close;
+}
+
+x_base,352,283,0	script	xjb_wout03	139,0,1,{
+	OnTouch:
+		warp "x_base",84,89;
+	close;
+}
+
+//============================================================
+// MAIN ENTRANCE (Button) ====================================
+//============================================================
+x_base,76,53,0	script	xjb_button01	139,1,0,{
+	OnInit:
+		setcell "x_base",342,241,345,246,cell_walkable,0;
+		setcell "x_base",74,48,75,51,cell_walkable,0;
+		end;
+
+	OnTouch:
+		disablenpc "xjb_button01";
+		donpcevent "#xjb_door7_1::OnOpen";
+		donpcevent "#xjb_door8_1::OnOpen";
+		donpcevent "#xjb_door9_1::OnOpen";
+		donpcevent "#xjb_door10_1::OnOpen";
+		donpcevent "#xjb_door7_2::OnOpen";
+		donpcevent "#xjb_door8_2::OnOpen";
+		donpcevent "#xjb_door9_2::OnOpen";
+		donpcevent "#xjb_door10_2::OnOpen";
+		setcell "x_base",342,241,345,246,cell_walkable,1;
+		setcell "x_base",74,48,75,51,cell_walkable,1;
+		sleep2 500;
+		movenpc "xjb_in01",344,244;
+		movenpc "xjb_out01",74,50;
+		enablenpc "xjb_in01";
+		enablenpc "xjb_out01";
+		sleep2 5000;
+		movenpc "xjb_in01",1,1;
+		movenpc "xjb_out01",1,1;
+		disablenpc "xjb_in01";
+		disablenpc "xjb_out01";
+		sleep2 500;
+		donpcevent "#xjb_door7_1::OnClose";
+		donpcevent "#xjb_door8_1::OnClose";
+		donpcevent "#xjb_door9_1::OnClose";
+		donpcevent "#xjb_door10_1::OnClose";
+		donpcevent "#xjb_door7_2::OnClose";
+		donpcevent "#xjb_door8_2::OnClose";
+		donpcevent "#xjb_door9_2::OnClose";
+		donpcevent "#xjb_door10_2::OnClose";
+		setcell "x_base",342,241,345,246,cell_walkable,0;
+		setcell "x_base",74,48,75,51,cell_walkable,0;
+		sleep2 1500;
+		enablenpc "xjb_button01";
+		end;
+}
+
+x_base,1,1,0	script	xjb_in01	45,2,3,{
+		OnInit:
+		disablenpc "xjb_in01";
+		end;
+		
+		OnTouch:
+		warp "x_base",77,50;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out01	45,1,2,{
+		OnInit:
+		disablenpc "xjb_out01";
+		end;
+		
+		OnTouch:
+		warp "x_base",341,244;
+		end;
+}
+
+// Inside Doors ==============================================
+x_base,64,51,4	script	#xjb_door7_1	20577,{
+OnInit:
+	disablenpc "#xjb_door7_1";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door7_1",64,51;
+	enablenpc "#xjb_door7_1";
+	npcwalkto 64,48;
+	end;
+	
+OnClose:
+	disablenpc "#xjb_door7_1";
+	end;	
+}
+
+x_base,64,49,8	script	#xjb_door8_1	20578,{
+OnInit:
+//	disablenpc "#xjb_door8_1";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door8_1",64,49;
+	enablenpc "#xjb_door8_1";
+	sleep 50;
+	npcwalkto 64,52;
+	end;
+	
+OnClose:
+	disablenpc "#xjb_door8_1";
+	end;	
+}
+
+x_base,64,49,4	script	#xjb_door9_1	20579,{
+OnInit:
+	disablenpc "#xjb_door9_1";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door9_1",64,52;
+	enablenpc "#xjb_door9_1";
+	npcwalkto 64,49;
+	sleep 625;
+	disablenpc "#xjb_door9_1";
+	enablenpc "#xjb_door8_1";
+	movenpc "#xjb_door8_1",64,49;	
+	end;
+	
+OnOpen:
+	disablenpc "#xjb_door9_1";
+	end;
+}
+
+x_base,64,51,8	script	#xjb_door10_1	20580,{
+OnInit:
+//	disablenpc "#xjb_door10_1";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door10_1",64,48;
+	enablenpc "#xjb_door10_1";
+	sleep 100;
+	npcwalkto 64,51;
+	end;
+	
+OnOpen:
+	disablenpc "#xjb_door10_1";
+	end;	
+}
+
+// Outside Doors =============================================
+x_base,334,243,8	script	#xjb_door7_2	20578,{
+OnInit:
+//	disablenpc "#xjb_door7_2";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door7_2",334,243;
+	enablenpc "#xjb_door7_2";
+	sleep 50;
+	npcwalkto 334,246;
+	end;
+	
+OnClose:
+	disablenpc "#xjb_door7_2";
+	end;	
+}
+
+x_base,334,245,4	script	#xjb_door8_2	20577,{
+OnInit:
+	disablenpc "#xjb_door8_2";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door8_2",334,245;
+	enablenpc "#xjb_door8_2";
+	npcwalkto 334,242;
+	end;
+	
+OnClose:
+	disablenpc "#xjb_door8_2";
+	end;	
+}
+
+x_base,334,243,4	script	#xjb_door9_2	20579,{
+OnInit:
+	disablenpc "#xjb_door9_2";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door9_2",334,246;
+	enablenpc "#xjb_door9_2";
+	npcwalkto 334,243;
+	sleep 625;
+	disablenpc "#xjb_door9_2";
+	enablenpc "#xjb_door7_2";
+	movenpc "#xjb_door7_2",334,243;	
+	end;
+	
+OnOpen:
+	disablenpc "#xjb_door9_2";
+	end;
+}
+
+x_base,334,245,8	script	#xjb_door10_2	20580,{
+OnInit:
+//	disablenpc "#xjb_door10_2";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door10_2",334,242;
+	enablenpc "#xjb_door10_2";
+	sleep 100;
+	npcwalkto 334,245;
+	end;
+	
+OnOpen:
+	disablenpc "#xjb_door10_2";
+	end;	
+}
+
+//============================================================
+// NUL FLOOR (Button) ========================================
+//============================================================
+x_base,44,357,0	script	xjb_button02	139,0,1,{
+	OnInit:
+		set $@button02,0;
+		setcell "x_base",39,354,41,356,cell_walkable,0;
+		setcell "x_base",52,233,55,235,cell_walkable,0;
+		end;
+
+	OnTouch:
+		if($@button02 == 0) {
+			set $@button02,1;
+			disablenpc "xjb_button02";
+			donpcevent "#xjb_door13_1::OnOpen";
+			donpcevent "#xjb_door13_2::OnOpen";
+			donpcevent "#xjb_door14_1::OnOpen";
+			donpcevent "#xjb_door14_2::OnOpen";
+			sleep2 500;
+			setcell "x_base",39,354,41,356,cell_walkable,1;
+			setcell "x_base",52,233,55,235,cell_walkable,1;
+			movenpc "xjb_in07",54,234;
+			movenpc "xjb_out07",39,355;
+			enablenpc "xjb_in07";
+			enablenpc "xjb_out07";
+			sleep2 1500;
+			enablenpc "xjb_button02";
+			end;
+		}
+			set $@button02,0;
+			disablenpc "xjb_button02";
+			setcell "x_base",39,354,41,356,cell_walkable,0;
+			setcell "x_base",52,233,55,235,cell_walkable,0;
+			movenpc "xjb_in07",1,1;
+			movenpc "xjb_out07",1,1;
+			disablenpc "xjb_in07";
+			disablenpc "xjb_out07";
+			sleep2 500;
+			donpcevent "#xjb_door13_1::OnClose";
+			donpcevent "#xjb_door13_2::OnClose";
+			donpcevent "#xjb_door14_1::OnClose";
+			donpcevent "#xjb_door14_2::OnClose";
+			sleep2 1500;
+			enablenpc "xjb_button02";
+			end;
+}
+
+x_base,1,1,0	script	xjb_in07	45,1,2,{
+		OnInit:
+		disablenpc "xjb_in07";
+		end;
+		
+		OnTouch:
+		warp "x_base",39,358;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out07	45,1,2,{
+		OnInit:
+		disablenpc "xjb_out07";
+		end;
+		
+		OnTouch:
+		warp "x_base",54,231;
+		end;
+}
+
+x_base,47,356,2	script	#xjb_door13_1	20583,{
+OnInit:
+	disablenpc "#xjb_door13_1";
+	end;
+
+OnOpen:
+	enablenpc "#xjb_door13_1";
+	movenpc "#xjb_door13_1",47,356;
+	sleep 50;
+	npcwalkto 43,356;
+	end;
+	
+OnClose:
+	movenpc "#xjb_door13_1",1,1;
+	disablenpc "#xjb_door13_1";
+	end;
+}
+
+x_base,47,356,6	script	#xjb_door14_1	20584,{
+OnInit:
+//	disablenpc "#xjb_door14_1";
+	end;
+
+OnClose:
+	movenpc "#xjb_door14_1",43,356;
+	enablenpc "#xjb_door14_1";
+	npcwalkto 47,356;
+	end;
+
+OnOpen:
+	sleep 50;
+	movenpc "#xjb_door14_1",1,1;
+	disablenpc "#xjb_door14_1";
+	end;
+}
+
+x_base,45,238,2	script	#xjb_door13_2	20587,{
+OnInit:
+	disablenpc "#xjb_door13_2";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door13_2",45,238;
+	enablenpc "#xjb_door13_2";
+	npcwalkto 41,238;
+	end;
+	
+OnClose:
+	movenpc "#xjb_door13_2",1,1;
+	disablenpc "#xjb_door13_2";
+	end;
+}
+
+x_base,61,232,6	script	#xjb_door14_2	20584,{
+OnInit:
+//	disablenpc "#xjb_door14_2";
+	end;
+
+OnClose:
+	movenpc "#xjb_door14_2",57,232;
+	enablenpc "#xjb_door14_2";
+	npcwalkto 61,232;
+	end;
+
+OnOpen:
+	sleep 50;
+	movenpc "#xjb_door14_2",1,1;
+	disablenpc "#xjb_door14_2";
+	end;
+}
+
+//============================================================
+// 1st FLOOR (Button) ========================================
+//============================================================
+x_base,39,315,0	script	xjb_button03	139,0,1,{
+	OnInit:
+		set $@button03,0;
+		setcell "x_base",42,304,45,306,cell_walkable,0;
+		setcell "x_base",107,69,110,69,cell_walkable,1;
+		end;
+
+	OnTouch:
+		if($@button03 == 0) {
+			set $@button03,1;
+			disablenpc "xjb_button03";
+			donpcevent "#xjb_door15_1::OnOpen";
+			donpcevent "#xjb_door15_2::OnOpen";
+			donpcevent "#xjb_door16_1::OnOpen";
+			donpcevent "#xjb_door16_2::OnOpen";
+			sleep2 500;
+			setcell "x_base",42,304,45,306,cell_walkable,1;
+			setcell "x_base",107,69,110,69,cell_walkable,1;
+			movenpc "xjb_in04",43,304;
+			movenpc "xjb_out04",109,69;
+			movenpc "xjb_out04_1",109,70;
+			enablenpc "xjb_in04";
+			enablenpc "xjb_out04";
+			enablenpc "xjb_out04_1";
+			sleep2 1500;
+			enablenpc "xjb_button03";
+			end;
+		}
+			set $@button03,0;
+			disablenpc "xjb_button03";
+			setcell "x_base",42,304,45,306,cell_walkable,0;
+			setcell "x_base",107,69,110,69,cell_walkable,0;
+			movenpc "xjb_in04",1,1;
+			movenpc "xjb_out04",1,1;
+			movenpc "xjb_out04_1",1,1;
+			disablenpc "xjb_in04";
+			disablenpc "xjb_out04";
+			disablenpc "xjb_out04_1";
+			sleep2 500;
+			donpcevent "#xjb_door15_1::OnClose";
+			donpcevent "#xjb_door15_2::OnClose";
+			donpcevent "#xjb_door16_1::OnClose";
+			donpcevent "#xjb_door16_2::OnClose";
+			sleep2 1500;
+			enablenpc "xjb_button03";
+			end;
+}
+
+x_base,1,1,0	script	xjb_in04	45,2,2,{
+		OnInit:
+		disablenpc "xjb_in04";
+		end;
+		
+		OnTouch:
+		warp "x_base",109,67;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out04	139,2,1,{
+		OnInit:
+		disablenpc "xjb_out04_1";
+		end;
+		
+		OnTouch:
+		warp "x_base",43,307;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out04_1	45,{
+end;
+}
+
+//x_base,43,305,0	warp	xjb_in04	1,1,x_base,109,67
+//x_base,109,70,0	warp	xjb_out04	1,1,x_base,43,307
+
+x_base,52,307,6	script	#xjb_door15_1	20586,{
+OnInit:
+//	disablenpc "#xjb_door15_1";
+	end;
+
+OnOpen:
+	enablenpc "#xjb_door15_1";
+	movenpc "#xjb_door15_1",52,307;
+	sleep 50;
+	npcwalkto 56,307;
+	end;
+	
+OnClose:
+	movenpc "#xjb_door15_1",1,1;
+	disablenpc "#xjb_door15_1";
+	end;
+}
+
+x_base,56,307,2	script	#xjb_door15_2	20585,{
+OnInit:
+	disablenpc "#xjb_door15_2";
+	end;
+
+OnClose:
+	movenpc "#xjb_door15_2",56,307;
+	enablenpc "#xjb_door15_2";
+	npcwalkto 52,307;
+	end;
+
+OnOpen:
+//	sleep 50;
+	movenpc "#xjb_door15_2",1,1;
+	disablenpc "#xjb_door15_2";
+	end;
+}
+
+x_base,117,69,6	script	#xjb_door16_1	20586,{
+OnInit:
+//	disablenpc "#xjb_door16_1";
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door16_1",117,69;
+	enablenpc "#xjb_door16_1";
+	sleep 50;
+	npcwalkto 121,69;
+	end;
+
+OnClose:
+	movenpc "#xjb_door16_1",1,1;
+	disablenpc "#xjb_door16_1";
+	end;
+}
+
+x_base,121,69,2	script	#xjb_door16_2	20585,{
+OnInit:
+	disablenpc "#xjb_door16_2";
+	end;
+
+OnClose:
+	movenpc "#xjb_door16_2",121,69;
+	enablenpc "#xjb_door16_2";
+	npcwalkto 117,69;
+	end;
+
+OnOpen:
+	sleep 50;
+	movenpc "#xjb_door16_2",1,1;
+	disablenpc "#xjb_door16_2";
+	end;
+}
+
+//============================================================
+// CELLAR ENTRANCE (Button) ==================================
+//============================================================
+x_base,307,63,0	script	xjb_button04	139,1,0,{
+	OnInit:
+		set $@button04,0;
+		setcell "x_base",308,57,311,59,cell_walkable,0;
+		setcell "x_base",214,60,217,62,cell_walkable,0;
+		end;
+
+	OnTouch:
+		if($@button04 == 0) {
+			set $@button04,1;
+			disablenpc "xjb_button04";
+			donpcevent "#xjb_door19_1::OnOpen";
+			donpcevent "#xjb_door19_2::OnOpen";
+			donpcevent "#xjb_door20_1::OnOpen";
+			donpcevent "#xjb_door20_2::OnOpen";
+			sleep2 500;
+			setcell "x_base",308,57,311,59,cell_walkable,1;
+			setcell "x_base",214,60,217,62,cell_walkable,1;
+			movenpc "xjb_in08",216,62;
+			movenpc "xjb_out08",309,58;
+			enablenpc "xjb_in08";
+			enablenpc "xjb_out08";
+			sleep2 1500;
+			enablenpc "xjb_button04";
+			end;
+		}
+			set $@button04,0;
+			disablenpc "xjb_button04";
+			setcell "x_base",308,57,311,59,cell_walkable,0;
+			setcell "x_base",214,60,217,62,cell_walkable,0;
+			movenpc "xjb_in08",1,1;
+			movenpc "xjb_out08",1,1;
+			disablenpc "xjb_in08";
+			disablenpc "xjb_out08";
+			donpcevent "#xjb_door19_1::OnClose";
+			donpcevent "#xjb_door19_2::OnClose";
+			donpcevent "#xjb_door20_1::OnClose";
+			donpcevent "#xjb_door20_2::OnClose";
+			sleep2 2000;
+			enablenpc "xjb_button04";
+			end;
+}
+
+x_base,1,1,0	script	xjb_in08	45,2,1,{
+		OnInit:
+		disablenpc "xjb_in08";
+		end;
+		
+		OnTouch:
+		warp "x_base",309,61;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out08	45,2,1,{
+		OnInit:
+		disablenpc "xjb_out08";
+		end;
+		
+		OnTouch:
+		warp "x_base",216,59;
+		end;
+}
+
+//x_base,216,62,0	warp	xjb_in08	1,1,x_base,309,61
+//x_base,309,58,0	warp	xjb_out08	1,1,x_base,216,59
+
+x_base,304,61,2	script	#xjb_door19_1	20589,{
+OnInit:
+	disablenpc "#xjb_door19_1";
+	end;
+
+OnClose:
+	enablenpc "#xjb_door19_1";
+	movenpc "#xjb_door19_1",304,61;
+	sleep 50;
+	npcwalkto 298,61;
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door19_1",2,2;
+	disablenpc "#xjb_door19_1";
+	end;
+}
+
+x_base,299,61,6	script	#xjb_door20_1	20590,{
+OnInit:
+//	disablenpc "#xjb_door20_1";
+	end;
+
+OnOpen:
+	movenpc "#xjb_door20_1",299,61;
+	enablenpc "#xjb_door20_1";
+	npcwalkto 303,61;
+	end;
+
+OnClose:
+	movenpc "#xjb_door20_1",1,1;
+	disablenpc "#xjb_door20_1";
+	end;
+}
+
+x_base,209,61,2	script	#xjb_door19_2	20589,{
+OnInit:
+	disablenpc "#xjb_door19_2";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door19_2",209,61;
+	enablenpc "#xjb_door19_2";
+	sleep 50;
+	npcwalkto 204,61;
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door19_2",1,1;
+	disablenpc "#xjb_door19_2";
+	end;
+}
+
+x_base,205,61,6	script	#xjb_door20_2	20590,{
+OnInit:
+//	disablenpc "#xjb_door20_2";
+	end;
+
+OnOpen:
+	movenpc "#xjb_door20_2",205,61;
+	enablenpc "#xjb_door20_2";
+	npcwalkto 209,61;
+	end;
+
+OnClose:
+	sleep 50;
+	movenpc "#xjb_door20_2",1,1;
+	disablenpc "#xjb_door20_2";
+	end;
+}
+
+//============================================================
+// 2nd FLOOR (Button) ========================================
+//============================================================
+x_base,67,39,0	script	xjb_button05	139,1,0,{
+	OnInit:
+		set $@button05,0;
+		setcell "x_base",65,34,67,37,cell_walkable,0;
+		setcell "x_base",338,228,340,231,cell_walkable,0;
+		end;
+
+	OnTouch:
+		if($@button05 == 0) {
+			set $@button05,1;
+			disablenpc "xjb_button05";
+			donpcevent "#xjb_door17_1::OnOpen";
+			donpcevent "#xjb_door17_2::OnOpen";
+			donpcevent "#xjb_door18_1::OnOpen";
+			donpcevent "#xjb_door18_2::OnOpen";
+			sleep2 500;
+			setcell "x_base",65,34,67,37,cell_walkable,1;
+			setcell "x_base",338,228,340,231,cell_walkable,1;
+			movenpc "xjb_in06",339,229;
+			movenpc "xjb_out06",65,36;
+			enablenpc "xjb_in06";
+			enablenpc "xjb_out06";
+			sleep2 1500;
+			enablenpc "xjb_button05";
+			end;
+		}
+			set $@button05,0;
+			disablenpc "xjb_button05";
+			setcell "x_base",65,34,67,37,cell_walkable,0;
+			setcell "x_base",338,228,340,231,cell_walkable,0;
+			movenpc "xjb_in06",1,1;
+			movenpc "xjb_out06",1,1;
+			disablenpc "xjb_in06";
+			disablenpc "xjb_out06";
+			sleep2 500;
+			donpcevent "#xjb_door17_1::OnClose";
+			donpcevent "#xjb_door17_2::OnClose";
+			donpcevent "#xjb_door18_1::OnClose";
+			donpcevent "#xjb_door18_2::OnClose";
+			sleep2 1500;
+			enablenpc "xjb_button05";
+			end;
+}
+
+//x_base,338,229,0	warp	xjb_in06	1,1,x_base,69,36
+//x_base,66,36,0	warp	xjb_out06	1,1,x_base,335,229
+
+x_base,1,1,0	script	xjb_in06	45,1,2,{
+		OnInit:
+		disablenpc "xjb_in06";
+		end;
+		
+		OnTouch:
+		warp "x_base",69,36;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out06	45,1,2,{
+		OnInit:
+		disablenpc "xjb_out06";
+		end;
+		
+		OnTouch:
+		warp "x_base",336,229;
+		end;
+}
+
+x_base,62,31,4	script	#xjb_door17_1	20587,{
+OnInit:
+	disablenpc "#xjb_door17_1";
+	end;
+
+OnClose:
+	enablenpc "#xjb_door17_1";
+	movenpc "#xjb_door17_1",62,31;
+	sleep 50;
+	npcwalkto 62,27;
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door17_1",1,1;
+	disablenpc "#xjb_door17_1";
+	end;
+}
+
+x_base,62,27,8	script	#xjb_door18_1	20588,{
+OnInit:
+//	disablenpc "#xjb_door18_1";
+	end;
+
+OnOpen:
+	movenpc "#xjb_door18_1",62,27;
+	enablenpc "#xjb_door18_1";
+	sleep 50;
+	npcwalkto 62,31;
+	end;
+
+OnClose:
+	sleep 50;
+	movenpc "#xjb_door18_1",1,1;
+	disablenpc "#xjb_door18_1";
+	end;
+}
+
+x_base,332,225,4	script	#xjb_door17_2	20587,{
+OnInit:
+	disablenpc "#xjb_door17_2";
+	end;
+	
+OnClose:
+	movenpc "#xjb_door17_2",332,225;
+	enablenpc "#xjb_door17_2";
+	sleep 50;
+	npcwalkto 332,221;
+	end;
+	
+OnOpen:
+	movenpc "#xjb_door17_2",1,1;
+	disablenpc "#xjb_door17_2";
+	end;
+}
+
+x_base,332,221,8	script	#xjb_door18_2	20588,{
+OnInit:
+//	disablenpc "#xjb_door18_2";
+	end;
+
+OnOpen:
+	movenpc "#xjb_door18_2",332,221;
+	enablenpc "#xjb_door18_2";
+	sleep 50;
+	npcwalkto 332,225;
+	end;
+
+OnClose:
+	sleep 50;
+	movenpc "#xjb_door18_2",1,1;
+	disablenpc "#xjb_door18_2";
+	end;
+}
+
+//============================================================
+// CELLAR EXIT (Button) ======================================
+//============================================================
+x_base,135,268,0	script	xjb_c2_button	139,1,0,{
+	OnInit:
+		set $@button06,0;
+		end;
+
+	OnTouch:
+		if($@button06 == 0) {
+		set $@button06,1;
+		disablenpc "xjb_c2_button";
+		donpcevent "#xjb_door21_1::OnOpen";
+		donpcevent "#xjb_door22_1::OnOpen";
+		donpcevent "#xjb_door23_1::OnOpen";
+		donpcevent "#xjb_door24_1::OnOpen";
+		movenpc "xjb_in11",83,38;
+		movenpc "xjb_out11",146,268;
+		enablenpc "xjb_in11";
+		enablenpc "xjb_out11";
+		sleep2 2000;
+		enablenpc "xjb_c2_button";
+		end;
+		}
+		set $@button06,0;
+		disablenpc "xjb_c2_button";
+		areawarp "x_base",83,37,104,38,"x_base",143,268;
+		areawarp "x_base",105,37,107,38,"x_base",106,40;
+		donpcevent "#xjb_door21_1::OnClose";
+		donpcevent "#xjb_door22_1::OnClose";
+		donpcevent "#xjb_door23_1::OnClose";
+		donpcevent "#xjb_door24_1::OnClose";
+		movenpc "xjb_in11",1,1;
+		movenpc "xjb_out11",1,1;
+		disablenpc "xjb_in11";
+		disablenpc "xjb_out11";
+		sleep2 2000;
+		enablenpc "xjb_c2_button";
+		end;
+}
+
+x_base,1,1,0	script	xjb_in11	45,1,2,{
+		OnInit:
+		disablenpc "xjb_in11";
+		end;
+		
+		OnTouch:
+		warp "x_base",143,268;
+		end;
+}
+
+x_base,1,1,0	script	xjb_out11	45,2,2,{
+		OnInit:
+		disablenpc "xjb_out11";
+		end;
+		
+		OnTouch:
+		warp "x_base",85,38;
+		end;
+}
+
+x_base,156,265,4	script	#xjb_door21_1	20591,{
+OnInit:
+//	disablenpc "#xjb_door21_1";
+	end;
+
+OnOpen:
+	enablenpc "#xjb_door21_1";
+	movenpc "#xjb_door21_1",156,265;
+	sleep 50;
+	npcwalkto 156,261;
+	sleep 1000;
+	disablenpc "#xjb_door21_1";
+	end;
+	
+OnClose:
+//	disablenpc "#xjb_door21_1";
+	movenpc "#xjb_door21_1",1,1;	
+	end;
+}
+
+x_base,156,265,8	script	#xjb_door22_1	20592,{
+OnInit:
+//	disablenpc "#xjb_door22_1";
+//	movenpc "#xjb_door22_1",1,1;	
+	end;
+	
+OnOpen:
+	sleep 100;
+	disablenpc "#xjb_door22_1";
+	movenpc "#xjb_door22_1",1,1;	
+	end;
+	
+OnClose:
+	enablenpc "#xjb_door22_1";
+	movenpc "#xjb_door22_1",156,261;
+	sleep 50;
+	npcwalkto 156,265;	
+	end;
+}
+
+x_base,372,224,4	script	#xjb_door22_2	20593,{
+OnInit:
+//	disablenpc "#xjb_door22_2";
+	end;
+}
+
+x_base,102,30,4	script	#xjb_door23_1	20593,{
+OnInit:
+//	disablenpc "#xjb_door23_1";
+	end;
+
+OnOpen:
+	enablenpc "#xjb_door23_1";
+	movenpc "#xjb_door23_1",102,30;
+	sleep 50;
+	npcwalkto 102,26;
+	sleep 850;
+	disablenpc "#xjb_door23_1";
+	end;
+	
+OnClose:
+//	disablenpc "#xjb_door23_1";
+	movenpc "#xjb_door23_1",1,1;	
+	end;
+}
+
+x_base,88,30,8	script	#xjb_door24_1	20594,{
+OnInit:
+//	disablenpc "#xjb_door24_1";
+//	movenpc "#xjb_door24_1",1,1;	
+	end;
+	
+OnOpen:
+	sleep 100;
+	disablenpc "#xjb_door24_1";
+	movenpc "#xjb_door24_1",1,1;	
+	end;
+	
+OnClose:
+	enablenpc "#xjb_door24_1";
+	movenpc "#xjb_door24_1",88,26;
+	sleep 50;
+	npcwalkto 88,30;	
+	end;
+}
+
+//============================================================
+// OTHER WARPS ===============================================
+//============================================================
+//x_base,285,242,0	warp	xjb_in03	1,1,x_base,221,18
+//x_base,223,18,0	warp	xjb_out03	1,1,x_base,288,242
+
+x_base,285,242,0	script	xjb_in03	139,2,2,{
+		OnTouch:
+		warp "x_base",221,18;
+		end;
+}
+
+x_base,224,18,0	script	xjb_out03	139,2,2,{
+		OnTouch:
+		warp "x_base",288,242;
+		end;
+}
+
+x_base,36,355,0	warp	xjb_in05	1,1,x_base,107,127
+x_base,102,127,0	warp	xjb_out05	1,1,x_base,33,355
+x_base,376,99,0	warp	xjb_in09	2,2,x_base,132,369
+x_base,129,369,0	warp	xjb_out09	2,2,x_base,373,99
+x_base,358,286,0	warp	xjb_in10_1	1,1,x_base,37,210
+x_base,34,210,0	warp	xjb_out10_1	1,3,x_base,356,286
+x_base,358,293,0	warp	xjb_in10_2	1,1,x_base,37,217
+x_base,34,217,0	warp	xjb_out10_2	1,3,x_base,356,293

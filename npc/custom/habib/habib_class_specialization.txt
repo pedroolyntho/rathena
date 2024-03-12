@@ -1,0 +1,184 @@
+//===== eAthena Script =======================================
+//= Class Specialization
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.2
+//===== Description: =========================================
+//= A class expansion system allowing characters to
+//= "specialize" in a particular aspect of their job.
+//============================================================
+
+valkyrie,53,53,4	script	Class Specialization	440,{
+function Option;
+
+// --------------------- Config ---------------------
+//  Max: Maximum base level, maximum job level,
+//		and maximum job level for Super Novices.
+// SReq: Items required to specialize.
+//		Format is "ID1,Count1,ID2,Count2,..."
+//		If no requirements, use a single 0.
+// DReq: Zeny, in MILLIONS, to despecialize.
+//		If no requirement, use 0.
+
+	setarray .Max[0],99,70,99;
+	setarray .SReq[0],0;
+	set .DReq,20;
+	set .n$,"[Class Specialization]";
+
+// --------------------------------------------------
+
+	mes .n$;
+	if (BaseLevel < .Max[0]) {
+		mes "You must be level " + .Max[0] + " to use this feature."; close; }
+	if (Class != 23 && (Class < 4008 || Class > 4022)) {
+		mes "This feature is not available for your class."; close; }
+	if ((JobLevel < .Max[1]) || (Class == 23 && JobLevel < .Max[2])) {
+		mes "You must master your class before using this feature."; close; }
+
+	mes "So you've mastered your class~"; sleep2 500;
+	mes "The process of ^0055ffspecialization^000000 can greatly enhance your attributes."; mes " "; sleep2 750;
+	mes "^ff0000You may only choose once, so think carefully before deciding.^000000"; sleep2 750;
+	next;
+	if(select("I want to specialize.:I'll think about it.")==2) goto Closing;
+	mes .n$;
+	for (set .@i,3350; .@i<=3377; set .@i,.@i+1)
+		if (countitem(.@i)>0) { sleep2 1000; goto Despecialize; }
+	sleep2 500;
+
+	if (getarraysize(.SReq)) {
+		mes "The process is not simple."; sleep2 1000;
+		mes "I require the following items:"; sleep2 750;
+		set .@i,0;
+		while (.@i < getarraysize(.SReq)) {
+			mes "  ~ ^FF0000"+getitemname(.SReq[.@i])+"^000000 [^0055ff"+countitem(.SReq[.@i])+"^000000/"+.SReq[.@i+1]+"]"; sleep2 100;
+			set .@i, .@i+2; }
+		next;
+		if(select("I've got them all.:I'll come back later.")==2) close;
+		set .@i,0;
+		while (.@i < getarraysize(.SReq)) {
+			if (countitem(.SReq[.@i]) < .SReq[.@i+1]) {
+				mes .n$; sleep2 500;
+				mes "You're missing some items."; sleep2 500;
+				mes "I'll need all the materials";
+				mes "for this to work.";
+				close; }
+		set .@i, .@i+2; }
+		mes .n$; }
+
+	switch(Class){
+		case 23: Option("Ultra Novice","Heightened magical powers",3372,"Hyper Novice","Insurmountable in strength",3373);
+		case 4008: Option("Slayer","Agile sword-bearer",3350,"Lancer","Spear expert",3351);
+		case 4009: Option("Cardinal","Divine healer",3354,"Battle Priest","Powerful acolyte-warrior",3355);
+		case 4010: Option("Evoker","Bolt-oriented magician",3364,"Sorcerer","Area-oriented spellcaster",3365);
+		case 4011: Option("Goldsmith","Master forger",3376,"Battlesmith","Impulsive axeman",3377);
+		case 4012: Option("Scout","Swift archer",3368,"Ranger","Dagger-wielder",3369);
+		case 4013: Option("Virus","Strength in poison",3362,"Reaver","High-defense killer",3363);
+		case 4015: Option("Guardian","Unstoppable tank",3352,"Templar","Holy mercenary",3353);
+		case 4016: Option("Brawler","Lethal combos",3356,"Zealot","Fanatic striker",3357);
+		case 4017: Option("Geomancer","Single-spell sorcerer",3366,"Enchanter","Melee assaulter",3367);
+		case 4018: Option("Raider","Cunning marksman",3374,"Backstabber","Delusive assassin",3375);
+		case 4019: Option("Apothecary","Potion-brewer",3370,"Terrorist","Malicious bomber",3371);
+		case 4020: Option("Minstrel","Gifted bard",3358,"Jester","Musical killer",3359);
+		case 4021: Option("Performer","Gifted dancer",3360,"Siren","Musical killer",3361);
+		default: mes "Something went wrong. Try again."; close; }
+
+function Option {
+	mes "^0055ff > "+getarg(0);
+		sleep2 200;
+	mes "^777777 > "+getarg(1)+".";
+	mes " ";
+		sleep2 200;
+	mes "^0055ff > "+getarg(3);
+		sleep2 200;
+	mes "^777777 > "+getarg(4)+".^000000";
+	set @menu$,"^0055ff"+getarg(0)+":"+getarg(3)+":^777777Cancel^000000";
+		sleep2 1000;
+	next;
+	switch(select(@menu$)) {
+		case 1: set @sring,getarg(2); set @sclass$,getarg(0); goto SConfirm;
+		case 2: set @sring,getarg(5); set @sclass$,getarg(3); goto SConfirm;
+		case 3: goto Closing; }
+}
+
+SConfirm:
+	mes .n$;
+	mes "Are you sure you want to specialize as the ^0055ff" + @sclass$ + "^000000 class?"; mes " "; sleep2 500;
+	mes "^ff0000Your base level will be reset.  This cannot be undone.^000000";
+	next;
+	if(select("I need more time to think.:Yes!")==1) goto Closing;
+	progressbar "",2;
+	specialeffect2 248;
+	if (getarraysize(.SReq)) {
+		set .@i,0;
+		while (.@i < getarraysize(.SReq)) {
+			delitem .SReq[.@i], .SReq[.@i+1];
+			set .@i, .@i+2; }
+	}
+	mes .n$;
+	mes "...finished!"; sleep2 500;
+	mes "Here's your ^0055ff" + getitemname(@sring) + "^000000."; sleep2 200;
+	getitem @sring,1;
+	set BaseLevel,1;
+	ResetStatus;
+	set StatusPoint,100; sleep2 200;
+	nude;
+	equip @sring;
+	close;
+
+Despecialize:
+	mes "You've already specialized!"; sleep2 1000;
+	if (.DReq) {
+		mes " ";
+		mes "^777777There is a way to switch, if you really want to... but it's costly.^000000"; sleep2 1000;
+		next;
+		if(select("Okay, never mind.:I still want to switch!")==1) close;
+		mes .n$; sleep2 1000;
+		mes "...okay."; sleep2 800;
+		mes "To undo the specialization process, I'll need ^ff0000" + .DReq + " million Zeny^000000 to";
+		mes "obtain all the materials I need."; mes " "; sleep2 1000;
+		mes "Are you sure?"; sleep2 1000;
+		next;
+		if(select("What? No way!:Yes.")==1) goto Closing;
+		mes .n$;
+		if (Zeny < (.DReq*1000000)) {
+			sleep2 500;
+			mes "You don't have enough Zeny."; sleep2 500;
+			mes "It's an expensive procedure, so please reconsider.";
+			close; }
+	} else {
+		mes "Your ring will be deleted if you despecialize."; sleep2 1000;
+		next;
+		if(select("Oh, never mind then.:Let me despecialize!")==1) close;
+		mes .n$; sleep2 1000;
+		mes "Do you really want to despecialize?"; sleep2 500;
+		next;
+		if(select("No, I've changed my mind.:Yes.")==1) close;
+		mes .n$; }
+	progressbar "", 2;
+	specialeffect2 338;
+	set Zeny, Zeny - (.DReq*1000000);
+	for (set .@i,3350; .@i<=3377; set .@i,.@i+1)
+		if (countitem(.@i)>0) delitem .@i,1;
+	mes "...finished!"; sleep2 1000;
+	mes "^777777(I hope you don't regret this...)^000000"; sleep2 1000;
+	close;
+
+Closing:
+	mes .n$;
+	mes "Come back when you've";
+	mes "made your decision.";
+	close;
+}
+
+function	script	SpecEffect	{
+	function dd	{
+		while(.@j<=getarg(2)){
+			set .@j, .@j+1;
+			specialeffect2 getarg(0);
+			sleep2(getarg(1)); }
+		return; }
+	if(@effectdelay < gettimetick(2)) {
+		set @effectdelay, gettimetick(2)+5;
+		dd(54,10,2); dd(55,10,2); dd(668,10,2); dd(58,10,2); dd(377,10,2); dd(500,20,2); }
+}

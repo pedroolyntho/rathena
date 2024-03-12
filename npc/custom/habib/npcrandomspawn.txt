@@ -1,0 +1,23 @@
+prt_in,79,106,5	script	Random NPC	757,{
+getmapxy( .@map$,.@x,.@y,1 );
+mes "My current location : "+.@map$+","+.@x+","+.@y;
+close;
+
+OnInit:
+setarray .coordinate_x,0,300;
+setarray .coordinate_y,0,300;
+
+// change every 15 minutes.
+OnMinute00:
+OnMinute15:
+OnMinute30:
+OnMinute45:
+
+.@npc_map$ = strnpcinfo(4);
+do{
+	.@rand_x = rand( .coordinate_x[0],.coordinate_x[1] );
+	.@rand_y = rand( .coordinate_y[0],.coordinate_y[1] );
+}while( !checkcell( .@npc_map$,.@rand_x,.@rand_y,cell_chkpass ) );
+movenpc strnpcinfo(0),.@rand_x,.@rand_y;
+end;
+}

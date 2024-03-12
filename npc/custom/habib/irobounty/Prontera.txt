@@ -1,0 +1,67 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Prontera
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+prontera,136,225,3	script	Bounty Board 1-4#prt1	837,{
+	callfunc "F_Bounty_Board", 1, 4, 3, 1,
+		1004,	62722,	 900,		 0,	// HORNET
+		1012,	62723,	1012,		 0,	// RODA_FROG
+		1052,	62724,	1102,		 0,	// ROCKER
+		1167,	62725,	1012,		 0,	// SAVAGE_BABE
+		1048,	62726,	1417,		0,	// THIEF_BUG_EGG
+		1063,	62816,	 540,		 0,	// LUNATIC
+		1094,	62817,	1305,		 0;	// AMBERNITE
+	end;
+}
+
+prontera,138,227,3	script	Bounty Board 4-10#prt2	837,{
+	callfunc "F_Bounty_Board", 4, 10, 4, 1,
+		1051,	62727,	1417,		0,	// THIEF_BUG
+		1175,	62728,	1507,		0,	// TAROU
+		1174,	62729,	1417,		0,	// STAINER
+		1019,	62730,	1822,		0,	// PECOPECO
+		1104,	62731,	3037,		0,	// COCO
+		1057,	62732,	3037,		0,	// YOYO
+		1053,	62733,	2025,		0,	// THIEF_BUG_
+		1054,	62734,	2227,		0,	// THIEF_BUG__
+		1031,	62735,	2227,		0,	// POPORING
+		1033,	62736,	2610,		0,	// ELDER_WILOW
+		1055,	62818,	1215,		0;	// MUKA
+	end;
+}
+
+prontera,140,229,3	script	Bounty Board 8-14#prt3	837,{
+	callfunc "F_Bounty_Board", 8, 14, 4, 1,
+		1100,	62737,	4050,		0,	// ARGOS
+		1494,	62738,	5062,		0,	// KIND_OF_BEETLE
+		1166,	62739,	6435,		0,	// SAVAGE
+		1138,	62819,	4950,		0;	// MAGNOLIA
+	end;
+}
+
+prontera,142,231,3	script	Bounty Board 12-20#prt4	837,{
+	callfunc "F_Bounty_Board", 12, 20, 4, 1,
+		1380,	62740,	 6682,		 0,	// DRILLER
+		1035,	62741,	 6795,		 0,	// HUNTER_FLY
+		1139,	62742,	 6682,		 0,	// MANTIS
+		1037,	62743,	15000,		0,	// SIDE_WINDER
+		1099,	62744,	 9112,		0;	// ARGIOPE
+	end;
+}
+

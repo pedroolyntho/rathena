@@ -1,0 +1,111 @@
+//===== rAthena Script ======================================= 
+//= Bard Job Quest
+//===== By: ==================================================
+//= Muad_Dib(The Prometheus Project), Lupus, Samuray22
+//===== Current Version: ===================================== 
+//= 2.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job quest for Bard class
+//===== Additional Comments: =================================
+//= 2.1b Updated to the Official One. [Samuray22]
+//= 2.2 Fixed BUG when baby classes weren't able to get a job,
+//=	- fixed bug with final prize [Lupus] HAVE TO CHANE ALL ITEMS to numeric IDs
+//= 2.3 Updated NPC dialogs and cutins using Aegis 10.3 files. [L0ne_W0lf]
+//=	- Fixed error with the present checking. (Lupus beat me to committing)
+//=	- Changed the reward checking to use callsub (fixed the flow of the script)
+//=	- Optimized and changed the flow of things slightly.
+//=	- Temporary character variables "@" are now ".@"
+//=	- Fixed some indentation.
+//=	- Changed item names to item IDs
+//= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
+//= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 2.7 adjust to t9wro, make so it requires novice [Habib]
+//============================================================
+// HABIB
+//============================================================
+comodo,226,123,5	script	Wandering Bard	741,{
+	mes "[Lalo]";
+	mes "The sadness that overcomes my heart.. ";
+	mes "It will not reside..";
+	mes "Is this the reason behind my troubles,";
+	mes "is this why I am weak,";
+	mes "This must be why I cannot seem to forget you...";
+	next;
+	mes "[Lalo]";
+	mes "Oh, sorry. I didn't see you because I was concentrating on writing some lyrics.";
+	mes "How may I help you?";
+	next;
+	switch(select("I want to be a Bard.:I need the requirements, please.:Nothing, thanks.")) {
+	case 1:
+		mes "[Lalo]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Bard)
+				mes "Haha, you are kidding me...";
+			else {
+				mes "I feel sorry but only Novices can change their job.";
+				mes "You already have your own decent job, don't you?";
+			}
+			close;
+		}else{
+			mes "You are... "+strcharinfo(0)+", right?";
+			next;
+			if (JobLevel < 5) {
+				mes "[Lalo]";
+				mes "Well, you're not at the right skill level.";
+				mes "Your job level must be at least ^4A4AFF5^000000";
+				next;
+				mes "[Lalo]";
+				mes "Because a Bard needs extremely high concentration, so we do not accept those who have little patience.";
+				close;
+			}
+			mes "[Lalo]";
+			mes "Your level is now enough..";
+			mes "....Hm~~ so you are now ready to be a Bard. I will take the step right away.";
+			next;
+			mes "[Lalo]";
+			mes "Very well! Hope you sing happy enjoyable songs.";
+			mes "Live like the wind and the clouds!";
+			callfunc "Job_Change",Job_Bard;
+			specialeffect2 EF_ANGEL2;
+			specialeffect2 EF_ELECTRIC;			
+			skill "WM_LESSON",1,SKILL_PERM;
+			getitem 1901,1;	// Violin
+			set SkillPoint, SkillPoint + 1;
+			dispbottom "You've earned 01 Skill Point.";
+			getexp 500,0;
+			next;
+			mes "[Lalo]";
+			mes "Here you go, a souvenir. It is useful when you sing.";
+			mes "Hope you sing happy songs.";
+			next;
+			mes "[Lalo]";
+			mes "See you next time!";
+			mes "Bye.";
+			close;
+		}
+	case 2:
+		mes "[Lalo]";
+		mes "A Bard has various talents.";
+		mes "The greatest ability of a bard is his voice.";
+		next;
+		mes "[Lalo]";
+		mes "We want to help everyone to become a better version of themselves...";
+		mes "They can count on us!";
+		next;
+		mes "[Lalo]";
+		mes "^8C2121A Bard can change jobs to a Clown.^000000";
+		close;
+	case 3:
+		mes "[Lalo]";
+		mes "If you have any questions, feel free to come and ask me.";
+		close;
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOB, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}

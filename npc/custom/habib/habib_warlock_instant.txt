@@ -1,0 +1,100 @@
+//===== rAthena Script ======================================= 
+//= Renewal Mage Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Mage Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+geffen_in,164,124,4	script	Warlock Guildsman#mage	123,{
+	mes "[Warlock Guildsman]";
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Mage) {
+			mes "Hey, haven't you realized? You're already a Warlock, silly!";
+			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+		} else
+			mes "Hey~ C'mon. Quit playing games. You can't be a Warlock because you already have another Job.";
+		close;
+	}else{
+		mes "Hey?";
+		next;
+		switch(select("I want to be a Warlock:What are the requirements to be a Warlock?:Nothing, thanks.")) {
+		case 1:
+			mes "[Warlock Guildsman]";
+			mes "Wanna be a Warlock? Eh...";
+			next;
+			mes "[Warlock Guildsman]";
+			if (Sex == SEX_MALE) {
+				mes "Hey, look at you! You're kinda cute~! Not my type though...";
+			}else{
+				mes "Oooh, you're such a hot babe~!";
+				mes "I like girls like you~";
+			}
+			mes "Right, you said that you wanna be a Warlock?";
+			next;
+			if(select("I want to be a Warlock.:Nothing, thanks.") == 2) {
+				mes "[Warlock Guildsman]";
+				mes "Whaaaaat~?! Right after you tell me that you wanna become a Warlock, you change your mind?! Be a bit more decisive!";
+				close;
+			}
+			mes "[Warlock Guildsman]";
+			if (JobLevel < 5) {
+				mes "Oh, man your Job Level doesn't reach enough to be a Warlock.";
+				mes "Go back and level up your Job Level.";
+				close;
+			}
+			mes "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough.";
+			mes "You are... "+strcharinfo(0)+".";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!";
+			mes "Good! Always sticking to the basics is the best! I will transform you right away.";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "Hahh..! You are now a Warlock, one of our colleagues!";
+			mes "We welcome you to the Warlock Guild, our new friend!";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "'Welcome to the Warlock Guild~'";
+			mes "Congratulations on becoming a member of the Warlock Guild! Go for it!";
+			callfunc "Job_Change",Job_Mage;
+			skill "HW_SOULDRAIN",1,SKILL_PERM;
+			specialeffect2 EF_ANGEL2;
+			specialeffect2 EF_ELECTRIC;
+			set SkillPoint, SkillPoint + 1;
+			dispbottom "You've earned 01 Skill Point.";
+			getexp 500,0;
+			getitem 1601,1;	// Rod
+			close;
+		case 2:
+			mes "[Warlock Guildsman]";
+			mes "Wanna be a Warlock, eh?";
+			mes "I'd be happy to explain the requirements for a pretty girl like you!";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "First of all, you have to reach Novice Job Level 5.";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly.";
+			mes "So, we decided to accept all aplicants who meet the basic requirements.";
+			next;
+			mes "[Warlock Guildsman]";
+			mes "Don't hesitate. Just be a magician!";
+			close;
+		case 3:
+			mes "[Warlock Guildsman]";
+			mes "Nothing...?";
+			close;
+		}
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOB, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;	
+}

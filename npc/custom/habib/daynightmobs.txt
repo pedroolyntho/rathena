@@ -1,0 +1,14 @@
+-	script	night_only_mob_spawns	-1,{
+OnInit:
+OnNight:
+	killmonster "icecastle", strnpcinfo(3)+"::OnZombieDead";
+	monster "icecastle",204,165,"Frozen Zombie",1015,10,strnpcinfo(3)+"::OnZombieDead";
+	end;
+OnZombieDead:
+	if (isnight())
+		monster "icecastle",204,165,"Frozen Zombie",1015,1 ,strnpcinfo(3)+"::OnZombieDead";
+	end;
+OnDay:
+	killmonster "icecastle", strnpcinfo(3)+"::OnZombieDead";
+	end;
+}

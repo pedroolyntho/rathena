@@ -1,0 +1,340 @@
+//===== rAthena Script =======================================
+//= Crimea
+//===== By: ==================================================
+//= w0wZukuBg
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena
+//===== Description: =========================================
+//= There are 2 arenas on this map. One simple, other more difficult – for those, who loves extreme.
+//= Also there is an area with a little DAMAGE, it is after a mountain ON A CEMETERY, does not walk there)).
+//= Ask Alice (E-Mail: A1621@ukr.net), before using textures from Crimea_duel folder.
+//= THANKS TO: Alice, Lifeson, Dorian, Kai Tracid, Slevin, Smol, Dan Mor
+//===== Additional Comments: =================================
+//= 1.0 [w0wZukuBg]
+//============================================================
+
+// Check tomb zone cell
+-	script	::crm_t_zone	-1,{
+	end;
+
+	OnTouch:
+	specialeffect 450;
+	sc_start SC_CHANGEUNDEAD,5000,1;
+	percentheal -10,0;
+	if (HP < 10)
+	percentheal -100,0;
+	end;
+}
+
+crimea,106,215,0	duplicate(crm_t_zone)	crmt::crm_t_zone01	139,3,3
+crimea,113,222,0	duplicate(crm_t_zone)	crmt::crm_t_zone02	139,3,3
+crimea,120,215,0	duplicate(crm_t_zone)	crmt::crm_t_zone03	139,3,3
+crimea,127,222,0	duplicate(crm_t_zone)	crmt::crm_t_zone04	139,3,3
+crimea,134,215,0	duplicate(crm_t_zone)	crmt::crm_t_zone05	139,3,3
+
+// Check height 100% damage cell
+-	script	::crm_d_cell	-1,{
+	end;
+
+	OnTouch:
+	sleep2 50;
+	percentheal -100,0;
+	sleep2 1000;
+	warp "crimea",162,118;
+	end;
+}
+
+crimea,127,141,0	duplicate(crm_d_cell)	crmc::crm_d_cell01	139,0,0
+crimea,127,118,0	duplicate(crm_d_cell)	crmc::crm_d_cell02	139,0,22
+crimea,131,149,0	duplicate(crm_d_cell)	crmc::crm_d_cell03	139,3,0
+crimea,131,118,0	duplicate(crm_d_cell)	crmc::crm_d_cell04	139,3,30
+crimea,147,149,0	duplicate(crm_d_cell)	crmc::crm_d_cell05	139,12,0
+crimea,147,147,0	duplicate(crm_d_cell)	crmc::crm_d_cell06	139,12,1
+crimea,147,90,0	duplicate(crm_d_cell)	crmc::crm_d_cell07	139,12,1
+crimea,147,88,0	duplicate(crm_d_cell)	crmc::crm_d_cell08	139,12,0
+crimea,136,145,0	duplicate(crm_d_cell)	crmc::crm_d_cell09	139,1,0
+crimea,135,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell10	139,0,0
+crimea,136,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell11	139,0,0
+crimea,135,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell12	139,0,0
+crimea,135,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell13	139,0,0
+crimea,135,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell14	139,0,0
+crimea,136,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell15	139,0,0
+crimea,136,92,0	duplicate(crm_d_cell)	crmc::crm_d_cell16	139,1,0
+crimea,138,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell17	139,0,0
+crimea,139,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell18	139,0,1
+crimea,137,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell19	139,0,0
+crimea,138,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell20	139,0,0
+crimea,137,141,0	duplicate(crm_d_cell)	crmc::crm_d_cell21	139,1,0
+crimea,139,141,0	duplicate(crm_d_cell)	crmc::crm_d_cell22	139,0,0
+crimea,147,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell23	139,7,0
+crimea,147,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell24	139,7,1
+crimea,136,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell25	139,0,7
+crimea,138,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell26	139,1,7
+crimea,141,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell27	139,0,0
+crimea,148,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell28	139,6,0
+crimea,141,132,0	duplicate(crm_d_cell)	crmc::crm_d_cell29	139,0,6
+crimea,143,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell30	139,0,0
+crimea,149,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell31	139,5,0
+crimea,143,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell32	139,0,5
+crimea,156,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell33	139,0,0
+crimea,156,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell34	139,0,1
+crimea,156,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell35	139,0,0
+crimea,156,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell36	139,0,0
+crimea,156,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell37	139,0,3
+crimea,136,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell38	139,0,0
+crimea,138,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell39	139,1,0
+crimea,141,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell40	139,0,0
+crimea,143,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell41	139,0,0
+crimea,147,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell42	139,3,0
+crimea,155,130,0	duplicate(crm_d_cell)	crmc::crm_d_cell43	139,0,0
+crimea,154,129,0	duplicate(crm_d_cell)	crmc::crm_d_cell44	139,0,0
+crimea,155,129,0	duplicate(crm_d_cell)	crmc::crm_d_cell45	139,0,0
+crimea,153,128,0	duplicate(crm_d_cell)	crmc::crm_d_cell46	139,0,0
+crimea,154,128,0	duplicate(crm_d_cell)	crmc::crm_d_cell47	139,0,0
+crimea,152,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell48	139,0,0
+crimea,153,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell49	139,0,0
+crimea,151,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell50	139,0,0
+crimea,152,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell51	139,0,0
+crimea,150,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell52	139,0,0
+crimea,151,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell53	139,0,0
+crimea,158,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell54	139,0,0
+crimea,159,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell55	139,0,0
+crimea,158,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell56	139,0,1
+crimea,159,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell57	139,0,1
+crimea,158,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell58	139,0,0
+crimea,159,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell59	139,0,0
+crimea,136,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell60	139,0,0
+crimea,136,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell61	139,0,0
+crimea,138,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell62	139,1,0
+crimea,138,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell63	139,1,0
+crimea,141,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell64	139,0,0
+crimea,141,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell65	139,0,0
+crimea,136,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell66	139,0,0
+crimea,138,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell67	139,1,0
+crimea,136,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell68	139,0,0
+crimea,138,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell69	139,1,0
+crimea,141,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell70	139,0,0
+crimea,141,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell71	139,0,0
+crimea,136,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell72	139,0,0
+crimea,138,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell73	139,1,0
+crimea,141,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell74	139,0,0
+crimea,143,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell75	139,0,0
+crimea,147,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell76	139,3,0
+crimea,136,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell77	139,0,0
+crimea,138,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell78	139,1,0
+crimea,136,103,0	duplicate(crm_d_cell)	crmc::crm_d_cell79	139,0,6
+crimea,138,103,0	duplicate(crm_d_cell)	crmc::crm_d_cell80	139,1,6
+crimea,137,96,0	duplicate(crm_d_cell)	crmc::crm_d_cell81	139,1,0
+crimea,139,96,0	duplicate(crm_d_cell)	crmc::crm_d_cell82	139,0,0
+crimea,137,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell83	139,0,0
+crimea,138,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell84	139,0,0
+crimea,138,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell85	139,0,0
+crimea,139,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell86	139,0,1
+crimea,140,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell87	139,0,1
+crimea,140,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell88	139,0,0
+crimea,147,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell89	139,7,1
+crimea,147,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell90	139,7,0
+crimea,141,105,0	duplicate(crm_d_cell)	crmc::crm_d_cell91	139,0,6
+crimea,141,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell92	139,0,0
+crimea,148,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell93	139,6,0
+crimea,143,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell94	139,0,5
+crimea,143,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell95	139,0,0
+crimea,149,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell96	139,5,0
+crimea,156,104,0	duplicate(crm_d_cell)	crmc::crm_d_cell97	139,0,3
+crimea,156,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell98	139,0,0
+crimea,156,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell99	139,0,0
+crimea,156,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell100	139,0,1
+crimea,156,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell101	139,0,0
+crimea,158,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell102	139,0,0
+crimea,159,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell103	139,0,0
+crimea,158,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell104	139,0,1
+crimea,159,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell105	139,0,1
+crimea,158,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell106	139,0,0
+crimea,159,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell107	139,0,0
+crimea,150,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell108	139,0,0
+crimea,151,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell109	139,0,0
+crimea,151,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell110	139,0,0
+crimea,152,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell111	139,0,0
+crimea,152,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell112	139,0,0
+crimea,153,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell113	139,0,0
+crimea,153,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell114	139,0,0
+crimea,154,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell115	139,0,0
+crimea,154,108,0	duplicate(crm_d_cell)	crmc::crm_d_cell116	139,0,0
+crimea,155,108,0	duplicate(crm_d_cell)	crmc::crm_d_cell117	139,0,0
+crimea,155,107,0	duplicate(crm_d_cell)	crmc::crm_d_cell118	139,0,0
+crimea,164,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell119	139,0,0
+crimea,165,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell120	139,0,0
+crimea,164,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell121	139,0,1
+crimea,165,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell122	139,0,1
+crimea,164,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell123	139,0,0
+crimea,165,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell124	139,0,0
+crimea,167,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell125	139,0,0
+crimea,167,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell126	139,0,1
+crimea,167,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell127	139,0,0
+crimea,167,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell128	139,0,0
+crimea,167,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell129	139,0,3
+crimea,176,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell130	139,7,0
+crimea,176,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell131	139,7,1
+crimea,175,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell132	139,6,0
+crimea,182,139,0	duplicate(crm_d_cell)	crmc::crm_d_cell133	139,0,0
+crimea,182,132,0	duplicate(crm_d_cell)	crmc::crm_d_cell134	139,0,6
+crimea,174,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell135	139,5,0
+crimea,180,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell136	139,0,0
+crimea,180,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell137	139,0,5
+crimea,176,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell138	139,3,0
+crimea,180,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell139	139,0,0
+crimea,182,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell140	139,0,0
+crimea,184,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell141	139,0,1
+crimea,185,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell142	139,0,0
+crimea,185,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell143	139,0,0
+crimea,186,142,0	duplicate(crm_d_cell)	crmc::crm_d_cell144	139,0,0
+crimea,184,141,0	duplicate(crm_d_cell)	crmc::crm_d_cell145	139,0,0
+crimea,186,141,0	duplicate(crm_d_cell)	crmc::crm_d_cell146	139,1,0
+crimea,185,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell147	139,1,7
+crimea,187,133,0	duplicate(crm_d_cell)	crmc::crm_d_cell148	139,0,7
+crimea,185,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell149	139,1,0
+crimea,187,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell150	139,0,0
+crimea,168,130,0	duplicate(crm_d_cell)	crmc::crm_d_cell151	139,0,0
+crimea,168,129,0	duplicate(crm_d_cell)	crmc::crm_d_cell152	139,0,0
+crimea,169,129,0	duplicate(crm_d_cell)	crmc::crm_d_cell153	139,0,0
+crimea,169,128,0	duplicate(crm_d_cell)	crmc::crm_d_cell154	139,0,0
+crimea,170,128,0	duplicate(crm_d_cell)	crmc::crm_d_cell155	139,0,0
+crimea,170,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell156	139,0,0
+crimea,171,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell157	139,0,0
+crimea,171,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell158	139,0,0
+crimea,172,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell159	139,0,0
+crimea,172,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell160	139,0,0
+crimea,173,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell161	139,0,0
+crimea,182,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell162	139,0,0
+crimea,182,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell163	139,0,0
+crimea,185,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell164	139,1,0
+crimea,187,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell165	139,0,0
+crimea,185,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell166	139,1,0
+crimea,187,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell167	139,0,0
+crimea,182,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell168	139,0,0
+crimea,182,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell169	139,0,0
+crimea,185,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell170	139,1,0
+crimea,187,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell171	139,0,0
+crimea,185,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell172	139,1,0
+crimea,187,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell173	139,0,0
+crimea,176,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell174	139,3,0
+crimea,180,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell175	139,0,0
+crimea,182,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell176	139,0,0
+crimea,185,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell177	139,1,0
+crimea,187,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell178	139,0,0
+crimea,172,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell179	139,0,0
+crimea,173,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell180	139,0,0
+crimea,171,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell181	139,0,0
+crimea,172,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell182	139,0,0
+crimea,170,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell183	139,0,0
+crimea,171,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell184	139,0,0
+crimea,169,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell185	139,0,0
+crimea,170,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell186	139,0,0
+crimea,168,108,0	duplicate(crm_d_cell)	crmc::crm_d_cell187	139,0,0
+crimea,169,108,0	duplicate(crm_d_cell)	crmc::crm_d_cell188	139,0,0
+crimea,168,107,0	duplicate(crm_d_cell)	crmc::crm_d_cell189	139,0,0
+crimea,167,104,0	duplicate(crm_d_cell)	crmc::crm_d_cell190	139,0,3
+crimea,167,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell191	139,0,0
+crimea,164,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell192	139,0,0
+crimea,165,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell193	139,0,0
+crimea,164,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell194	139,0,1
+crimea,165,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell195	139,0,1
+crimea,164,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell196	139,0,0
+crimea,165,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell197	139,0,0
+crimea,167,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell198	139,0,0
+crimea,167,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell199	139,0,1
+crimea,167,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell200	139,0,0
+crimea,180,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell201	139,0,5
+crimea,174,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell202	139,5,0
+crimea,180,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell203	139,0,0
+crimea,182,105,0	duplicate(crm_d_cell)	crmc::crm_d_cell204	139,0,6
+crimea,175,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell205	139,6,0
+crimea,182,98,0	duplicate(crm_d_cell)	crmc::crm_d_cell206	139,0,0
+crimea,185,104,0	duplicate(crm_d_cell)	crmc::crm_d_cell207	139,1,7
+crimea,187,104,0	duplicate(crm_d_cell)	crmc::crm_d_cell208	139,0,7
+crimea,176,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell209	139,7,1
+crimea,176,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell210	139,7,0
+crimea,184,96,0	duplicate(crm_d_cell)	crmc::crm_d_cell211	139,0,0
+crimea,186,96,0	duplicate(crm_d_cell)	crmc::crm_d_cell212	139,1,0
+crimea,184,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell213	139,0,1
+crimea,185,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell214	139,0,0
+crimea,186,95,0	duplicate(crm_d_cell)	crmc::crm_d_cell215	139,0,0
+crimea,185,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell216	139,0,0
+crimea,187,145,0	duplicate(crm_d_cell)	crmc::crm_d_cell217	139,1,0
+crimea,187,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell218	139,0,0
+crimea,188,144,0	duplicate(crm_d_cell)	crmc::crm_d_cell219	139,0,0
+crimea,188,143,0	duplicate(crm_d_cell)	crmc::crm_d_cell220	139,0,0
+crimea,188,94,0	duplicate(crm_d_cell)	crmc::crm_d_cell221	139,0,0
+crimea,187,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell222	139,0,0
+crimea,188,93,0	duplicate(crm_d_cell)	crmc::crm_d_cell223	139,0,0
+crimea,187,92,0	duplicate(crm_d_cell)	crmc::crm_d_cell224	139,1,0
+crimea,176,149,0	duplicate(crm_d_cell)	crmc::crm_d_cell225	139,12,0
+crimea,176,147,0	duplicate(crm_d_cell)	crmc::crm_d_cell226	139,12,1
+crimea,176,90,0	duplicate(crm_d_cell)	crmc::crm_d_cell227	139,12,1
+crimea,176,88,0	duplicate(crm_d_cell)	crmc::crm_d_cell228	139,12,0
+crimea,192,149,0	duplicate(crm_d_cell)	crmc::crm_d_cell229	139,3,0
+crimea,192,118,0	duplicate(crm_d_cell)	crmc::crm_d_cell230	139,3,30
+// center
+crimea,158,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell231	139,0,0
+crimea,159,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell232	139,0,0
+crimea,158,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell233	139,0,5
+crimea,159,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell234	139,0,5
+crimea,164,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell235	139,0,0
+crimea,165,137,0	duplicate(crm_d_cell)	crmc::crm_d_cell236	139,0,0
+crimea,164,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell237	139,0,5
+crimea,165,131,0	duplicate(crm_d_cell)	crmc::crm_d_cell238	139,0,5
+crimea,143,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell239	139,0,0
+crimea,149,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell240	139,5,0
+crimea,143,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell241	139,0,0
+crimea,149,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell242	139,5,0
+crimea,143,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell243	139,0,0
+crimea,149,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell244	139,5,0
+crimea,143,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell245	139,0,0
+crimea,149,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell246	139,5,0
+crimea,158,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell247	139,0,5
+crimea,159,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell248	139,0,5
+crimea,158,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell249	139,0,0
+crimea,159,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell250	139,0,0
+crimea,164,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell251	139,0,5
+crimea,165,106,0	duplicate(crm_d_cell)	crmc::crm_d_cell252	139,0,5
+crimea,164,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell253	139,0,0
+crimea,165,100,0	duplicate(crm_d_cell)	crmc::crm_d_cell254	139,0,0
+crimea,174,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell255	139,5,0
+crimea,180,122,0	duplicate(crm_d_cell)	crmc::crm_d_cell256	139,0,0
+crimea,174,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell257	139,5,0
+crimea,180,121,0	duplicate(crm_d_cell)	crmc::crm_d_cell258	139,0,0
+crimea,174,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell259	139,5,0
+crimea,180,116,0	duplicate(crm_d_cell)	crmc::crm_d_cell260	139,0,0
+crimea,174,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell261	139,5,0
+crimea,180,115,0	duplicate(crm_d_cell)	crmc::crm_d_cell262	139,0,0
+crimea,157,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell263	139,0,1
+crimea,156,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell264	139,0,1
+crimea,155,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell265	139,0,1
+crimea,154,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell266	139,0,1
+crimea,153,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell267	139,0,0
+crimea,153,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell268	139,0,0
+crimea,152,123,0	duplicate(crm_d_cell)	crmc::crm_d_cell269	139,0,0
+crimea,153,123,0	duplicate(crm_d_cell)	crmc::crm_d_cell270	139,0,0
+crimea,166,127,0	duplicate(crm_d_cell)	crmc::crm_d_cell271	139,0,1
+crimea,167,126,0	duplicate(crm_d_cell)	crmc::crm_d_cell272	139,0,1
+crimea,168,125,0	duplicate(crm_d_cell)	crmc::crm_d_cell273	139,0,1
+crimea,169,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell274	139,0,1
+crimea,170,124,0	duplicate(crm_d_cell)	crmc::crm_d_cell275	139,0,0
+crimea,170,123,0	duplicate(crm_d_cell)	crmc::crm_d_cell276	139,0,0
+crimea,171,123,0	duplicate(crm_d_cell)	crmc::crm_d_cell277	139,0,0
+crimea,153,114,0	duplicate(crm_d_cell)	crmc::crm_d_cell278	139,1,0
+crimea,154,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell279	139,1,0
+crimea,155,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell280	139,1,0
+crimea,156,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell281	139,1,0
+crimea,156,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell282	139,0,0
+crimea,157,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell283	139,0,0
+crimea,157,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell284	139,0,0
+crimea,170,114,0	duplicate(crm_d_cell)	crmc::crm_d_cell285	139,1,0
+crimea,169,113,0	duplicate(crm_d_cell)	crmc::crm_d_cell286	139,1,0
+crimea,168,112,0	duplicate(crm_d_cell)	crmc::crm_d_cell287	139,1,0
+crimea,167,111,0	duplicate(crm_d_cell)	crmc::crm_d_cell288	139,1,0
+crimea,166,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell289	139,0,0
+crimea,167,110,0	duplicate(crm_d_cell)	crmc::crm_d_cell290	139,0,0
+crimea,166,109,0	duplicate(crm_d_cell)	crmc::crm_d_cell291	139,0,0

@@ -1,0 +1,57 @@
+//===== rAthena Script =======================================
+//= Habib Fields Monster Spawn Script
+//===== By: ==================================================
+//= Habib
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 Habib Mobs
+//============================================================
+// format "map",x,y%TAB%monster%TAB%Monster Name%TAB%,MonsterID,amount
+//==================================================
+// Isgard Habib
+//==================================================
+//
+jor_tail,0,0	monster	Little Skirja	30003,40,1000
+jor_tail,0,0	monster	Baby Hatii	1515,90,1000
+//
+jor_back1,0,0	monster	Little Skirja	30003,60,1000
+jor_back1,0,0	monster	Gazeti	1778,80,1000
+jor_back1,0,0	monster	Baby Hatii	1515,60,1000
+jor_back1,0,0	monster	Frost Bladewolf	3442,15,1000
+//
+jor_back2,0,0	monster	Ice Titan	1777,70,1000
+jor_back2,0,0	monster	Gazeti	1778,35,1000
+jor_back2,0,0	monster	Baby Hatii	1515,25,1000
+jor_back2,0,0	monster	Frost Bladewolf	3442,70,1000
+//
+jor_back3,0,0	monster	Ice Titan	1777,20,1000
+jor_back3,0,0	monster	Gazeti	1778,15,1000
+jor_back3,0,0	monster	Frost Bladewolf	3442,70,1000
+jor_back3,0,0,0	boss_monster	Ktullanux	1779,1,7200000,600000,1
+//
+jor_back4,0,0	monster	Ice Titan	1777,20,1000
+jor_back4,0,0	monster	Gazeti	1778,15,1000
+jor_back4,0,0	monster	Frost Bladewolf	3442,70,1000
+//
+jor_back5,0,0	monster	Ice Titan	1777,20,1000
+jor_back5,0,0	monster	Gazeti	1778,15,1000
+jor_back5,0,0	monster	Frost Bladewolf	3442,70,1000
+//
+jor_back6,0,0	monster	Ice Titan	1777,20,1000
+jor_back6,0,0	monster	Gazeti	1778,15,1000
+jor_back6,0,0	monster	Frost Bladewolf	3442,70,1000
+//
+jor_twice,0,0	monster	Little Skirja	30003,90,1000
+jor_twice,0,0	monster	Baby Hatii	1515,25,1000
+jor_twice,0,0	monster	Blue Plant	1079,5,1000
+//
+jor_twig,0,0	monster	Little Skirja	30003,80,1000
+//
+jor_ab01,0,0	monster	Haunted Armor	30004,70,1000
+jor_ab01,0,0	monster	Cattbearer	30000,60,1000
+//
+jor_ab02,0,0	monster	Haunted Armor	30004,20,1000
+jor_ab02,0,0	monster	Cattbearer	30000,20,1000
+jor_ab02,0,0	monster	Black Cattbearer	30001,70,1000
+jor_ab02,0,0	monster	Red Cattbearer	30002,70,1000

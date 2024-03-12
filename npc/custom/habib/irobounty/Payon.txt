@@ -1,0 +1,54 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Payon City
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+payon,148,95,3	script	Bounty Board 1-4#pay1	837,{
+	callfunc "F_Bounty_Board", 1, 4, 1, 1,
+		1010,	62644,	 697,		0,	// WILOW
+		1014,	62565,	1305,		0,	// SPORE
+		1025,	62566,	1305,		0;	// SNAKE
+	end;
+}
+
+payon,148,93,3	script	Bounty Board 4-10#pay2	837,{
+	callfunc "F_Bounty_Board", 4, 10, 2, 1,
+		1060,	62567,	2025,		0,	// BIGFOOT
+		1128,	62797,	2430,		0,	// HORN
+		1076,	62560,	1822,		0,	// SKELETON
+		1028,	62561,	2430,		0;	// SOLDIER_SKELETON
+	end;
+}
+
+payon,148,91,3	script	Bounty Board 8-15#pay3	837,{
+	callfunc "F_Bounty_Board", 8, 15, 2, 1,
+		1277,	62569,	5467,		0,	// GREATEST_GENERAL
+		1013,	62645,	3847,		0,	// WOLF
+		1016,	62562,	4545,		0,	// ARCHER_SKELETON
+		1026,	62646,	5557,		0,	// MUNAK
+		1188,	62647,	5962,		0;	// BON_GUN
+	end;
+}
+
+payon,148,89,3	script	Bounty Board 12-20#pay4	837,{
+	callfunc "F_Bounty_Board", 12, 20, 2, 1,
+		1170,	62648,	6675,		 0,	// SOHEE
+		1110,	62649,	7590,		 0,	// DOKEBI
+		1180,	62650,	9975,		0;	// NINE_TAIL
+	end;
+}

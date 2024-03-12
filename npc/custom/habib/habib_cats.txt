@@ -1,0 +1,86 @@
+// Habib Cats (14.2 Cat Paw Addition)
+//============================================================
+-	script	Habib Cat#ep14_2	-1,{
+	switch(atoi(charat(strnpcinfo(1),13))) {
+	case 1:
+		setarray .@map$[0],"Entrance to Mora";
+		setarray .@cost[0],15;// Amount Einherjar Souls
+		break;
+	case 2:
+		setarray .@map$[0],"Near Eclage","Near Splendide";
+		setarray .@cost[0],15,55;
+		break;
+	case 3:
+		setarray .@map$[0],"Entrance to Mora","Midgard Allied Forces Post";
+		setarray .@cost[0],55,10;
+		break;
+	case 4:
+		setarray .@map$[0],"Near Splendide","Manuk Field";
+		setarray .@cost[0],10,10;
+		break;
+	case 5:
+		setarray .@map$[0],"Midgard Allied Forces Post","Near El Dicastes";
+		setarray .@cost[0],10,20;
+		break;
+	case 6:
+		setarray .@map$[0],"Manuk Field","Near Isgard";
+		setarray .@cost[0],20,50;
+		break;
+	case 7:
+		setarray .@map$[0],"Near El Dicastes";
+		setarray .@cost[0],20;
+		break;
+	}
+	mes "[Habib Cat]";
+	mes "What a nice day, isn't it!";
+	mes "Welcome to Cat Merchant Group. We do anything to please our customers. We would even lie on our back if you want!";
+	next;
+	mes "[Habib Cat]";
+	mes "We provide teleport service between various regions based on our accumulated knowledge. We accept your faith or Zeny, so you can pay however you like it~";
+	next;
+	set .@menu$,"Forget it:";
+	for (.@i = 0; .@i < getarraysize(.@map$); .@i++) {
+		set .@menu$, .@menu$+
+			.@map$[.@i]+" ("+.@cost[.@i]+" Einherjar Souls):"+
+			.@map$[.@i]+" ("+callfunc("F_InsertComma",.@cost[.@i]*1000)+" Zeny):";
+	}
+	.@i = select(.@menu$) -2;
+	if (.@i == -1) {
+		mes "[Habib Cat]";
+		mes "I'll see you later then.";
+		close;
+	}
+	.@choice$ = .@map$[.@i/2];
+	.@price = .@cost[.@i/2];
+	if (.@i % 2) {
+		.@price = .@price*1000;
+		if (Zeny < .@price) {
+			mes "[Habib Cat]";
+			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
+			close;
+		}
+		Zeny = Zeny -.@price;
+	} else {
+		if (countitem(47006) < .@price) {
+			mes "[Habib Cat]";
+			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
+			close;
+		}
+		delitem 47006,.@price;// Einherjar Souls
+	}
+	if (.@choice$ == "Midgard Allied Forces Post") warp "mid_camp",180,247;
+	else if (.@choice$ == "Manuk Field") warp "man_fild02",133,47;
+	else if (.@choice$ == "Near Splendide") warp "spl_fild02",51,240;
+	else if (.@choice$ == "Near El Dicastes") warp "dic_fild01",159,264;
+	else if (.@choice$ == "Entrance to Mora") warp "bif_fild02",291,323;
+	else if (.@choice$ == "Near Eclage") warp "ecl_fild01",116,309;
+	else if (.@choice$ == "Near Isgard") warp "jor_tail",221,49;
+	end;
+}
+ecl_fild01,118,311,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.1	4_M_BOSSCAT
+bif_fild02,293,325,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.2	4_M_BOSSCAT
+spl_fild02,53,242,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.3	4_M_BOSSCAT
+mid_camp,207,234,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.4	4_M_BOSSCAT
+man_fild02,135,49,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.5	4_M_BOSSCAT
+dic_fild01,161,266,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.6	4_M_BOSSCAT
+jor_tail,217,42,4	duplicate(Habib Cat#ep14_2)	Habib Cat No.7	4_M_BOSSCAT

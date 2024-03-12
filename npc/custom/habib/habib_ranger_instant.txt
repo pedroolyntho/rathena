@@ -1,0 +1,92 @@
+//===== rAthena Script ======================================= 
+//= Renewal Archer Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Archer Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+payon_in02,64,71,4	script	Ranger Guildsman#archer	85,{
+	mes "[Ranger Guildsman]";
+	mes "Nice to meet you. How may I help you?";
+	next;
+	switch(select("I want to be a Ranger.:I need the requirements, please.:Nothing, thanks.")) {
+	case 1:
+		mes "[Ranger Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Archer)
+				mes "Haha, you are kidding me...";
+			else {
+				mes "I feel sorry but only Novices can change their job.";
+				mes "You already have your own decent job, don't you?";
+			}
+			close;
+		}else{
+			mes "You are... "+strcharinfo(0)+", right?";
+			next;
+			if (JobLevel < 5) {
+				mes "[Ranger Guildsman]";
+				mes "Well, you're not at the right skill level.";
+				mes "Your job level must be at least ^4A4AFF5^000000";
+				next;
+				mes "[Ranger Guildsman]";
+				mes "Because a Ranger needs extremely high concentration, so we do not accept those who have little patience.";
+				close;
+			}
+			mes "[Ranger Guildsman]";
+			mes "Your level is now enough..";
+			mes "....Hm~~ so you are now ready to be a Ranger. I will take the step right away.";
+			next;
+			mes "[Ranger Guildsman]";
+			mes "Congratulations! You are now a Ranger! Also, we hope that you actively participate in many programs for the revival of the Ranger Guild.";
+			mes "Ah, items have arrived from the Production Department. Here, take these! These are all yours!";
+			callfunc "Job_Change",Job_Archer;
+			skill "RANGER_CORE",1,SKILL_PERM;
+			specialeffect2 EF_ANGEL2;
+			specialeffect2 EF_ELECTRIC;			
+			getitem 1701,1;	//
+			getitem 12004,1;	// Arrow_Container
+			//getitem 12009,1;	// Silver_Arrow_Container
+			//getitem 12008,1;	// Fire_Arrow_Container
+			set SkillPoint, SkillPoint + 1;
+			dispbottom "You've earned 01 Skill Point.";
+			getexp 500,0;
+			next;
+			mes "[Ranger Guildsman]";
+			mes "Having a bow and arrows, now you became a real Ranger.";
+			mes "If you open the arrow container, there are arrows in it and then you can equip them.";
+			mes "Well, I expect to hear better news from you. It's time to say goodbye.";
+			mes "Bye.";
+			close;
+		}
+	case 2:
+		mes "[Ranger Guildsman]";
+		mes "A Ranger has skills using a bow and has various talents.";
+		mes "The greatest ability of a Ranger is attacking enemies from a long distance.";
+		next;
+		mes "[Ranger Guildsman]";
+		mes "Although a Ranger has weaker HP, he or she can shoot enemies at a long range,";
+		mes "so a Ranger is safer in a real battle.";
+		next;
+		mes "[Ranger Guildsman]";
+		mes "Although a Ranger in Ragnarok has lower HP, he or she has high accuracy and attack rate so that the Ranger can kill monsters before they get close to a Ranger.";
+		next;
+		mes "[Ranger Guildsman]";
+		mes "^8C2121A Ranger can change jobs to a Frozen Prowler or a Stormheart.^000000";
+		close;
+	case 3:
+		mes "[Ranger Guildsman]";
+		mes "If you have any questions, feel free to come and ask me.";
+		close;
+	}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_JOB, QMARK_YELLOW, "JobLevel > 4 && Class == Job_Novice";
+	end;
+}

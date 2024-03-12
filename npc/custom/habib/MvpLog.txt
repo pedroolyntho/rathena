@@ -1,0 +1,86 @@
+//===== rAthena Script =======================================
+//= Mvp log cards
+//===== By: ==================================================
+//= Eyhra
+//https://rathena.org/board/profile/25655-eyhra/
+//===== Current Version: =====================================
+//= 2.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//all versions supported
+//===== Description: =========================================
+// 1.0 structuring of the entire log script in txt [ Eyhra#7128 ]
+// 2.0 structuring of the entire log script and generating mysql tables [ Eyhra#7128 ]
+// 2.5 fix mvp card update every minute 5 of every hour [ by GM Triedge#1753 ]
+//============================================================
+//= OnMinute - Change this to the minute you would like this script to load. [ LINE 22 ]
+//= SET THE 5 TO THE MINUTE YOU WANT THE LOG TO START EACH HOUR.
+//============================================================
+
+-	script	MVPCARDLOG2	,{
+
+OnMinute05:
+OnInit:
+	setarray .card_mvps[0],4241,4198,4174, 4047,4054,4121, 4123, 4128, 4131, 4132, 4134, 4135, 4137, 4142, 4143, 4144, 4145, 4146, 4147, 4148, 4168, 4169, 4236, 4263, 4276, 4302, 4305, 4318, 4324, 4330, 4342, 4352, 4357, 4359, 4361, 4363, 4365, 4367, 4372, 4374, 4376, 4386, 4399, 4403, 4407, 4408, 4419, 4425, 4430, 4441, 4456, 4507, 4509, 4520, 4525, 4560, 4561, 4562, 4563, 4564, 4565, 4566, 4574, 4576, 4578, 4580, 4592, 4625, 4636, 6414, 27020, 27126, 27162, 27164, 27182, 31026;
+	.size = getarraysize(.card_mvps);
+	query_sql("truncate table `mvp_cards_log`;");
+	for(.@i = 0; .@i < .size; .@i++){
+		.@b = query_sql("SELECT `char`.account_id,`inventory`.`char_id`,`char`.`name`,`nameid` FROM `inventory`  INNER JOIN `char` ON `char`.`char_id` = `inventory`.`char_id`  WHERE ( CASE WHEN `nameid` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card0` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card1` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card2` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card3` = "+.card_mvps[.@i]+" THEN `nameid` ELSE  0 END) > 0;", .@char_account_id, .@inventory_char_id, .@char_name$, .@nameid);
+		for(.@j = 0; .@j < .@b; .@j++){
+
+			.@id_card = .card_mvps[.@i];
+			.@name_card$ = getitemname(.card_mvps[.@i]);
+			if(.@nameid[.@j] == .card_mvps[.@i]){
+				.@localizacion$ = "[Inventory]";
+			}else{
+				.@localizacion$ = "[Inventory]"+getitemname(.@nameid[.@j])+"["+.@nameid[.@j]+"]";
+			}
+			.@account_id = 	.@char_account_id[.@j];
+			.@char_id = 	.@inventory_char_id[.@j];
+			.@char_name2$ = 	.@char_name$[.@j];
+			query_sql("INSERT INTO `mvp_cards_log` (id_card,name_card,localizacion,account_id,char_id,char_name) VALUES ("+.@id_card+",'"+escape_sql(.@name_card$)+"','"+escape_sql(.@localizacion$)+"',"+.@account_id+","+.@char_id+",'"+escape_sql(.@char_name2$)+"')");
+		}
+		.@b = query_sql("SELECT `char`.account_id,`cart_inventory`.`char_id`,`char`.`name`,`nameid` FROM `cart_inventory`  INNER JOIN `char` ON `char`.`char_id` = `cart_inventory`.`char_id`  WHERE ( CASE WHEN `nameid` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card0` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card1` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card2` = "+.card_mvps[.@i]+" THEN `nameid`  WHEN `card3` = "+.card_mvps[.@i]+" THEN `nameid` ELSE  0 END) > 0;", .@char_account_id, .@inventory_char_id, .@char_name$, .@nameid);
+		for(.@j = 0; .@j < .@b; .@j++){
+
+			.@id_card = .card_mvps[.@i];
+			.@name_card$ = getitemname(.card_mvps[.@i]);
+			if(.@nameid[.@j] == .card_mvps[.@i]){
+				.@localizacion$ = "[cart]";
+			}else{
+				.@localizacion$ = "[cart]"+getitemname(.@nameid[.@j])+"["+.@nameid[.@j]+"]";
+			}
+			.@account_id = 	.@char_account_id[.@j];
+			.@char_id = 	.@inventory_char_id[.@j];
+			.@char_name2$ = 	.@char_name$[.@j];
+			query_sql("INSERT INTO `mvp_cards_log` (id_card,name_card,localizacion,account_id,char_id,char_name) VALUES ("+.@id_card+",'"+escape_sql(.@name_card$)+"','"+escape_sql(.@localizacion$)+"',"+.@account_id+","+.@char_id+",'"+escape_sql(.@char_name2$)+"')");
+		}
+		.@b = query_sql("SELECT `nameid`,`account_id` FROM `storage` WHERE ( CASE WHEN `nameid` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card0` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card1` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card2` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card3` = "+.card_mvps[.@i]+" THEN `nameid` ELSE 0 END) > 0;", .@nameid, .@account_id);
+		for(.@j = 0; .@j < .@b; .@j++){
+
+			.@id_card = .card_mvps[.@i];
+			.@name_card$ = getitemname(.card_mvps[.@i]);
+			if(.@nameid[.@j] == .card_mvps[.@i]){
+				.@localizacion$ = "[Storage]";
+			}else{
+				.@localizacion$ = "[Storage]"+getitemname(.@nameid[.@j])+"["+.@nameid[.@j]+"]";
+			}
+			.@account_id = 	.@account_id[.@j];
+			query_sql("INSERT INTO `mvp_cards_log` (id_card,name_card,localizacion,account_id) VALUES ("+.@id_card+",'"+escape_sql(.@name_card$)+"','"+escape_sql(.@localizacion$)+"',"+.@account_id+")");
+		}
+		.@b = query_sql("SELECT `nameid`,`guild_id` FROM `guild_storage` WHERE ( CASE WHEN `nameid` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card0` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card1` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card2` = "+.card_mvps[.@i]+" THEN `nameid` WHEN `card3` = "+.card_mvps[.@i]+" THEN `nameid` ELSE 0 END) > 0;", .@nameid, .@account_id);
+		for(.@j = 0; .@j < .@b; .@j++){
+
+			.@id_card = .card_mvps[.@i];
+			.@name_card$ = getitemname(.card_mvps[.@i]);
+			if(.@nameid[.@j] == .card_mvps[.@i]){
+				.@localizacion$ = "[Guild Storage]";
+			}else{
+				.@localizacion$ = "[Guild Storage]"+getitemname(.@nameid[.@j])+"["+.@nameid[.@j]+"]";
+			}
+			.@account_id = 	.@account_id[.@j];
+			query_sql("INSERT INTO `mvp_cards_log` (id_card,name_card,localizacion,account_id) VALUES ("+.@id_card+",'"+escape_sql(.@name_card$)+"','"+escape_sql(.@localizacion$)+"',"+.@account_id+")");
+		}
+	}
+	end;
+}

@@ -1,0 +1,96 @@
+//===== Hercules Script ======================================================
+//= ??Quest for Zodiac Headgeards
+//===== By: ==================================================================
+//= Ridley
+//===== Current Version: =====================================================
+//= 1.0
+//===== Description: =========================================================
+//= Rotates each month. January (Capricorn) to December (Sagittarius)
+//= Counts and displays required items and how much you miss
+//= Player can choose to make diadem or crown
+//============================================================================
+//prontera,155,181,5	script	Zodiac#hats	4_F_PINKWOMAN,{
+amatsu,113,105,5	script	Zodiac#hats	4_F_PINKWOMAN,{
+	mes "[Zodiac of the Month]";
+	mes "Hello there, I am in charge of the Zodiac items. Please select which Zodiac item you are interested in.";
+		if (select("Zodiac Diadem", "Zodiac Crown") == 1) {
+			function Zodiac;
+			setarray .Zodiac$[0], "Capricon_Diadem", "Aquarius_Diadem", "Pisces_Diadem", "Aries_Diadem", "Taurus_Diadem", "Gemini_Diadem", "Cancer_Diadem", "Leo_Diadem", "Virgo_Diadem", "Libra_Diadem", "Scorpio_Diadem", "Sagittarius_Diadem";
+		} else {		
+			function Zodiac;
+			setarray .Zodiac$[0], "Capricon_Crown", "Aquarius_Crown", "Pisces_Crown", "Aries_Crown", "Taurus_Crown", "Gemini_Crown", "Cancer_Crown", "Leo_Crown", "Virgo_Crown", "Libra_Crown", "Scorpio_Crown", "Sagittarius_Crown";
+		}
+	next;
+	mes "[Zodiac of the Month]";
+	mes "Would you like to make 1 ^FF0000" + getitemname (.Zodiac$[gettime(6) -1]) + "^000000 for the %dth Month of this year ?";
+	next;
+		if (select("Yes", "No") == 2)
+			close;
+	switch (gettime(6)) {
+	// (Item,Amount, Item,Amount,..);
+	case 1:
+		callfunc "Zodiac", 7511, 300, 2256, 1, "Goat_Card", 1, 7107, 100, 7106, 100;
+		break;
+	case 2:
+		callfunc "Zodiac", 7511, 300, "Aqua_Elemental_Card", 1, "Crystalized_Teardrop", 100, "Water_Of_Darkness", 20, "Holy_Water", 50;
+		break;
+	case 3:
+		callfunc "Zodiac", 7511, 300, "Lip_Of_Ancient_Fish", 100, "Fisherman's_Dagger", 1, "Sword_Fish_Card", 1, "Water_Of_Darkness", 50;
+		break;
+	case 4:
+		callfunc "Zodiac", 7511, 300, 2256, 1, "Book_Of_Blazing_Sun_", 1, 7107, 100, 7106, 100;
+		break;
+	case 5:
+		callfunc "Zodiac", 7511, 300, "Nose_Ring", 100, "Hammer_Of_Blacksmith", 10, "Majoruros_Card", 1, "Minorous_Card", 1;
+		break;
+	case 6: 
+		callfunc "Zodiac",7511,300, "Twinhorn_Helm",100, "Book_Of_Gust_Of_Wind_",1, "Rough_Wind",15, "Windhawk",1;
+		break;
+	case 7: 
+		callfunc "Zodiac",7511,300, 960,100, 991,50, 943,100, 4049,1;
+		break;
+	case 8: 
+		callfunc "Zodiac",7511,300, "Tiger_Footskin",1, "Horn_Of_Hilsrion",100, "Hilsrion_Card",1, "Horn_Of_Hilthrion",1;
+		break;
+	case 9: 
+		callfunc "Zodiac",7511,300, "Skirt_Of_Virgin",1, "Kiss_Of_Angel",1, "Angel's_Arrival",1, "Angel's_Warmth",1, "Angel's_Safeguard",1, "Angel's_Protection",1, "Angelic_Chain",1;
+		break;
+	case 10: 
+		callfunc "Zodiac",7511,300, "Whip_Of_Balance",1, "Prohibition_Red_Candle",1, "Red_Feather",50, "Injustice_Card",1;
+		break;
+	case 11: 
+		callfunc "Zodiac",7511,300, "Scorpion_Card",1, "Scorpion's_Tail",100, "Scropion's_Nipper",100;
+		break;
+	case 12: 
+		callfunc "Zodiac",7511,300, "Piece_Of_Darkness",50, "Veteran_Axe",1, "Burning_Bow",1, "Burning_Heart",100;
+		break;
+	}
+	mes "[Zodiac of the Month]";
+	mes "Awesome! Here you go. You gained ^FF0000" + getitemname (.Zodiac$[gettime(6) -1]) + "^000000 for this month!";
+	getitem .Zodiac$[gettime(DT_MONTH) - 1], 1;
+	close;
+	function Zodiac {
+
+	}
+}
+
+function	script	Zodiac	{
+	mes "[  ^0000FF Required Items ^000000  ]";
+	mes	"^FFFFFF________________________________^000000";
+	for (.@i = 0; getarg(.@i, 0); .@i+=2) {
+		mes ((countitem(getarg(.@i)) < getarg(.@i + 1))?"^FF0000":"^0000FF")+"[ " + countitem(getarg(.@i)) + " / " + getarg(.@i + 1) + " ] ^0000FF" + getitemname(getarg(.@i)) + "^000000";
+			if (countitem(getarg(.@i)) < getarg(.@i + 1))
+				.@j++;
+	}
+	mes "^FFFFFF________________________________^000000";
+	if (.@j) {
+	mes "[  ^FF0000Await completion for " + .@j + " Items^000000  ]";
+		close;
+	}
+	next;
+	if (select("^FF0000Continue^000000", "Cancel") == 2) close;
+		for(.@i = 0; getarg(.@i,0); .@i+=2) {
+			delitem getarg(.@i), getarg(.@i + 1);
+		}
+		return;
+}

@@ -1,0 +1,674 @@
+prt_fild08,176,369,4	script	Merchant Cat#0	553,{
+	set .@CurMap$, strnpcinfo(4);
+	set .@TownID, strnpcinfo(2);
+	.@ComerceProfitName$ = "ComerceProfit";
+	if(.@TownID >= 16)
+		set .@TownID, .@TownID - 1;
+	set .@NpcName$, "[Cat Pawn Merchant]";
+	if(.@CurMap$ == "prt_fild08")
+		set .@CurMap$, "prontera";
+	if(.@CurMap$ == "gef_fild00")
+		set .@CurMap$, "geffen";
+	if(.@CurMap$ == "xmas")
+		set .@CurMap$, "lutie";
+	if(MarketLevel < 1)
+	{
+		set MarketLevel, 1;
+		set MarketExp, 0;
+	}
+	set .@MarketMaxExp, 75 * MarketLevel;
+	set .@Cargo, 0;
+	for(.@i = 0; .@i <= .ProductsEnd - .ProductsStart; .@i++)
+	{
+		set .@Cargo, .@Cargo + (countitem(.ProductsStart + .@i) * getiteminfo(.ProductsStart + .@i, 6));
+	}
+	if(TradeCatIntroduction == 0)
+	{
+		mes .@NpcName$;
+		mes "You must be new, this is the Cat Paw Merchants, we trade things from one town to another to keep the economy alive.";
+		next;
+		mes .@NpcName$;
+		mes "But currently we are short handed, so we'd like people interessed to help us delivering the goods to the other towns.";
+		next;
+		mes .@NpcName$;
+		mes "You may think we use Zenys to trade, but no, we trade goods by using Ducats as currency.";
+		next;
+		mes .@NpcName$;
+		mes "Each town will offer a different value in price for items, the general idea is of buying cheap and selling expenser.";
+		next;
+		mes .@NpcName$;
+		mes "Depending on how much profit you get from the trade, we may even reward you with a number of Zenys, or something else....";
+		next;
+		mes .@NpcName$;
+		mes "But you have to beware when carrying valuable goods around, It may attract the attention of bandits aswell.";
+		next;
+		mes .@NpcName$;
+		mes "As a little gift, we will give you a starting 500 Ducats for you to use in the trading.";
+		set Ducats, Ducats + 500;
+		next;
+		set TradeCatIntroduction, 1;
+	}
+	else
+	{
+		if(.@Cargo == 0 && Ducats < 500)
+		{
+			mes .@NpcName$;
+			mes "You seems to have lost all your ducats, aswell as your goods, probably has been stolen by bandits or you did a bad deal.";
+			next;
+			mes .@NpcName$;
+			mes "Here, I'll give you a sum of ducats to help you on your restart.";
+			next;
+			set .@DucatsDifference, 500 - Ducats;
+			Ducats += .@DucatsDifference;
+			mes "Gained " + .@DucatsDifference + " Ducats.";
+			next;
+		}
+	}
+	set .@MaxCargo, callfunc("F_TradeLevelCargo", MarketLevel, getcharid(0));
+	dispbottom "Cat Pawn Merchant Level: "+ MarketLevel + " EXP:"+MarketExp + "/" + .@MarketMaxExp+".";
+	dispbottom "You have " + Ducats + " Ducats.";
+	set .@RegionProduct[0], 65000;
+	goto SetRegionProducts;
+	ReturnFromRegion:
+	mes .@NpcName$;
+	if(.@CurMap$ == "umbala" && event_umbala < 3)
+	{
+		mes "*I can't understand what he says*";
+		close;
+	}
+	if(.@CurMap$ == "niflheim")
+	{
+		mes "This place is creepy, but cannot stop the capitalism.";
+	}
+	mes "Welcome to the Cat Pawn Trading, we hire you to trade items through towns, what do you want?";
+	mes "Cargo Hold: "+.@Cargo + "/"+.@MaxCargo;
+	next;
+	menu "Buy",L_buy, "Sell",L_sell, "What is Trading?", L_info, "Daily Quest", L_dailyQuest,"Nothing",-;
+	mes .@NpcName$;
+	mes "In case you change your mind, visit us again.";
+	close2;
+	end;
+	
+	L_dailyQuest:
+		mes .@NpcName$;
+		.@ComerceDateName$ = "ComerceLastDay$";
+		.@Today$ = gettime(5)+""+gettime(6)+""+gettime(7);
+		.@ProfitToAchieve = 5000;
+		if(getd(.@ComerceDateName$) != .@Today$)
+		{
+			if(getd(.@ComerceProfitName$) >= .@ProfitToAchieve)
+			{				
+				mes "Good job, take this for your hard work.";
+				getexp 200 + (BaseLevel * 7), 0;
+				getitem 47006, (JobLevel * 50);
+				setd .@ComerceDateName$, .@Today$;
+				setd .@ComerceProfitName$, 0;
+			}
+			else
+			{
+				mes "If you get "+ (.@ProfitToAchieve - getd(.@ComerceProfitName$)) + " Zenys of profit, I will give you a reward.";
+			}
+		}
+		else
+		{
+			mes "There is no mission for you today, come back tomorrow.";
+		}
+		close;
+	
+	L_info:
+		mes .@NpcName$;
+		mes "Trading allows you to buy products in one town, and sell them to others.";
+		next;
+		mes .@NpcName$;
+		mes "By doing that you will be able to make money, if you buy cheap products to sell them expenser on other towns.";
+		next;
+		mes .@NpcName$;
+		mes "But remember, 5% of what you gain will be given to the Cat Pawn Merchants.";
+		mes "And you can still gain some experience by doing trading.";
+		next;
+		mes .@NpcName$;
+		mes "But be sure to not be defeated in combat, part of your cargo may break.";
+		close;
+	
+	L_buy:
+		mes .@NpcName$;
+		mes "What do you want to buy?";
+		//mes " === Market Rates === ";
+		BuyStackReturn:
+		set .@i, 0;
+		set .@MenuText$, "";
+		//explode(.@Taxes$, .Rates$[.@TownID], "|");
+		while (.@i < getarraysize(.@RegionProduct))
+		{
+			set .@ID, .@RegionProduct[.@i];
+			.@Tax = getd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart));
+			set .@NewPrice, callfunc("F_MarketPercentMaker",getiteminfo(.@ID, 0), .@Tax) - getiteminfo(.@ID, 0);
+			set .@MesText$, (callfunc("F_Affordable", getiteminfo(.@ID, 0)) == 0 ? "^C0C0C0" : (.@NewPrice < 0 ? "^009900" : "^FF0000")) + getitemname(.@ID) + " -> "+getiteminfo(.@ID, 0) + (.@NewPrice >= 0 ? " + " : " ") + (.@NewPrice) + "D";
+			set .@MesText$, replacestr(.@MesText$, "Product: ", "");
+			if(.@i > 0)
+				set .@MenuText$, .@MenuText$ + ":";
+			set .@MenuText$, .@MenuText$ + .@MesText$;
+			set .@i, .@i+1;
+		}
+		next;
+		menu .@MenuText$,L_checkItemBuy,"^000000Nothing Interesting...",L_close;
+		close;
+		
+	L_close:
+		mes .@NpcName$;
+		mes "Visit us again, we can make you rich.";
+		close;
+		
+	L_checkItemBuy:
+		set .@SelectedItem, @menu - 1;
+		mes .@NpcName$;
+		set .@ID, .@RegionProduct[.@SelectedItem];
+		if(callfunc("F_Affordable", getiteminfo(.@ID, 0)) == 0)
+		{
+			mes "You aren't experienced enough to trade this kind of goods.";
+			next;
+			goto L_buy;
+		}
+		mes "Here are the prices of "+ getitemname(.@ID)+" in other towns.";
+		set .@PriceHere, callfunc("F_MarketPercentMaker",getiteminfo(.@ID, 0), getd(".Taxes_" + .@TownID + "_" + .@curTax));
+		for(.@i = 0; .@i < .Towns; .@i++)
+		{
+			if(.@i == .@TownID)
+				continue;
+			//explode(.@Taxes$, .Rates$[.@i], "|");
+			set .@CityTax, getd(".Taxes_" + .@i + "_" + (.@ID - .ProductsStart));
+			set .@NewPrice, callfunc("F_MarketPercentMaker",getiteminfo(.@ID, 0), .@CityTax) - getiteminfo(.@ID, 0);
+			set .@MesText$, (.@NewPrice >= 0 ? "^009900" : "^FF0000") + .Townslist$[.@i] + ": " + getiteminfo(.@ID, 0) + (.@NewPrice >= 0 ? " + " : " ") + (.@NewPrice) + "D";
+			mes .@MesText$;
+		}
+		next;
+		menu "Buy Item",L_buy2, "Better not...", L_close;
+		
+	L_buy2:
+		mes .@NpcName$;
+		mes "How Many?";
+		//explode(.@Taxes$, .Rates$[.@TownID], "|");
+		set .@BuyItemPrice, callfunc("F_MarketPercentMaker", getiteminfo(.@ID, 0), getd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart)));
+		set .@MayBuy, Ducats / .@BuyItemPrice;
+		if(.@MayBuy > (MaxWeight - Weight) / getiteminfo(.@ID, 6))
+		{
+			set .@MayBuy,(MaxWeight - Weight) / getiteminfo(.@ID, 6);
+		}
+		if(.@MayBuy > (.@MaxCargo - .@Cargo) / getiteminfo(.@ID, 6))
+		{
+			set .@MayBuy,(.@MaxCargo - .@Cargo) / getiteminfo(.@ID, 6);
+		}
+		buyreturn:
+		mes "You may buy a maximum of "+.@MayBuy+" of this item.";
+		mes "Digit 0 to cancel.";
+		next;
+		input .@BuyStack;
+		if(.@BuyStack <= 0)
+		{
+			mes .@NpcName$;
+			mes "If you say so...";
+			close;
+		}
+		if(.@BuyStack > .@MayBuy)
+		{
+			mes .@NpcName$;
+			mes "W-wait a moment! You are trying to buy more than you can.";
+			goto buyreturn;
+		}
+		set .@Cargo, .@Cargo + (getiteminfo(.@ID, 6) * .@BuyStack);
+		getitembound .@ID, .@BuyStack, 4;
+		set .@BuyItem, (callfunc("F_MarketPercentMaker", getiteminfo(.@ID, 0), getd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart))) * .@BuyStack);
+		set Ducats, Ducats - .@BuyItem;
+		setd("Item_" + (.@ID - .ProductsStart) + "_BuyTax", getd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart)));
+		setd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart), getd(".Taxes_" + .@TownID + "_" + (.@ID - .ProductsStart)) + (.@BuyItem - (getiteminfo(.@ID, 0) * .@BuyStack)));
+		//set .@Taxes$[.@ID - .ProductsStart], .@Taxes$[.@ID - .ProductsStart] + (.@BuyItem - (getiteminfo(.@ID, 0) * .@BuyStack)); //3
+		//.Rates$[.@TownID] = implode(.@Taxes$, "|");
+		mes .@NpcName$;
+		mes "Here it goes, anything else?";
+		goto BuyStackReturn;
+		
+	L_sell:
+		mes .@NpcName$;
+		mes "What do you want to sell?";
+		returnToSale:
+		set .@MenuText$, "";
+		//explode(.@Taxes$, .Rates$[.@TownID], "|");
+		for(.@i = 0; .@i <= .ProductsEnd - .ProductsStart; .@i++)
+		{
+			set .@ItemID, .ProductsStart + .@i;
+			set .@ItemCount, countitem(.@ItemID);
+			set .@ItemRates, getd(".Taxes_" + .@TownID + "_" + .@i + "");
+			set .@MesText$, (.@ItemCount == 0 ? "^555555" : (.@ItemRates >= 10000 ? "^009900" : "^FF0000")) + getitemname(.@ItemID) + " " + .@ItemCount+" pcs -> " + getiteminfo(.@ItemID, 0) + (.@ItemRates > 0 ? " + " : " ") + (callfunc("F_MarketPercentMaker",getiteminfo(.@ItemID, 0), .@ItemRates) - getiteminfo(.@ItemID, 0)) + "D";
+			set .@MesText$, replacestr(.@MesText$, "Product: ", "");
+			if(.@ItemCount == 0)
+				.@MesText$ = "";
+			if(.@i > 0)
+				set .@MenuText$, .@MenuText$ + ":";
+			set .@MenuText$, .@MenuText$ + .@MesText$;
+		}
+		.@MenuText$ += ":^000000I guess not...";
+		//next;
+		//menu .@MenuText$, L_sell2, "I guess not...", L_close;
+		.@SelectedItem = select(.@MenuText$) - 1;
+		next;
+		if(.@SelectedItem > .ProductsEnd - .ProductsStart)
+		{
+			goto L_close;
+		}
+		goto L_sell2;
+		close;
+		
+	L_sell2:
+		//set .@SelectedItem, @menu - 1;
+		mes .@NpcName$;
+		for(.@i = 0; .@i < getarraysize(.@RegionProduct); .@i++)
+		{
+			if(.@RegionProduct[.@i] == .ProductsStart + .@SelectedItem)
+			{
+				mes "You cannot sell this item here, since it can be found here.";
+				goto returnToSale;
+			}
+		}
+		set .@ItemCount, countitem(.ProductsStart + .@SelectedItem);
+		if(.@ItemCount <= 0)
+		{
+			mes "You does not have this item.";
+			mes "Pick another item.";
+			goto returnToSale;
+		}
+		returnSellList:
+		mes "Pick the number of items you want to sell, you have "+.@ItemCount + " of this item.";
+		input .@SellStack;
+		if(.@SellStack > .@ItemCount)
+		{
+			/*next;
+			mes .@NpcName$;
+			mes "You does not have this number of items.";
+			goto returnSellList;*/
+			.@SellStack = .@ItemCount;
+		}
+		if(.@SellStack <= 0)
+		{
+			next;
+			mes .@NpcName$;
+			mes "Does not want to sell it anymore? Alright then.";
+			next;
+			goto L_sell;
+		}
+		set .@CityTax, getd(".Taxes_" + .@TownID + "_" + .@SelectedItem);
+		set .@DucatsToGet, ((callfunc("F_MarketPercentMaker", getiteminfo(.ProductsStart + .@SelectedItem, 0), .@CityTax) * .@SellStack));
+		if((.@DucatsToGet - getiteminfo(.ProductsStart + .@SelectedItem, 0)) <= 0)
+		{
+			set .@DucatsToGet, .@DucatsToGet - getiteminfo(.ProductsStart + .@SelectedItem, 0) - (((.@DucatsToGet - getiteminfo(.ProductsStart + .@SelectedItem, 0)) / 10) / 2);
+		}
+		.@Profit = .@DucatsToGet - callfunc("F_MarketPercentMaker", getiteminfo(.ProductsStart + .@SelectedItem, 0), getd("Item_" + (.@ID - .ProductsStart) + "_BuyTax")) * .@SellStack;//(.@DucatsToGet - (getiteminfo(.ProductsStart + .@SelectedItem, 0) * .@SellStack));
+		.@ZenyReward = .@Profit / 10;
+		if(.@ZenyReward < 0) .@ZenyReward = 0;
+		Zeny += .@ZenyReward;
+		set .@ExpToGet, .@Profit;
+		if(.@DucatsToGet > 0)
+		{
+			setd .@ComerceProfitName$, getd(.@ComerceProfitName$) + (.@DucatsToGet - (getiteminfo(.ProductsStart + .@SelectedItem, 0) * .@SellStack));
+		}
+		if(.@ExpToGet <= 0)
+		{
+			set .@ExpToGet, 0;
+		}
+		else
+		{
+			set MarketExp, MarketExp + .@SellStack;
+			.@ExpToGet = .@ExpToGet / 5;
+			if(.@ExpToGet <= 0)
+				.@ExpToGet = 1;
+		}
+		mes "Items sold. Acquired " + .@Profit + " Ducats of profit" + (.@ExpToGet > 0 ? " and Acquired "+.@ExpToGet+" Experience" : "") + ".";
+		if(.@ZenyReward > 0) mes "Acquired "+ .@ZenyReward + " Zenys.";
+		set Ducats, Ducats + .@DucatsToGet;
+		set .@Cargo, .@Cargo - (getiteminfo(.ProductsStart + .@SelectedItem, 6) * .@SellStack);
+		setd(".Taxes_" + .@TownID + "_" + .@SelectedItem, getd(".Taxes_" + .@TownID + "_" + .@SelectedItem) - ((.@DucatsToGet * 100) / (getiteminfo(.ProductsStart + .@SelectedItem, 0) * .@SellStack)));
+		//.@Taxes$[.@SelectedItem] = (atoi(.@Taxes$[.@SelectedItem]) - ((.@DucatsToGet * 100) / (getiteminfo(.ProductsStart + .@SelectedItem, 0) * .@SellStack)));
+		//.Rates$[.@TownID] = implode(.@Taxes$, "|");
+		getexp (.@ExpToGet <= 0 ? 0 : .@ExpToGet), 0;
+		delitem .ProductsStart + .@SelectedItem, .@SellStack;
+		.@LastLevel = MarketLevel;
+		while(MarketExp >= .@MarketMaxExp)
+		{
+			set MarketLevel, MarketLevel + 1;
+			set MarketExp, MarketExp - .@MarketMaxExp;
+		}
+		if(.@LastLevel != MarketLevel)
+			npctalk "Meow! Congratulations " + strcharinfo(0) + " for reaching Merchant Level "+MarketLevel + "!";
+		close;
+	
+	OnInit:
+		goto SetupMarketRates;
+	
+	OnClock0000:
+	OnClock0200:
+	OnClock0400:
+	OnClock0600:
+	OnClock0800:
+	OnClock1000:
+	OnClock1200:
+	OnClock1400:
+	OnClock1600:
+	OnClock1800:
+	OnClock2000:
+	OnClock2200:
+	OnClock2400:
+		goto SetupMarketRates;
+	
+	SetupMarketRates:
+		if(strnpcinfo(2) != "0")
+			end;
+		set .ProductsStart, 48000;
+		set .ProductsEnd, 48041;
+		setarray .TownsList$[0], "Prontera", "Morocc", "Geffen", "Payon", "Alberta", "Izlude", "Al De Baran", "Lutie"; //, "Comodo", "Yuno", "Amatsu", "Rachel", "Umbala", "Niflheim", "Veins", "Jawaii", "Pharos Island", "Einbroch", "Lighthalzen", "Hugel";
+		set .Towns, getarraysize(.TownsList$);
+		set .@i, 0;
+		set .@CurTown, 0;
+		while(.@CurTown < .Towns)
+		{
+			.@curTax = 0;
+			.@i = 0;
+			while(.@i <= (.ProductsEnd - .ProductsStart))
+			{
+				if(.@i == 0 && .@CurTown == 5 || .@i == 5 && .@CurTown == 0)
+				{
+					.@curTax = rand(9990, 10011);
+				}
+				else
+				{
+					.@curTax = rand(5000, 15001);
+				}
+				setd(".Taxes_" + .@CurTown + "_" + .@i, .@curTax);
+				.@i++;
+			}
+			//.Rates$[.@CurTown] = .@curTax;
+			.@CurTown++;
+		}
+		announce "The Cat Pawn Merchant prices were resetted.",0;
+		end;
+		
+	SetRegionProducts:
+		/*for(.@i = 0; .@i < (.ProductsEnd - .ProductsStart); .@i++)
+		{
+			set .@RegionProduct[.@i], .ProductsStart + .@i;
+		}*/
+		if(.@CurMap$ == "prontera")
+		{
+			setarray .@RegionProduct[0], 48000, 48032, 48002, 48023;
+		}
+		else if(.@CurMap$ == "morocc")
+		{
+			setarray .@RegionProduct[0], 48036, 48004, 48016, 48026;
+		}
+		else if(.@CurMap$ == "geffen")
+		{
+			setarray .@RegionProduct[0], 48038, 48011, 48030, 48009;
+		}
+		else if(.@CurMap$ == "payon")
+		{
+			setarray .@RegionProduct[0], 48040, 48022, 48015, 48004;
+		}
+		else if(.@CurMap$ == "alberta")
+		{
+			setarray .@RegionProduct[0], 48041, 48018, 48012, 48024;
+		}
+		else if(.@CurMap$ == "izlude")
+		{
+			setarray .@RegionProduct[0], 48001, 48014, 48035, 48003;
+		}
+		else if(.@CurMap$ == "aldebaran")
+		{
+			setarray .@RegionProduct[0], 48007, 48026, 48011, 48019;
+		}
+		else if(.@CurMap$ == "lutie")
+		{
+			setarray .@RegionProduct[0], 48020, 48028, 48002, 48021;
+		}
+		goto ReturnFromRegion;
+		
+	OnPCLoadMapEvent:
+		BanditPosX = -1;
+		BanditPosY = -1;
+		if(strnpcinfo(4) == strcharinfo(3))
+		{
+			.@ComerceDateName$ = "ComerceLastDay$";
+			.@Today$ = gettime(5)+""+gettime(6)+""+gettime(7);
+			if(getd(.@ComerceDateName$) != .@Today$)
+				showevent 4, 2;
+		}
+		end;
+		
+	OnPCDieEvent:
+		if(strnpcinfo(2) != "0")
+			end;
+		killmonster strcharinfo(3), strcharinfo(0);
+		set .@ProdCount, 0;
+		.@CurStackPos = 0;
+		for(.@i = 0; .@i < (.ProductsEnd - .ProductsStart); .@i++)
+		{
+			set .@ProdID, .ProductsStart + .@i;
+			set .@ProdCount, .@ProdCount + countitem(.@ProdID);
+			if(countitem(.@ProdID) > 0)
+			{
+				.@ProductList[.@CurStackPos] = .@ProdID;
+				//.@ProductStack[.@CurStackPos] = countitem(.@ProdID);
+				.@CurStackPos++;
+			}
+		}
+		set .@ProdRemove, 0;
+		if(.@ProdCount <= 0)
+			end;
+		dispbottom "You lost 5% of the products you were carrying with you.";
+		set .@ProdCount, (.@ProdCount / 10) / 5;
+		while(.@ProdRemove < .@ProdCount)
+		{
+			.@CurProd = rand(getarraysize(.@ProductList));
+			set .@ProdID, .ProductsStart + .@CurProd;
+			if(countitem(.@ProdID) > 0)
+			{
+				delitem .@ProdID, 1;
+				set .@ProdRemove, .@ProdRemove + 1;
+			}
+		}
+		end;
+		
+	OnPCLoginEvent:
+		if(strnpcinfo(2) != "0")
+			end;
+		BanditPosX = -1;
+		BanditPosY = -1;
+		goto CheckTimer;
+		end;
+		
+	CheckTimer:
+	OnAmbushCheck:
+		set .@ProductsValue, 0;
+		for(.@i = 0; .@i < (.ProductsEnd - .ProductsStart); .@i++)
+		{
+			set .@ProdID, .ProductsStart + .@i;
+			set .@ProdCount, countitem(.@ProdID);
+			.@ProductsValue = .@ProductsValue + (getiteminfo(.@ProdID, 0) * .@ProdCount);
+		}
+		deltimer strnpcinfo(3) + "::OnAmbushCheck";
+		addtimer 15000, strnpcinfo(3) + "::OnAmbushCheck";
+		.@AmbushChance = .@ProductsValue;
+		getmapxy(.@map$, .@x, .@y, BL_PC, strcharinfo(0));
+		if(strpos(.@map$, "fild") > 0 && .@ProductsValue > 0 && rand(10000) < .@AmbushChance)
+		{
+			.@BanditSpawnNumber = 1 + .@ProductsValue / 1000;
+			for(.@i = 0; .@i < .@BanditSpawnNumber; .@i++)
+			{
+						if(rand(2) == 1)
+						{
+							.@BanditPosX = 5;
+							.@BanditPosY = rand(5);
+						}
+						else
+						{
+							.@BanditPosY = 5;
+							.@BanditPosX = rand(5);
+						}
+						if(rand(2) == 1) .@BanditPosX = .@BanditPosX * -1;
+						if(rand(2) == 1) .@BanditPosY = .@BanditPosY * -1;
+						.@BanditPosX += .@x;
+						.@BanditPosY += .@y;
+						.@PriceBonus = 8;
+						.@Bandit = 1002;
+						if(.@ProductsValue < 300 * .@PriceBonus)
+						{
+							.@Bandit = 1184;
+						}
+						else if(.@ProductsValue < 650 * .@PriceBonus)
+						{
+							.@Bandit = 1005;
+						}
+						else if(.@ProductsValue < 1000 * .@PriceBonus)
+						{
+							.@Bandit = 1608;
+						}
+						else if(.@ProductsValue < 1250 * .@PriceBonus)
+						{
+							.@Goblin = rand(7);
+							if(.@Goblin == 0)
+								.@Bandit = 1122;
+							if(.@Goblin == 1)
+								.@Bandit = 1534;
+							if(.@Goblin == 2)
+								.@Bandit = 1125;
+							if(.@Goblin == 3)
+								.@Bandit = 1537;
+							if(.@Goblin == 4)
+								.@Bandit = 1123;
+							if(.@Goblin == 5)
+								.@Bandit = 1535;
+							if(.@Goblin == 6)
+								.@Bandit = 1126;
+						}
+						else if(.@ProductsValue < 1400 * .@PriceBonus)
+						{
+							.@Bandit = 1106;
+						}
+						else if(.@ProductsValue < 1550 * .@PriceBonus)
+						{
+							.@Bandit = 1119;
+						}
+						else if(.@ProductsValue < 1700 * .@PriceBonus)
+						{
+							.@Bandit = 1016;
+						}
+						else if(.@ProductsValue < 1900 * .@PriceBonus)
+						{
+							.@Bandit = 	1417;
+						}
+						else if(.@ProductsValue < 1550 * .@PriceBonus)
+						{
+							.@Bandit = 1119;
+						}
+						else if(.@ProductsValue < 1800 * .@PriceBonus)
+						{
+							.@Bandit = 1036;
+						}
+						else if(.@ProductsValue < 2000 * .@PriceBonus)
+						{
+							.@Bandit = 1271;
+						}
+						else if(.@ProductsValue < 2250 * .@PriceBonus)
+						{
+							.@Bandit = 1680;
+						}
+						else if(.@ProductsValue < 2500 * .@PriceBonus)
+						{
+							.@Bandit = 1253;
+						}
+						else if(.@ProductsValue < 2750 * .@PriceBonus)
+						{
+							.@Bandit = 1180;
+						}
+						monster strcharinfo(3), .@BanditPosX, .@BanditPosY, "Bandit", .@Bandit, 1,"::" + strcharinfo(0);
+			}
+			message strcharinfo(0), "It's a bandit attack!";
+			atcommand "@effect 99";
+			sc_start SC_BLIND, 10000, 0;
+			MerchLastPosX = .@x;
+			MerchLastPosY = .@y;
+		}
+		else
+		{
+			//message strcharinfo(0), "Everything is peaceful for now.";
+		}
+		end;
+}
+
+function	script	F_Affordable	{
+	set .@ItemPrice, getarg(0);
+	if(.@ItemPrice >= 1000 && MarketLevel >= 20 || .@ItemPrice < 1000 && MarketLevel >= 7 || .@ItemPrice < 100)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+function	script	F_TradeLevelCargo	{
+	set .@Level, getarg(0);
+	set .@PlayerID, getarg(1);
+	set .@Cargo, 400;
+	while(.@Level > 0)
+	{
+		set .@Cargo, .@Cargo + (.@Cargo / 12);
+		set .@Level, .@Level - 1;
+	}
+	//if(eaclass(readparam(Class , rid2name(.@PlayerID))&EAJ_BASEMASK) == EAJ_MERCHANT)
+	//	set .@Cargo, .@Cargo + 1200;
+	return .@Cargo;
+}
+
+function	script	F_MarketPercentMaker	{
+	set .@Price, getarg(0);
+	set .@Rate, getarg(1);
+	return (.@Price * .@Rate) / 10000;
+}
+
+morocc,165,52,4	duplicate(Merchant Cat#0)	Merchant Cat#1	496
+geffen,131,60,4	duplicate(Merchant Cat#0)	Merchant Cat#2	554
+payon,179,112,4	duplicate(Merchant Cat#0)	Merchant Cat#3	555
+alberta,28,240,4	duplicate(Merchant Cat#0)	Merchant Cat#4	545
+izlude,139,127,4	duplicate(Merchant Cat#0)	Merchant Cat#5	544
+aldebaran,151,90,4	duplicate(Merchant Cat#0)	Merchant Cat#6	546
+xmas,161,104,4	duplicate(Merchant Cat#0)	Merchant Cat#7	561
+/*comodo,183,146,4	duplicate(Merchant Cat#0)	Merchant Cat#8	559
+yuno,173,183,4	duplicate(Merchant Cat#0)	Merchant Cat#9	549
+amatsu,211,105,4	duplicate(Merchant Cat#0)	Merchant Cat#10	554
+rachel,122,123,4	duplicate(Merchant Cat#0)	Merchant Cat#11	560
+umbala,126,139,4	duplicate(Merchant Cat#0)	Merchant Cat#12	559
+niflheim,201,199,4	duplicate(Merchant Cat#0)	Merchant Cat#13	561
+veins,297,215,4	duplicate(Merchant Cat#0)	Merchant Cat#14	545
+jawaii,117,1589,3	duplicate(Merchant Cat#0)	Merchant Cat#15	544
+jawaii,115,1589,5	duplicate(Merchant Cat#0)	Merchant Cat#16	555
+cmd_fild07,234,127,4	duplicate(Merchant Cat#0)	Merchant Cat#17	548
+einbroch,244,182,4	duplicate(Merchant Cat#0)	Merchant Cat#18	495
+lighthalzen,175,113,4	duplicate(Merchant Cat#0)	Merchant Cat#19	556
+hugel,98,136,4	duplicate(Merchant Cat#0)	Merchant Cat#20	547*/
+
+prt_fild08	mapflag	loadevent	true
+morocc	mapflag	loadevent	true
+geffen	mapflag	loadevent	true
+payon	mapflag	loadevent	true
+alberta	mapflag	loadevent	true
+izlude	mapflag	loadevent	true
+aldebaran	mapflag	loadevent	true
+xmas	mapflag	loadevent	true
+comodo	mapflag	loadevent	true
+yuno	mapflag	loadevent	true
+amatsu	mapflag	loadevent	true
+rachel	mapflag	loadevent	true
+umbala	mapflag	loadevent	true
+niflheim	mapflag	loadevent	true
+veins	mapflag	loadevent	true
+jawaii	mapflag	loadevent	true
+cmd_fild07	mapflag	loadevent	true
+einbroch	mapflag	loadevent	true
+lighthalzen	mapflag	loadevent	true
+hugel	mapflag	loadevent	true

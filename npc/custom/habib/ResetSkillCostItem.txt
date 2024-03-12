@@ -1,0 +1,64 @@
+icas_in,190,64,4	script	Hypnotist	124,{
+    mes "[Hypnotist]";
+    mes "Greetings, adventurer.";
+    mes "I'm a member of the Hypnotist";
+    mes "Academy sent here to Isgard";
+    mes "to provide Skill Reset services.";
+    next;
+    switch(select("Skill Reset?:I want a Skill Reset:Nothing")) {
+    
+    case 1:
+        mes "[Hypnotist]";
+        mes "Skill Resets allow warriors";
+        mes "to redistribute their skill";
+        mes "points if they are unhappy";
+        mes "but require a ^FF0000Rare Einherjar Soul^000000.";
+        close;
+    
+    case 2:
+        mes "[Hypnotist]";
+        mes "Are you sure that you";
+        mes "want to proceed with";
+        mes "my ^FF0000Skill Reset^000000 service?";
+        next;
+        if (select("Yes:Cancel") == 1) {
+            
+            if (countitem(47010) >= 1) {
+            delitem 47010,1;
+            sc_end_class;
+			ResetSkill;
+                mes "[Hypnotist]";
+                mes "Thank you for using";
+                mes "my Skill Redistribution";
+                mes "services. Oh, and best";
+                mes "of luck to you on your";
+                mes "travels, adventurer.";
+				mes "[Hypnotist]";
+				mes "If you had any skills from quest, make sure";
+				mes "you talk to the trainers again and they'll give you";
+				mes "the skills if you have lost them.";
+                close;    
+            }
+            mes "[Hypnotist]";
+            mes "I'm sorry, but you need";
+            mes "a ^FF0000Rare Einherjar Soul^000000";
+            mes "for this service.";
+            close;                
+            
+        }
+        mes "[Hypnotist]";
+        mes "Thank you, and good";
+        mes "luck on your adventures.";
+        mes "Please travel in safety~";
+        close;
+
+    case 3:
+        mes "[Hypnotist]";
+        mes "Thank you, and good";
+        mes "luck on your adventures.";
+        mes "Please travel in safety~";
+        close;
+
+}    
+    
+}

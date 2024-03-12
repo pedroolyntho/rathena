@@ -1,0 +1,29 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Aldebaran
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+aldebaran,144,128,3	script	Bounty Board#al1	837,{
+	callfunc "F_Bounty_Board", 18, 20, 1, 5,
+		2479,	62890,		 6200,	 0,	// NG_MIMIC
+		2478,	62891,		12000,	0,	// NG_RIDEWORD
+		2917,	62892,		15000,	0,	// BIG_BELL
+		2916,	62893,		15000,	0,	// BIG_BEN
+		2919,	62894,		13000,	0;	// NEO_PUNK
+	end;
+}

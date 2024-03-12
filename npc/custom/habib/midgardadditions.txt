@@ -1,0 +1,863 @@
+//------------------------
+//MIDCAMP ADDS
+//------------------------
+mid_camp,336,171,1	script	Camp Guard#man1	852,{
+	mes "[Camp Guard]";
+	mes "Stop!";
+	mes "You're about to enter an area that has not been fully explored.";
+	mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+	//if (ep13_ryu < 100 && ep13_start < 100)
+	//	close;
+	next;
+	switch(select("I want to enter the next area.:I want to stay.")) {
+	case 1:
+		mes "[Camp Guard]";
+		mes "Please be careful out there.";
+		mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+		close2;
+		switch(atoi(charat(strnpcinfo(2),3))) {
+		case 1:
+			if (ep13_animal == 1)
+				set ep13_animal,2;
+			warp "man_fild01",36,235;
+			break;
+		case 2:
+			warp "spl_fild02",379,143;
+			break;
+		case 3:
+			warp "spl_fild02",380,217;
+			break;
+		}
+		end;
+	case 2:
+		mes "[Camp Guard]";
+		mes "No, you can't. Please return to the expedition camp.";
+		close;
+	}
+}
+mid_camp,13,143,5	duplicate(Camp Guard#man1)	Camp Guard#man2	852
+mid_camp,9,215,5	duplicate(Camp Guard#man1)	Camp Guard#man3	852
+
+//STORAGE and SAVE
+mid_campin,22,170,4	script	Kafra Employee::kaf_eden	4_F_KAFRA7,{
+	cutin "kafra_07",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I can lock your storage with a password!";
+	next;
+	mes "[Kafra Employee]";
+	mes "Do you need me?";
+	callfunc("F_SetKafCode","[Kafra Employee]","Kafra Services");
+}
+
+mid_camp,221,244,4	script	Kafra Employee::kaf_morocc	113,{
+	cutin "kafra_05",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,3,0,80,0;
+	savepoint "mid_camp",216,240,1,1;
+	callfunc "F_KafEnd",0,1,"in Midgard Camp";
+}
+
+//------------------------
+//DIMENSIONAL GAP
+//------------------------
+
+mid_camp,207,290,6	script	Expedition Guide#01	4_M_EIN_SOLDIER,{
+	mes "[Expedition Guide]";
+	mes "Are you going to enter the ^0000FFDimensional Gap^000000?  Please use this Transport Device you see here.";
+	next;
+	switch(select("What is the Dimensional Gap?:End Conversation.")) {
+	case 1:
+		mes "[Expedition Guide]";
+		mes "As you know we've already entered through the Dimensional Rift to get to Ash Vacuum right?  The Dimensional Gap is an expansion of that initial discovery.";
+		next;
+		mes "[Expedition Guide]";
+		mes "A member of the Expedition team found these backdoor passages to get through the Dimensional Rifts.";
+		next;
+		mes "[Expedition Guide]";
+		mes "This is like a Midgard Alliance version of the Bifrost bridge so it can connect us to different parts of the New World.";
+		next;
+		mes "[Expedition Guide]";
+		mes "Time and space is distorted in the Dimensional Gap.  Not all passageways have been discovered so please be sure to use caution when entering an unverified area.";
+		next;
+		mes "[Expedition Guide]";
+		mes "Anyone who has become lost here has yet to return.";
+		close;
+	case 2:
+		mes "[Expedition Guide]";
+		mes "Take care.";
+		close;
+	}
+}
+
+mid_camp,212,290,4	script	Expedition Guide#02	4_M_EIN_SOLDIER,{
+	mes "[Expedition Guide]";
+	mes "Please use a ^0000FFTransport Device^000000 if you wish to travel through the dimensional rift.  The insides have not been fully explored yet so please be careful in there.";
+	close;
+}
+
+moc_fild22b,225,198,6	duplicate(Expedition Guide#01)	Expedition Guide#03	4_M_MOC_SOLDIER
+moc_fild22b,223,203,4	duplicate(Expedition Guide#02)	Expedition Guide#04	4_M_MOC_SOLDIER
+bif_fild01,314,155,6	duplicate(Expedition Guide#01)	Expedition Guide#05	4_M_EIN_SOLDIER
+bif_fild01,320,154,4	duplicate(Expedition Guide#02)	Expedition Guide#06	4_M_EIN_SOLDIER
+dic_fild02,236,33,6	duplicate(Expedition Guide#01)	Expedition Guide#07	4_M_EIN_SOLDIER
+dic_fild02,239,36,4	duplicate(Expedition Guide#02)	Expedition Guide#08	4_M_EIN_SOLDIER
+
+dali,137,87,4	script	Allied Forces Soldier	4_M_MOCASS1,{
+	mes "[Allied Forces Soldier]";
+	mes "This dimensional rift is connected to the Allied Forces ^0000FFExpedition Camp^000000 in Jotunheim.";
+	next;
+	mes "[Allied Forces Soldier]";
+	mes "Do not worry, it has been set up after testing hundreds of experiments for safe teleportation.";
+	close;
+}
+
+dali,122,60,4	script	Morocc Soldier	4_M_MOC_SOLDIER,{
+	mes "[Morocc Soldier]";
+	mes "This dimensional rift is connected to ^0000FFMorocc^000000 back in Midgard.";
+	next;
+	mes "[Morocc Soldier]";
+	mes "This is the fastest gateway back to our world.  The area is still destroyed but restoration efforts will soon be on the way.";
+	close;
+}
+
+dali,51,104,6	script	Spledide Soldier	4_M_FAIRYSOLDIER2,{
+	mes "[Spledide Soldier]";
+	mes "This dimensional rift is connected to the south of ^0000FFBifrost^000000.  It enables quick travel to the Splendide frontline.";
+	next;
+	mes "[Spledide Soldier]";
+	mes "If we use it properly, it enables us to advance more easily to the capital of the Sapha.";
+	next;
+	mes "[Spledide Soldier]";
+	mes "The Mayor has asked us to cooperate as best we can instead of fighting, so I'm under orders not to do anything.  Since we have a common enemy we won't fight the Sapha... for now...";
+	close;
+}
+
+dali,56,126,4	script	Dispatched Sapha	4_MAN_BENKUNI,{
+	mes "[Dispatched Sapha]";
+	mes "This dimensional rift is connected to the southern area of the ^0000FFKamidal Mountains^000000 in El Dicastes.  I just dropped by for my research, but it is incredible.";
+	next;
+	mes "[Dispatched Sapha]";
+	mes "Moreover it is next to the Laphine capital..... Hmm... Do not worry, I do not want to fight in such a place.";
+	close;
+}
+
+dali,109,94,4	shop	Sundries Merchant	4_M_MERCAT2,611:-1,1750:-1,1065:-1
+
+dali,112,95,4	script	Logistics Manager	4_M_MERCAT2,{
+	mes "[Logistics Manager]";
+	mes "Welcome.  I am in charge of logistics to take care of your items in this weird place.  Do you need to access your storage?";
+	next;
+	switch(select("Open Storage 200 Zeny.:No Thanks.")) {
+	case 1:
+		if (Zeny > 199) {
+			if(!callfunc("F_CanOpenStorage")){
+				mes "[Logistics Manager]";
+				mes "You are not yet qualified to use the Storage.";
+			}
+			else {
+				Zeny -= 200;
+				openstorage;
+			}
+		}
+		else {
+			mes "[Logistics Manager]";
+			mes "You need at least 200 zeny to use the Storage.";
+		}
+		break;
+	case 2:
+		mes "[Logistics Manager]";
+		mes "Let me know if you change your mind.";
+	}
+	close;
+}
+
+dali02,58,123,3	script	Curious Knight#KY_KNT	4_M_KY_KNT,{
+	mes "[Curious Knight]";
+	mes "The Royal Guard in here";
+	mes "was desperate for help.";
+	mes "We entered through a secret place";
+	mes "in the palace.";
+	next;
+	mes "[Curious Knight]";
+	mes "We were whisked away here...";
+	mes "No idea where I am but I have to";
+	mes "establish a base here for the";
+	mes "Knighthood.";
+	close;
+}
+dali02,51,112,5	script	Confused Thief#DST_SOL	4_DST_SOLDIER,{
+	mes "[Confused Thief]";
+	mes "One minute I'm in a bar...";
+	mes "The next minute I'm here...";
+	mes "What is this place?";
+	next;
+	mes "[Confused Thief]";
+	mes "There's no night or day in here.";
+	mes "Hmm, something has to be valuable";
+	mes "in this place...";
+	close;
+}
+dali02,65,115,5	script	Adventurous Rafflesia#ra	4_M_RAFLE_GR,{
+	mes "[Adventurous Rafflesia]";
+	mes "No no this has to be Thanatos";
+	mes "Tower...";
+	mes "I sense dark magic here.";
+	next;
+	mes "[Guide]";
+	mes "Oh, we're back here again.";
+	mes "I cannot find a way out!";
+	mes "We are trapped in this maze!";
+	next;
+	mes "[Tourist]";
+	mes "Is this place the famous Prontera?";
+	mes "It is dark just like a big city!";
+	next;
+	mes "[Traveller]";
+	mes "I hear a ticking clock.";
+	mes "This place must be Geffen!";
+	close;
+}
+
+dali02,68,117,5	script	Guide#ra	4_M_RAFLE_GR,{
+	mes "[Guide]";
+	mes "Oh, we're back here again.";
+	mes "I cannot find a way out!";
+	mes "We are trapped in this maze!";
+	next;
+	mes "[Tourist]";
+	mes "Is this place the famous Prontera?";
+	mes "It is dark just like a big city!";
+	next;
+	mes "[Traveller]";
+	mes "I hear a ticking clock.";
+	mes "This place must be Geffen!";
+	next;
+	mes "[Adventurous Rafflesia]";
+	mes "No no this has to be Thanatos";
+	mes "Tower...";
+	mes "I sense dark magic here.";
+	close;
+}
+
+dali02,65,119,5	script	Tourist#ra	4_M_RAFLE_GR,{
+	mes "[Tourist]";
+	mes "Is this place the famous Prontera?";
+	mes "It is dark just like a big city!";
+	next;
+	mes "[Adventurous Rafflesia]";
+	mes "No no this has to be Thanatos";
+	mes "Tower...";
+	mes "I sense dark magic here.";
+	next;
+	mes "[Guide]";
+	mes "Oh, we're back here again.";
+	mes "I cannot find a way out!";
+	mes "We are trapped in this maze!";
+	next;
+	mes "[Traveller]";
+	mes "I hear a ticking clock.";
+	mes "This place must be Geffen!";
+	close;
+}
+
+dali02,69,122,5	script	Traveller#ra	4_M_RAFLE_GR,{
+	mes "[Traveller]";
+	mes "I hear a ticking clock.";
+	mes "This place must be Geffen!";
+	next;
+	mes "[Guide]";
+	mes "Oh, we're back here again.";
+	mes "I cannot find a way out!";
+	mes "We are trapped in this maze!";
+	next;
+	mes "[Tourist]";
+	mes "Is this place the famous Prontera?";
+	mes "It is dark just like a big city!";
+	next;
+	mes "[Adventurous Rafflesia]";
+	mes "No no this has to be Thanatos";
+	mes "Tower...";
+	mes "I sense dark magic here.";
+	close;
+}
+
+//------------------------
+//MORROC FIELD TO MIDGARD
+//------------------------
+
+
+moc_fild20,349,179,3	script	Rift Guard#1	707,{
+		mes "[Guard]";
+		mes "Ah, you are a member of the alliance that discovered the dimensional rift? Welcome. Everything is prepared. Just enter and find the camp when you pass through the rift.";
+		next;
+		mes "[Guard]";
+		mes "The new head of the alliance, Munkenro, will direct all of us.";
+		next;
+		mes "[Guard]";
+		mes "Then you will pass.";
+		mes "Are you ready?";
+		next;
+		switch(select("Yes, sure.:Please wait.")) {
+		case 1:
+			mes "[Guard]";
+			mes "Good luck.";
+			close2;
+			warp "moc_fild22b",38,195;
+			end;
+		case 2:
+			mes "[Guard]";
+			mes "Just tell me once you are ready. I will let you pass right away.";
+			close;
+		}
+}
+
+moc_fild22b,37,196,5	script	Rift Guard#2	707,{
+	mes "[Guard]";
+	mes "Are you the new adventurer?";
+	mes "If you're going to the other side of the rift, the head of the alliance will guide you there.";
+	next;
+	mes "[Guard]";
+	mes "He should be near the center of the Gorge. He is stronger than the former one, so be careful with your words.";
+	next;
+	mes "[Guard]";
+	mes "If you want to run away from here, just let me know, I will guide you.";
+	next;
+	switch(select("Escape.:Nah.")) {
+	case 1:
+		mes "[Guard]";
+		mes "Ok.";
+		mes "Follow me, I will let you out of here.";
+		close2;
+		warp "moc_fild20",342,179;
+		end;
+	case 2:
+		mes "[Guard]";
+		mes "Ok, just go ahead for yourself.";
+		close;
+	}
+}
+
+moc_fild22b,330,154,3	script	Rift Guard#3	707,{
+	mes "[Guard]";
+	mes "Are you new here?";
+	mes "You look like you need to find the head of the alliance. You can find him near the center of the dimensional rift.";
+	next;
+	mes "[Guard]";
+	mes "Just right there.";
+	mes "There's a pillar of stone.";
+	mes "Very close!";
+	close;
+}
+
+// Resurrection of Satan Morocc -- use if not using quests_morroc.txt
+// ============================================================
+/*
+moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
+	if ((rebirth_moc_edq == 0) && (rebirth_moc_edq < 4)) {
+		mes "[Continental Guard]";
+		mes "No commoners are allowed in the area beyond this point.";
+		mes "This place is extremely dangerous so you are restricted from entering.";
+		next;
+		switch(select("Cancel Conversation:Ask What Happened")) {
+		case 1:
+			close;
+		case 2:
+			mes "[Continental Guard]";
+			mes "Didn't you know? Satan Morocc has resurrected and broke out of Morocc Village where he was confined.";
+			next;
+			mes "[Continental Guard]";
+			mes "His resurrection has caused irreparable damage to the village and to the desert around it, and now he has moved to the Sograt Desert.";
+			next;
+			mes "[Continental Guard]";
+			mes "We are here to carry out the orders of the Prontera Kingdom by preventing commoners, aside from the members of the Morocc Subjugation, from accessing the area.";
+			next;
+			mes "[Continental Guard]";
+			mes "If you'd like to know more information, I suggest that you speak to the Continental Guard in charge of the accident site in Morocc Village.";
+			next;
+			switch(select("End Conversation:Ask About Guard's Location")) {
+			case 1:
+				close;
+			case 2:
+				mes "[Continental Guard]";
+				mes "The guard that you want to talk to is at a camp built in the center of Morocc Village.";
+				next;
+				mes "[Continental Guard]";
+				mes "If you'd like, I can send you there directly.";
+				next;
+				switch(select("No, thanks.:Please do.")) {
+				case 1:
+					mes "[Continental Guard]";
+					mes "I see. Well then, for your safety, please leave this dangerous area as soon as possible.";
+					close;
+				case 2:
+					mes "[Continental Guard]";
+					mes "Great. I'll send you to Morocc Village's accident site shortly.";
+					close2;
+					warp "morocc",160,61;
+					end;
+				}
+			}
+		}
+	}
+	else if ((rebirth_moc_edq > 3) && (rebirth_moc_edq < 8)) {
+		mes "[Continental Guard]";
+		mes "No commoners are allowed in the area beyond this point.";
+		mes "This place is extremely dangerous so you are restricted from entering.";
+		next;
+		switch(select("Cancel Conversation:Enter the Field to Investigate:Move to Morocc's Accident Site")) {
+		case 1:
+			close;
+		case 2:
+			if ($@re_moc < 3) {
+				getpartymember getcharid(1), 1, .@partymembercid;
+				.@partymembercount = $@partymembercount;
+				for (.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+						.@onlinemembers++;
+				}
+				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+					mes "[Continental Guard]";
+					mes "......";
+					next;
+					mes "[Continental Guard]";
+					mes "Yes, I've confirmed that you're a member of the Continental Guards. I wish you good luck in accomplishing your mission.";
+					next;
+					mes "[Continental Guard]";
+					mes "I'll send you to the field shortly. Please use the warp at the field entrance to come back to this area.";
+					close2;
+					warp "moc_fild21",38,193;
+					end;
+				}
+				else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+					mes "[Continental Guard]";
+					mes "Welcome, members of the Continental Guards. I have a special order from Chief Balrog for you, so let me read it for you.";
+					next;
+					mes "[Continental Guard]";
+					mes "'Due to the dangers of this area, I hereby prohibit members of the Continental Guard to investigate the area alone. You must organize a party of at least 2 members to carry out your missions from now on.'";
+					next;
+					mes "[Continental Guard]";
+					mes "...You understand that, right? Please go back to the site, and come back in a party of at least 2 members. Thank you.";
+					close;
+				}
+				else if (countitem(7826) < 1) {
+					mes "[Continental Guard]";
+					mes "Only members of the Continental Guards with Continental Guard Certificates are allowed to proceed beyond this point.";
+					close;
+				}
+				else {
+					close;
+				}
+			}
+			else {
+				mes "[Continental Guard]";
+				mes "We've received orders from Headquarters to block access to this area since an unusual space-time phenomenon has been detected from the Morocc field.";
+				next;
+				mes "[Continental Guard]";
+				mes "We need to wait until the phenomenon is over, and then we'll let you proceed with your investigation.";
+				close;
+			}
+		case 3:
+			mes "[Continental Guard]";
+			mes "Great. I'll send you to Morocc Village's accident site shortly.";
+			close2;
+			warp "morocc",160,61;
+			end;
+		}
+	}
+	else if (rebirth_moc_edq == 8) {
+		mes "[Continental Guard]";
+		mes "Ah, you're an adventurer working for the Continental Guard. Nice to meet you. Feel free to ask me if you need my assistance.";
+		next;
+		getpartymember getcharid(1), 1, .@partymembercid;
+		.@partymembercount = $@partymembercount;
+		for (.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+				.@onlinemembers++;
+		}
+		switch(select("Enter the First Field to Investigate:Enter the Second Field to Investigate:Return to Morocc's Accident Site:Cancel Conversation")) {
+		case 1:
+			if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+				mes "[Continental Guard]";
+				mes "......";
+				next;
+				mes "[Continental Guard]";
+				mes "Yes, I've confirmed that you're a member of the Continental Guards. I wish you good luck in accomplishing your mission.";
+				next;
+				mes "[Continental Guard]";
+				mes "I'll send you to the field shortly. Please use the warp at the field entrance to come back to this area.";
+				close2;
+				warp "moc_fild21",38,193;
+				end;
+			}
+			else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+				mes "[Continental Guard]";
+				mes "Welcome, members of the Continental Guards. I have a special order from Chief Balrog for you, so let me read it for you.";
+				next;
+				mes "[Continental Guard]";
+				mes "'Due to the dangers of this area, I hereby prohibit members of the Continental Guard to investigate the area alone. You must organize a party of at least 2 members to carry out your missions from now on.'";
+				next;
+				mes "[Continental Guard]";
+				mes "...You understand that, right? Please go back to the site, and come back in a party of at least 2 members. Thank you.";
+				close;
+			}
+			else if (countitem(7826) < 1) {
+				mes "[Continental Guard]";
+				mes "Only members of the Continental Guards with Continental Guard Certificates are allowed to proceed beyond this point.";
+				close;
+			}
+			else {
+				close;
+			}
+		case 2:
+			if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+				mes "[Continental Guard]";
+				mes "......";
+				next;
+				mes "[Continental Guard]";
+				mes "Yes, I've confirmed that you're a member of the Continental Guards. I wish you good luck in accomplishing your mission.";
+				next;
+				mes "[Continental Guard]";
+				mes "I'll send you to the field shortly. Please use the warp at the field entrance to come back to this area.";
+				close2;
+				warp "moc_fild22",38,193;
+				end;
+			}
+			else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+				mes "[Continental Guard]";
+				mes "Welcome, members of the Continental Guards. I have a special order from Chief Balrog for you, so let me read it for you.";
+				next;
+				mes "[Continental Guard]";
+				mes "'Due to the dangers of this area, I hereby prohibit members of the Continental Guard to investigate the area alone. You must organize a party of at least 2 members to carry out your missions from now on.'";
+				next;
+				mes "[Continental Guard]";
+				mes "...So please go back to the site, and come back in a party of at least 2 members. Thank you.";
+				close;
+			}
+			else if (countitem(7826) < 1) {
+				mes "[Continental Guard]";
+				mes "Only members of the Continental Guards with Continental Guard Certificates are allowed to proceed beyond this point.";
+				close;
+			}
+			else {
+				close;
+			}
+		case 3:
+			mes "[Continental Guard]";
+			mes "Great. I'll send you to Morocc Village's accident site shortly.";
+			close2;
+			warp "morocc",160,61;
+			end;
+		case 4:
+			close;
+		}
+	}
+	else {
+		end;
+	}
+
+OnTouch:
+	mes "[Continental Guard]";
+	mes "No commoners are allowed in the area beyond this point.";
+	mes "This place is extremely dangerous so you are restricted from entering.";
+	close;
+	end;
+}
+
+moc_fild20,354,174,3	duplicate(MocConGuard)	Continental Guard#02	707,3,3
+moc_fild20,38,174,5	duplicate(MocConGuard)	Continental Guard#03	707,3,3
+moc_fild20,38,183,5	duplicate(MocConGuard)	Continental Guard#04	707,3,3
+moc_fild20,189,21,7	duplicate(MocConGuard)	Continental Guard#05	707,3,3
+moc_fild20,200,21,7	duplicate(MocConGuard)	Continental Guard#06	707,3,3
+moc_fild20,203,336,5	duplicate(MocConGuard)	Continental Guard#07	707,3,3
+moc_fild20,215,336,3	duplicate(MocConGuard)	Continental Guard#08	707,3,3
+
+*/
+
+// Carrot & Red Potion Traders
+//============================================================
+mid_campin,76,111,3	script	Phelix#edco	85,{
+	mes "[Phelix]";
+	mes "Oh... I see from that look that you want me to work and give you Meat and Carrots...";
+	mes "Well my friend Izaac here has some Red Potions with him, but I only have some Carrots.";
+	mes "So I can trade you ^0000CC1 Carrot for 3 Jellopy^000000.";
+	next;
+	mes "[Phelix]";
+	mes "If you're interested in my offer, get me the Jellopies I mentioned.";
+	next;
+	select("Carrots please.");
+	mes "[Phelix]";
+	mes "Alright, let's see what ya got...";
+	next;
+	if (countitem(909) < 3) {
+		mes "[Phelix]";
+		mes "Hmm, look dude, I said 3 Jellopies for 1 Carrot... got it?";
+		close;
+	}
+	mes "[Phelix]";
+	mes "Not too bad...";
+	mes "How many do you want?";
+	next;
+	switch(select("As many as I can get, please.:I want to choose.:Never mind, I like my Jellopy.")) {
+	case 1:
+		set .@amount, countitem(909) / 3;
+		break;
+	case 2:
+		set .@available, countitem(909) / 3;
+		mes "[Phelix]";
+		mes "How many do you want?";
+		mes "^ff0000You have enough for up to " + .@available + " Carrots.^000000";
+		input .@input;
+		next;
+		if (.@input < 1 || .@input > 10000) {
+			mes "[Phelix]";
+			mes "Don't want to deal? Fair enough...";
+			close;
+		}
+		if (.@input > .@available) {
+			mes "[Phelix]";
+			mes "Dude, I said for every 3 Jellopy I'll give you 1 Carrot.";
+			close;
+		}
+		set .@amount, .@input;
+		break;
+	case 3:
+		mes "[Phelix]";
+		mes "Don't bother me if you don't want to trade.";
+		close;
+	}
+	if (checkweight(515,.@amount) == 0) {
+		mes "[Phelix]";
+		mes "You are overweight.";
+		close;
+	}
+	mes "[Phelix]";
+	mes "There you go~! As I promised.";
+	mes "Try not to stuff yer face.";
+	delitem 909,.@amount*3; //Jellopy
+	getitem 515,.@amount; //Carrot
+	end;
+}
+
+mid_campin,73,111,7	script	Izaac#edco	86,{
+	mes "[Izaac]";
+	mes "Good day!";
+	mes "Have you collected any weird stuff from monsters?";
+	mes "I want things like Jellopy, Fluff, Shell, Feather of Birds, Tree Root, Worm Peelings, and Chrysalis.";
+	mes "I need those for something.";
+	next;
+	mes "[Izaac]";
+	mes "Of course, I won't ask you to give me that stuff for free. What if I traded the following for ^CC00001 Red Potion^000000:";
+	mes "^00CC005 Shell^000000";
+	mes "^0000CC10 Fluff^000000";
+	mes "^00CC0010 Jellopy^000000";
+	mes "^0000CC6 Tree Root^000000";
+	mes "^00CC001 Worm Peeling^000000";
+	mes "^0000CC7 Feather of Birds^000000";
+	mes "^00CC006 Chrysalis^000000";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Izaac]";
+		mes "So which items do";
+		mes "you want to bring me?";
+		next;
+
+		setarray .@items[0], 935, 914, 909, 902, 955, 916, 915;
+		setarray .@count[0],   5,  10,  10,   6,   1,   7,   6;
+
+		set .@size, getarraysize(.@items);
+		for(set .@i,0; .@i<.@size; set .@i,.@i+1)
+			set .@menu$, .@menu$+getitemname(.@items[.@i])+":";
+		set .@select, select(.@menu$+"Cancel")-1;
+		if (.@select == .@size) {
+			mes "[Izaac]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+		set .@item, .@items[.@select];
+		set .@item$, getitemname(.@item);
+		set .@price, .@count[.@select];
+
+		if (countitem(.@item) < .@price) {
+			mes "[Izaac]";
+			mes "Hey, where's all";
+			mes "that "+.@item$+" that";
+			mes "you promised me?";
+			mes "Give me "+.@item$+"!";
+			close;
+		}
+		mes "[Izaac]";
+		mes "Okay, let me check";
+		mes "how much "+.@item$;
+		mes "you have on you.";
+		mes "Hmm...";
+		next;
+		set .@amount, countitem(.@item) / .@price;
+		set .@trade_amount, .@amount * .@price;
+		mes "[Izaac]";
+		mes "You have";
+		mes "a total of "+countitem(.@item)+" "+.@item$+"...";
+		mes "For all those, I can give you";
+		mes "a total of "+.@amount+" Red Potion(s).";
+		next;
+		mes "[Izaac]";
+		mes "What do you say?";
+		mes "Do we have a deal?";
+		next;
+		if(select("Deal.:No deal.") == 2) {
+			mes "[Izaac]";
+			mes "Huh~";
+			mes "Alright.";
+			mes "Though are";
+			mes .@item$ + " more useful";
+			mes "to an adventurer like you?";
+			close;
+		}
+		if (checkweight(501,.@amount) == 0) { //custom check
+			mes "[Izaac]";
+			mes "You are overweight.";
+			close;
+		}
+		delitem .@item,.@trade_amount;
+		getitem 501,.@amount; //Red_Potion
+		mes "[Izaac]";
+		mes "There you go!";
+		mes "Check how many "+.@item$;
+		mes "I've given you, it should be good.";
+		mes "Thanks, that was a good deal~";
+		close;
+	case 2:
+		mes "[Izaac]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Izaac]";
+		mes "Alright, No problem.";
+		mes "But come back to me if you change your mind.";
+		close;
+	}
+}
+
+// Cleric Warper (part of other/Cleric_warp.txt)
+//============================================================
+dali,124,86,4	script	Aperture#Clericwarp	90,{
+	mes "[Aperture]";
+	mes "Hello there, adventurer.";
+	mes "I've been studying magic from all over Midgard to upgrade what I believe to be one of the greatest skills available to the Cleric class.";
+	next;
+
+	if (is_function("VIP_iRO_Cleric"))
+		callfunc "VIP_iRO_Cleric","[Warp to Prontera]","Prontera";
+
+	mes "[Aperture]";
+	mes "I am the one and only Cleric that has attained the Level 10 Warp Portal skill!";
+	emotion ET_THINK, playerattached();
+	next;
+	mes "[Aperture]";
+	mes "That's right! And...";
+	mes "I promise you that I don't forget locations that I have already memorized.";
+	mes "One day I will level up my skills to warp to wherever I please~";
+	next;
+	mes "[Aperture]";
+	mes "I am willing to warp you to the many locations that I have memorized for a small fee.";
+	mes "Would you like to use this service?";
+	next;
+	switch(select("Yes:No")) {
+	case 1:
+		mes "[Aperture]";
+		mes "Where would you like to go to?";
+		mes "I wish you goodluck on your journey.";
+		next;
+
+		setarray .@towns$[0], "Prontera", "Izlude", "Geffen", "Payon", "Morocc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno", "Einbroch", "Lighthalzen", "Hugel", "Rachel";
+		setarray .@cost[0],          6000,      6000,     12000,    12000,     12000,      18000,          22000,     22000,     22000,   18000,       22000,          22000,    22000,     22000;
+
+		set .@size, getarraysize(.@towns$);
+		for(set .@i,0; .@i<.@size; set .@i,.@i+1)
+			set .@menu$, .@menu$+.@towns$[.@i]+" -> "+.@cost[.@i]+"z:";
+		set .@i, select(.@menu$+"Cancel")-1;
+		if (.@i == .@size) {
+			mes "[Aperture]";
+			mes "Come back when you need a warp.";
+			close;
+		}
+		if (Zeny < .@cost[.@i]) {
+			mes "[Aperture]";
+			mes "I'm sorry, but you don't have";
+			mes "enough zeny for the Teleport";
+			mes "Service. The fee to teleport";
+			mes "to "+.@towns$[.@i]+" is "+.@cost[.@i]+" zeny.";
+			close;
+		}
+		specialeffect2 EF_READYPORTAL;
+		specialeffect2 EF_TELEPORTATION;
+		specialeffect2 EF_PORTAL;
+		next;
+		set Zeny, Zeny - .@cost[.@i];
+		switch(.@i) {
+			case 0: warp "prontera",116,72; break;
+			case 1: warp "izlude",128,98; break;
+			case 2: warp "geffen",120,39; break;
+			case 3: warp "payon",161,58; break;
+			case 4: warp "morocc",156,46; break;
+			case 5: warp "alberta",117,56; break;
+			case 6: warp "aldebaran",168,112; break;
+			case 7: warp "comodo",209,143; break;
+			case 8: warp "umbala",100,154; break;
+			case 9: warp "yuno",158,125; break;
+			case 10: warp "einbroch",67,195; break;
+			case 11: warp "lighthalzen",159,90; break;
+			case 12: warp "hugel",98,150; break;
+			case 13: warp "rachel",119,135; break;
+		}
+		close;
+	case 2:
+		mes "[Aperture]";
+		mes "Come back when you need a warp.";
+		close;
+	}
+}
+
+function	script	VIP_iRO_Cleric	{
+	if (!vip_status(VIP_STATUS_ACTIVE)) {
+		mes getarg(0);
+		mes "But, my full powers are only available to those who have are VIPs.";
+		mes "I can still offer you a warp to "+getarg(1)+" though.";
+		next;
+		switch(select(getarg(0)+" -> 2000z:Cancel")) {
+		case 1:
+			if (Zeny < 2000) {
+				mes getarg(0);
+				mes "I'm sorry, but you don't have";
+				mes "enough zeny for the Teleport";
+				mes "Service. The fee to teleport";
+				mes "to "+getarg(1)+" is 2,000 zeny.";
+				close;
+			}
+			specialeffect2 EF_READYPORTAL;
+			specialeffect2 EF_TELEPORTATION;
+			specialeffect2 EF_PORTAL;
+			next;
+			set Zeny, Zeny - 2000;
+			if (getarg(1) == "Juno")
+				warp "yuno",158,125;
+			else
+				warp "prontera",116,72;
+			close;
+		case 2:
+			close;
+		}
+	}
+	return;
+}

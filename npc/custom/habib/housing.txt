@@ -1,0 +1,236 @@
+//House System v1.5
+function	script	f_vend_house	{
+	if($varglo & getarg(0)) goto L_Purchased;
+	mes "[Vendeur de maison]";
+	mes "Would you like to buy this house?";
+	mes "It costs "+getarg(4)+" zeny.";
+	next;
+	
+	if(select("Yes:No")-1) {
+		mes "[Vendeur de maison]";
+		mes "Maybe next time then... Good luck!";
+		close;
+	}
+	
+	if(zeny < getarg(4)) {
+		mes "[Vendeur de maison]";
+		mes "You don't have enough zeny!";
+		close;
+	}
+	
+	set Zeny,Zeny-getarg(4);
+	set $varglo,$varglo | getarg(0);
+	set #varglo, #varglo | getarg(0);
+	mes "Please input your character name to seal the deal!";
+	input(.@a$);
+	announce strcharinfo(0)+" just bought "+getarg(5)+"!",8;
+	donpcevent(getarg(7)+"::OnInit");
+	close2;
+	return getcharid(3);
+	end;
+	
+L_Purchased:
+	if(#varglo & getarg(0)) {
+		mes "[Vendeur de maison]";
+		mes "What would you like to do?";
+		set .@menu$, "Warp:"+
+		(getarg(6)&1?"^FF0000Deny":"^0000FFAllow")+"^000000 Public:"+
+		(getarg(6)&2?"^FF0000Deny":"^0000FFAllow")+"^000000 Friends:"+
+		(getarg(6)&4?"^FF0000Deny":"^0000FFAllow")+"^000000 Guild Members:"+
+		(getarg(6)&8?"^FF0000Deny":"^0000FFAllow")+"^000000 Party Members:"+
+		(getarg(6)<0?"^0000FFStop Selling":"^FF0000Sell")+"^000000:Abandon:End";
+		next;
+		switch(select(.@menu$)) {
+			case 1: break;
+			case 2: return 1;
+			case 3: return 2;
+			case 4: return 4;
+			case 5: return 8;
+			case 6: 
+				if( getarg(6) >= 0 ) {
+					mes "[Vendeur de maison]";
+					mes "How much would you like to sell this mansion for?";
+					next;
+					input(.@a);
+					mes "[Vendeur de maison]";
+					mes "Are you sure you want to sell "+getarg(5)+" for "+.@a+" Zeny?";
+					next;
+					if(select("Yes:No")-1) {
+						mes "[Vendeur de maison]";
+						mes "Wow that was a close one!";
+						next;
+						goto "L_Purchased";
+					}
+					close2;
+					set( @mode, .@a );
+					return -1;
+				} else {
+					mes "[Vendeur de maison]";
+					mes "Do you really want to stop selling this address?";
+					next;
+					if(select("Yes:No")-1) {
+						mes "[Vendeur de maison]";
+						mes "Wow that was a close one!";
+						next;
+						goto "L_Purchased";
+					}
+					close2;
+					set( @mode, -1 );
+					return 0;
+				}
+			case 7: 
+				mes "[Vendeur de maison]";
+				mes "Are you sure you want to abandon this house?";
+				mes "You forfeit any rights to this property and zeny.";
+				next;
+				if(select("Yes:No")-1) {
+					mes "[Vendeur de maison]";
+					mes "Wow that was a close one!";
+					next;
+					goto "L_Purchased";
+				}
+				set( @mode, getarg(4) );
+				set #varglo, #varglo ^ getarg(0);
+				set $varglo, $varglo ^ getarg(0);
+				mes "[Vendeur de maison]";
+				mes "House successfully abandoned!";
+				close2;
+				return -1;
+			case 8: close;
+		}
+	}
+	if(getarg(6)<0) {
+		mes "[Vendeur de maison]";
+		mes "This area seems to be for sale by the owner for "+getarg(4)+"z";
+		next;
+		
+		if(select("I'll take it!:No way...")-1) {
+			mes "[Vendeur de maison]";
+			mes "Maybe next time then... Good luck!";
+			close;
+		}
+		
+		if(zeny < getarg(4)) {
+			mes "[Vendeur de maison]";
+			mes "You don't have enough zeny!";
+			close;
+		}
+		dispbottom "arg8 "+getarg(8);
+		if( getarg(8) ) {
+			.@aid = getarg(8);
+		} else {
+			set .@a, query_sql(
+				"SELECT `char`.`account_id`, `global_reg_value`.`char_id` "+
+				"FROM `global_reg_value` "+
+				"INNER JOIN `char` "+
+				"ON `global_reg_value`.`char_id`=`char`.`char_id` "+
+				"WHERE "+getarg(0)+"&`global_reg_value`.`value`>0 AND `global_reg_value`.`str`='#varglo'"
+				,.@aid,.@cid
+			);
+		}
+		set Zeny,Zeny-getarg(4);
+		set #varglo, #varglo | getarg(0);
+		set(.@tmp_aid,getcharid(3));
+		if(isloggedin(.@aid)) {
+			attachrid(.@aid);
+			set #varglo, #varglo ^ getarg(0);
+			set Zeny,Zeny+getarg(4);
+			dispbottom getarg(5)+" just sold for "+getarg(4)+"z!";
+		} else {
+			query_sql(
+				"UPDATE `global_reg_value` "+
+				"SET `value`=`value` XOR "+getarg(0)+" "+
+				"WHERE `char_id`="+.@cid+";"
+			);
+			set(@recovery,.@aid);
+			set(@cash_bak,getarg(4));
+			doevent("cash_money::OnLogEvent");
+		}
+		attachrid(.@tmp_aid);
+		mes "[Vendeur de maison]";
+		mes getarg(5)+" purchased successfully!";
+		announce strcharinfo(0)+" just bought "+getarg(5)+"!",8;
+		close2;
+		set( @mode , -1 );
+		return getcharid(3);
+	}
+	
+	set .@a, query_sql(
+		"SELECT `char`.`account_id`, `global_reg_value`.`char_id`, `char`.`name`, `char`.`party_id` "+
+		"FROM `global_reg_value` "+
+		"INNER JOIN `char` "+
+		"ON `global_reg_value`.`char_id`=`char`.`char_id` "+
+		"WHERE "+getarg(0)+"&`global_reg_value`.`value`>0 AND `global_reg_value`.`str`='#varglo'"
+		,.@aid,.@cid,.@name$,.@pid
+	);
+	
+	
+	set .@group,.@group|1;
+	query_sql("SELECT `friend_id` FROM `friends` WHERE `char_id`="+.@cid+";",.@fid);
+	for(set(.@y,0);.@y<getarraysize(.@fid);set(.@y,.@y+1)) {
+		if(getcharid(0)==.@fid[.@y]) {
+			set .@group,.@group|2;
+		}
+	}
+	
+	if(getguildmaster(getcharid(2))==.@name$)
+		set .@group,.@group|4;
+		
+	if(getcharid(1)==.@pid)
+		set .@group,.@group|8;
+	
+	if(getarg(6) & .@group || #varglo & getarg(0))
+		warp getarg(1),getarg(2),getarg(3);
+
+	mes "[Vendeur de maison]";
+	mes "This house has already been purchased.";
+	close;
+}
+
+-	script	cash_money	-1,{
+OnLogEvent:
+	set(.recovery[getarraysize(.recovery)],@recovery);
+	set(.cash_bak[getarraysize(.cash_bak)],@cash_bak);
+	set(@recovery,0);
+	set(@cash_bak,0);
+	end;
+
+OnPCLoginEvent:
+	sleep2 2000;
+	while(.@i<getarraysize(.recovery)) {
+		if(.recovery[.@i]==getcharid(3)) {
+			set(.@h,.@h+1);
+			set(.@t,.@t+.cash_bak[.@i]);
+			set Zeny,Zeny+.cash_bak[.@i];
+			deletearray .recovery[.@i],1;
+			deletearray .cash_bak[.@i],1;
+			set(.@i,.@i-1);
+		}
+		set .@i,.@i+1;
+	}
+	if(.@h)
+		dispbottom "While you were gone you sold "+.@h+" house(s) and made "+.@t+" zeny!";
+}
+
+prontera,165,168,5	script	Door#1	76,{
+dispbottom .temp_owner;
+	set( .@a, f_vend_house( pow( 2, atoi(strnpcinfo(2)) ), .warp$, .cords[0], .cords[1], .price, .name$, .status, strnpcinfo(0), .temp_owner ) );
+	if( .@a > 0 && .@a < 2000000 ) set( .status, .status ^ .@a );
+	if( .@a >= 2000000 ) set .temp_owner, .@a;
+	if( .@a==-1 ) { delwaitingroom; waitingroom "For Sale: "+@mode+"z",0; set .price, @mode; set .status,.status*-1; }
+	if( @mode<0 ) { delwaitingroom; waitingroom .name$,0; set .status,.status*-1; }
+	set(@mode,0);
+	end;
+	
+OnInit:
+	//-------Config--------
+	set .price, 10;
+	set .name$, "Jawaii Manor";
+	set .warp$, "jawaii_in";
+	set .status, 256;
+	setarray .cords, 115, 63;
+	//----------------------
+	
+	delwaitingroom;
+	waitingroom ( $varglo & pow(2,atoi(strnpcinfo(2))) ? .name$ : "For Sale: "+.price+"z" ),0;
+}

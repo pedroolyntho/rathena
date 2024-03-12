@@ -1,0 +1,9 @@
+-	script	command#whereismvp	-1,{
+OnInit:
+	// This part binds "whereismvp" as atcommand. 
+	bindatcmd("whereismvp",strnpcinfo(0)+"::OnCommand");
+	end;
+
+OnCommand:
+sc_start SC_BOSSMAPINFO,600000,0;	
+}

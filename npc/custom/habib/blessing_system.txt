@@ -1,0 +1,103 @@
+//script by Placid aka lShinel A simple system of runes, each time you kill a monster there will be a chance to activate one of them:
+//BLESSING SYSTEM HABIB
+
+-	script	Runes	-1,{
+
+	OnInit:
+		//CONFIGURATION
+		set .Duration,10; // Duration of runes in seconds
+		set .Chance,1/2; // Chance to get a rune
+		set .Sounds,0; // Use of custom sounds 1 = Enabled, 0 = Disabled
+
+		setarray .name$,	"Tyr's Blessing",
+					"Freyja's Blessing",
+					"Loki's Blessing",
+					"Thor's Blessing",
+					"Odin's Blessing",
+					"Frigg's Blessing",
+					"Hel's Blessing";
+					
+
+		setarray .sound$,	"doubledamage.wav",
+					"regeneration.wav",
+					"haste.wav",
+					"effect\\wl_stasis.wav",
+					"illusion.wav",
+					"",
+					"";
+
+		setarray .effect,	865, 861, 871, 867, 587, 112, 677;
+
+		
+		setarray .Message$,		"Tyr has blessed you. Your attack damage and spells will cause double damage for "+.Duration+" seconds",
+						"Freyja has blessed you. Your regeneration have been increased for "+.Duration+" seconds",
+						"Loki has blessed you. Your movement speed have been increased for "+.Duration+" seconds",
+						"Thor has blessed you. Your attack speed have been increased for "+.Duration+" seconds",
+						"Odin has blessed you. Your illusions will attack any monsters nearby!",
+						"Frigg has blessed you. You've just received Kyrie Eleison!",
+						"Hel has blessed you. All of your physical attacks will now crit!";
+
+		end;
+
+
+	OnNPCKillEvent:
+		if(rand(100) <= .Chance)
+		{
+
+			set .@rand,rand(1,7);
+			switch (.@rand)
+			{
+				case 1:
+				{
+					sc_start SC_INCATKRATE,( .Duration * 1000 ), 100;
+					sc_start SC_INCMATKRATE,( .Duration * 1000 ), 100;
+					break;
+				}
+				case 2:
+				{
+					sc_start SC_REGENERATION,( .Duration * 1000 ), 100;
+					break;
+				}
+				case 3:
+				{
+					sc_start SC_SpeedUp1,( .Duration * 1000 ), 25;
+					break;
+				}
+				case 4:
+				{
+					sc_start SC_INCASPDRATE, ( .Duration * 1000 ), 50;
+					break;
+				}
+				case 5:
+				{
+					getmapxy (.@map$, .@x, .@y);
+					clone .@map$,.@X,.@y,"",getcharid(0),getcharid(0),"",1,.Duration;
+					clone .@map$,.@X,.@y,"",getcharid(0),getcharid(0),"",1,.Duration;
+					break;
+				}
+				case 6:
+				{
+					sc_start SC_KYRIE, ( .Duration * 1000 ), 10;
+					break;
+				}
+				case 7:
+				{
+					sc_start SC_INCCRI, ( .Duration * 1000 ), 999;
+					break;
+				}
+				
+			}
+
+			if(.Sounds)
+				soundeffectall .sound$[.@rand-1],0;
+
+			specialeffect2 .effect[.@rand-1];
+
+			message strcharinfo(0),""+.name$[.@rand-1]+"";
+
+			dispbottom ""+.Message$[.@rand-1]+"";
+
+		}
+
+		end;
+}

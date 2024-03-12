@@ -1,0 +1,223 @@
+prontera,187,210,3	script	Broadcaster#1::BC	894,{
+	.@npcname$ = "^FF9300 Broadcaster ^000000";
+	.@header$ = "[^0000ff" + .@npcname$ + "^000000]";
+
+	mes .@header$;
+	mes "Hi, I'm the Broadcaster.";
+	mes "I can Broadcast a message for you.";
+	mes " ";
+	mes " ";
+	mes " ";
+	mes "It costs ^ff0000" + .broadcastfee + "^000000 zeny.";
+	next;
+	mes .@header$;
+	mes "Would you like to Broadcast?";
+	next;
+	
+	switch (select("Yes:Nevermind:Auto-broadcast:")) {
+		case 1:
+			if (Broadcast > gettimetick(2)) {
+				mes .@header$;
+				mes "Sorry you have to wait for 1 min.";
+				close;
+			}
+			
+			if (Zeny < .broadcastfee) {
+				goto L_NotEnoughZeny;
+			}
+			
+			mes .@header$;
+			mes "Please input your message.";
+			next;
+			input .@broadcast$;
+			Zeny -= .broadcastfee;
+			announce "Shout from " + strcharinfo(0) + ": " + .@broadcast$ + "", 0, 0x5AFF00; // Edit 5AFF00 for color code HTML Color Code
+			Broadcast = gettimetick(2) + 60; //Timer 60 = 1 minute/s
+			dispbottom "Broadcaster: Please wait for 1min until next broadcast to avoid flooding.";
+			end;
+		case 2:
+			mes .@header$;
+			mes "Suit yourself.";
+			close;
+		case 3:
+			mes .@header$;
+			mes "Hi, I can automatically broadcast messages for you!";
+			mes "It will cost you ^ff0000" + .auto_broadcastfee + "^000000 zeny per broadcast.";
+			next;
+			
+			.@aid = getcharid(3);
+			
+			switch(select("Proceed:Check status:Exit")) {
+				case 1:
+					if ($bc_announces_delay[.@aid]) {
+						mes .@header$;
+						mes "You already have an auto announce for this account.";
+						close;
+					}
+					
+					mes .@header$;
+					mes "Please input your message.";
+					next;
+					input .@broadcast$;
+					mes .@header$;
+					mes "How many times do you want to broadcast?";
+					mes "Min: 1";
+					mes "Max: 100";
+					next;
+					input .@repeat, 1, 100;
+					
+					if (.@repeat < 1 || .@repeat > 100) {
+						mes .@header$;
+						mes "Suit yourself.";
+						close;
+					}
+					
+					.@delay = 3;
+					//mes .@header$;
+					//mes "Delay between announces?";
+					//mes "Min: 3";
+					//mes "Max: 20";
+					//next;
+					//input .@delay, 3, 20;
+					//
+					//if (.@delay < 3 || .@delay > 20) {
+					//	mes .@header$;
+					//	mes "Suit yourself.";
+					//	close;
+					//}
+					
+					.@cost = .auto_broadcastfee * .@repeat;
+					
+					mes .@header$;
+					mes "You want to broadcast:";
+					mes "^ff0000" + .@broadcast$ + "^000000";
+					mes "Every 3 minutes for ^00ff00" + .@repeat + "^000000 time(s)?";
+					mes "It will cost you a total of ^ff0000" + .@cost + "^000000 zeny.";
+					next;
+					
+					switch(select("Proceed:Cancel")) {
+						case 2:
+							mes .@header$;
+							mes "Suit yourself.";
+							close;
+					}
+					
+					if (Zeny < .@cost) {
+						goto L_NotEnoughZeny;
+					}
+					
+					Zeny -= .@cost;
+					
+					$bc_announces_timer[.@aid] = 0;
+					$bc_announces_repeat[.@aid] = .@repeat;
+					$bc_announces_delay[.@aid] = .@delay * 60;
+					$bc_announces_mes$[.@aid] = "Shout from " + strcharinfo(0) + ": " + .@broadcast$;
+					$bc_announces_aid2idx[.@aid] = $bc_announces_count;
+					$bc_announces_idx2aid[$bc_announces_count] = .@aid;
+					$bc_announces_count++;
+					close;
+				case 2:
+					if ($bc_announces_delay[.@aid] == 0) {
+						mes .@header$;
+						mes "You currently have no auto announces.";
+						close;
+					}
+					
+					mes .@header$;
+					mes "Your current announce is as follow:";
+					mes "^ff0000" + $bc_announces_mes$[.@aid] + "^000000";
+					mes "It will be announced again in " + $bc_announces_timer[.@aid] + " second(s).";
+					mes "It will repeat " + $bc_announces_repeat[.@aid] + " more time(s).";
+					next;
+					
+					switch(select("Okay:Cancel announce:")) {
+						case 1:	
+							mes .@header$;
+							mes "...";
+							close;
+						case 2:
+							mes .@header$;
+							mes "Your zeny will not be refunded, are you sure you want to cancel?";
+							next;
+							
+							switch(select("No:Yes")) {
+								case 1:
+									mes .@header$;
+									mes "Suit yourself.";
+									close;
+							}
+							
+							if ($bc_announces_delay[.@aid] == 0) {	// It already ended?
+								end;
+							}
+							
+							callsub L_RemoveAutoAnnounce, .@aid;
+							mes .@header$;
+							mes "All done.";
+							close;
+					}
+					
+					end;
+				case 3:
+					mes .@header$;
+					mes "Suit yourself.";
+					close;
+				case 4:
+					
+					close;
+			}
+			
+			close;
+	}
+	
+	end;
+L_NotEnoughZeny:
+	mes .@header$;
+	mes "You don't have enough zeny.";
+	close;
+OnTimer1000:
+	freeloop(1);
+	
+	for (.@i = 0; .@i < $bc_announces_count; .@i++) {
+		.@aid = $bc_announces_idx2aid[.@i];
+		$bc_announces_timer[.@aid]--;
+		
+		if ($bc_announces_timer[.@aid] <= 0 && .@didannounce == false) {
+			announce $bc_announces_mes$[.@aid], 0, 0x5AFF00;
+			
+			$bc_announces_repeat[.@aid]--;
+			$bc_announces_timer[.@aid] = $bc_announces_delay[.@aid];
+			
+			if ($bc_announces_repeat[.@aid] <= 0) {
+				callsub L_RemoveAutoAnnounce, .@aid;
+				.@i--;
+			}
+			
+			.@didannounce = true;	// Prevents overlapping of announces
+		}
+	}
+	
+	freeloop(0);
+	initnpctimer;
+	end;
+L_RemoveAutoAnnounce:
+	.@aid = getarg(0);
+	.@idx = $bc_announces_aid2idx[.@aid];
+	
+	$bc_announces_timer[.@aid] = 0;
+	$bc_announces_repeat[.@aid] = 0;
+	$bc_announces_delay[.@aid] = 0;
+	$bc_announces_mes$[.@aid] = "";
+	
+	.@last_aid = $bc_announces_idx2aid[$bc_announces_count - 1];
+	$bc_announces_idx2aid[.@idx] = .@last_aid;
+	$bc_announces_idx2aid[$bc_announces_count - 1] = 0;
+	$bc_announces_aid2idx[.@last_aid] = .@idx;
+	$bc_announces_count--;
+	return;
+OnInit:
+	.broadcastfee = 3000000;
+	.auto_broadcastfee = 500000;
+	initnpctimer;
+	end;
+}

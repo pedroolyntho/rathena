@@ -1,0 +1,369 @@
+icas_in,141,216,4	script	Friederike	4_EP19_FRIEDERIKE,{
+		if (isbegin_quest(30002) == 1) {
+			mes "[Friederike]";
+			mes "Oh.. you must be the warrior Ran was talking about.";
+			mes "I don't know where your homeland is but Isgard is a place you can call home.";
+			next;
+			mes "[Friederike]";
+			mes "You can also find home at Midgard, but you know... Nothing like here. We are alike.";
+			mes "I have fought with and for the gods.";
+			mes "And so you do --- now.";
+			next;
+			mes "[Friederike]";
+			mes "It's a good sight to see your start.";
+			mes "You must be tired. Need a drink?";
+			next;
+			mes "[Friederike]";
+			mes "Here, take this reward. You've earned it.";
+			mes "You can exchange it with me.";
+			completequest 30002;
+			savepoint "icas_in" ,139,213;
+			getitem 47006,3000;
+			getexp 250,0; //reward 5
+			//Zeny += 1000;
+			//dispbottom "You've gained 1,000 Zeny.";
+			next;
+			mes "[Friederike]";
+			mes "I have also saved your spawn point here, so if you die, you'll respawn here.";
+			next;
+			setquest 7473;
+			getitem 531,1;// Apple_Juice
+			mes "[Friederike]";
+			mes "So, let me teach you how to use items.";
+			next;
+			mes "[Friederike]";
+			mes "You can open the Item window by clicking on the 'item' icon on top left portion of the screen.";
+			next;
+			mes "[Friederike]";
+			mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
+			mes "It will do the automatic sorting per indiviaul useage to";
+			next;
+			mes "[Friederike]";
+			mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
+			mes "or drag it onto^4d4dff the equipment window and use it^000000";
+			next;
+			cutin "tutorial03.bmp", 4;
+			mes "!- Information -!";
+			mes "^4d4dffItems can be used or equipped with simply double-clicking.";
+			mes "Item window can be opened with shortcut key Alt+E";
+			next;
+			mes "!- Information -!";
+			mes "^4d4dff Equipped items can be checked with Alt+ Q";
+			mes "Items can also be dragged onto the location where you wish to equip it.";
+			next;
+			cutin "", 255;
+			mes "[Friederike]";
+			mes "For detailed info on individual items^4d4dff, right click ^000000on that item.";
+			mes "You can check the detailed info on the item.";
+			next;
+			cutin "tutorial04.bmp", 4;
+			mes "!- Information -!";
+			mes "^4d4dffRight-clicking on the item icon^4d4dff  brings up detailed info on the item.";
+			next;
+			mes "!- Information -!";
+			mes "^4d4dffWhen you select other players, you can trade, party up with them with the community window that pops up.";
+			next;
+			cutin "", 255;
+			mes "[Friederike]";
+			mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+			close;
+		} else {
+			if (!isbegin_quest(7473)) {
+				mes "[Friederike]";
+				mes "Hey there.";
+				mes "Rest up for a bit.";
+				next;
+				mes "[Friederike]";
+				mes "It's joyous to see you.";
+				mes "You want something to drink while you are resting?";
+				setquest 7473;
+				getitem 531,1;// Apple_Juice
+				next;
+				mes "[Friederike]";
+				mes "Right clicking on the item icon ^4d4dffon the basic item window at the upper left corner brings up the detailed info on the item";
+				next;
+				mes "[Friederike]";
+				mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
+				mes "It will do the automatic sorting per indiviaul useage to";
+				next;
+				mes "[Friederike]";
+				mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
+				mes "or drag it onto^4d4dff the equipment window and use it^000000";
+				next;
+				mes "[Friederike]";
+				mes "For detailed info on individual items^4d4dff, right-click ^000000on the item.";
+				mes "You can check the detailed info on the item.";
+				next;
+				cutin "tutorial04.bmp", 3;
+				mes "!- Information -!";
+				mes "Right clicking on the item icon ^4d4dffbrings up the detailed info on the item";
+				next;
+				mes "!- Information -!";
+				mes "When you select on other players^4d4dff you can trade, party up with them with the community window that pops up.";
+				next;
+				cutin "", 255;
+				mes "[Friederike]";
+				mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+				close;
+			} else if (isbegin_quest(7473) == 1) {
+				if (countitem(531) > 0) {
+					mes "[Friederike]";
+					mes "Consume the apple juice that I gave you in your inventory.";
+					mes "Then we'll talk.";
+					close;
+				} else {
+					if (isbegin_quest(4269) > 0) {
+						mes "[Friederike]";
+						mes "How's the taste?";
+						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						next;
+						mes "[Friederike]";
+						mes "I want to give you more but that was the last of it";
+						mes "I'll give you something even better.";
+						next;
+						//mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						completequest 7473;
+						getexp 250,0; //reward 6
+						getitem 100900,10;
+						setquest 30003;
+						navigateto "icecastle", 85, 127;
+						mes "[Friederike]";
+						mes "That's from my old inventory.";
+						mes "I would use them when I lived in Midgard for a while.";
+						mes "Well... I am old enough. Won't be using them. You can have them.";
+						next;
+						mes "[Friederike]";
+						mes "It will quickly bring you here.";
+						mes "You can also buy more from Lazy, our personal merchant.";
+						mes "He is up here, somewhere.";
+						next;
+						mes "[Friederike]";
+						mes "He trades your souls for a few cool magical stuff!";
+						mes "Stay wise!";
+						//getitem 569,30;// Novice_Potion
+						//getexp 200,0;
+						next;
+						mes "[Friederike]";
+						mes "What do you plan to do from now on?";
+						mes "Have you found a place to stay?";
+						next;
+						switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+						case 1:
+							mes "[Friederike]";
+							mes "But still, though.";
+							mes "It's tough to be out alone in a new place.";
+							mes "That's why this castle is there.";
+							next;
+							mes "[Friederike]";
+							mes "Ran sent you to me probably for the same reason.";
+							mes "My opinion is that going to Midgard to get some souls is wise.";
+							mes "You should probably find Aegir and ask him help from his expedition.";
+							next;
+						case 2:
+							mes "[Friederike]";
+							mes "How optimistic of you.";
+							mes "My opinion is that going to Midgard to get some souls is wise.";
+							mes "You should probably find Aegir and ask him help from his expedition.";
+							next;
+						case 3:
+							mes "[Friederike]";
+							mes "You already have a plan laid out?";
+							mes "Well prepared.";
+							mes "But just in case, my opinion is that going to Midgard to get some souls is wise.";
+							mes "You should probably find Aegir and ask him help from his expedition.";
+							next;
+						}
+						mes "[Friederike]";
+						mes "Anyway, you're free to go.";
+						mes "You should go to Midgard, honestly. Go collect some souls and bring back to me.";
+						mes "Let's help you getting stronger and stronger. Midgard has a lot of strong mobs that will give you many souls.";
+						next;
+						mes "[Friederike]";
+						mes "Ran often goes there. Ask her to bring you there, or find a Cat that teleports you to Midgard.";
+						mes "There's one down there on the south of Frozen Tail.";
+						mes "They're just... Not cheap. Those cats... They've made a business.";
+						next;
+						mes "[Friederike]";
+						mes "Despite their arrogance, they're still believing in gods, so they are allowed to be here.";
+						mes "Anyway, good luck!.";
+						close;
+					} else {
+						mes "[Friederike]";
+						mes "How's the taste?";
+						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						next;
+						mes "[Friederike]";
+						mes "I want to give you more but that was the last of it";
+						mes "I'll give you something even better.";
+						next;
+						//mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						completequest 7473;
+						getexp 250,0; //reward 6
+						getitem 100900,10;
+						setquest 30003;
+						navigateto "icecastle", 85, 127;
+						mes "[Friederike]";
+						mes "That's from my old inventory.";
+						mes "I would use it when I lived in Midgard for a while.";
+						mes "Well... I am old enough. Won't be using it. You can have it.";
+						next;
+						mes "[Friederike]";
+						mes "It will quickly bring you here.";
+						mes "You can also buy more from Lazy, our personal merchant.";
+						mes "He is up here, somewhere.";
+						next;
+						mes "[Friederike]";
+						mes "He trades your souls for a few cool magical stuff!";
+						mes "Stay wise!";
+						//getitem 569,30;// Novice_Potion
+						//getexp 200,0;
+						next;
+						mes "[Friederike]";
+						mes "What do you plan to do from now on?";
+						mes "Have you found a place to stay?";
+						next;
+						switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+						case 1:
+							mes "[Friederike]";
+							mes "But still, though.";
+							mes "It's tough to be out alone in a new place.";
+							mes "That's why this castle is there.";
+							next;
+							mes "[Friederike]";
+							mes "Ran sent you to me probably for the same reason.";
+							mes "My opinion is that going to Midgard to get some souls is wise.";
+							next;
+						case 2:
+							mes "[Friederike]";
+							mes "How optimistic of you.";
+							mes "My opinion is that going to Midgard to get some souls is wise.";
+							next;
+						case 3:
+							mes "[Friederike]";
+							mes "You already have a plan laid out?";
+							mes "Well prepared.";
+							mes "But just in case, my opinion is that going to Midgard to get some souls is wise.";
+							next;
+						}
+						mes "[Friederike]";
+						mes "Anyway, you're free to go.";
+						mes "You should go to Midgard, honestly. Go collect some souls and bring back to me.";
+						mes "Let's help you getting stronger and stronger. Midgard has a lot of strong mobs that will give you many souls.";
+						next;
+						mes "[Friederike]";
+						mes "Ran often goes there. Ask her to bring you there, or find a Cat that teleports you to Midgard.";
+						mes "There's one down there on the south of Frozen Tail.";
+						mes "They're just... Not cheap. Those cats... They've made a business.";
+						next;
+						mes "[Friederike]";
+						mes "Despite their arrogance, they're still believing in gods, so they are allowed to be here.";
+						mes "Anyway, good luck!.";
+						close;
+					}
+				}
+			}
+		}
+
+//START HERE THE EXCHANGE
+
+if ( JobLevel > 9 ){
+set .@item_id, 47006; // Einherjar Soul
+set .@npc_name$, strnpcinfo(1);
+set .@n$,"[ " + .@npc_name$ + " ]";
+mes .@n$;
+mes "Hmm, you're already Max Job Level, but we can exchange ^4A4AFF10,000 <ITEM>" +getitemname(.@item_id)+ "<INFO>"+.@item_id+"</INFO></ITEM>^000000 for 1 extra skill point!";
+mes "Your current extra skill points is ^4A4AFF"+#GAINEXTRASKPOINTS+ "^000000!";
+next;
+if (countitem(47006) < 10000) {
+mes .@n$;
+mes "Well, you don't have all the souls...";
+close;
+}
+mes .@n$;
+mes "Do you want to exchange them?";
+next;
+if (select("Yes:No") == 2) {
+mes .@n$;
+mes "Okay, then.";
+close;
+}
+else {
+specialeffect2 EF_BLESSING;
+delitem 47006,10000;
+set SkillPoint, SkillPoint + 1;
+set #GAINEXTRASKPOINTS, #GAINEXTRASKPOINTS + 1;
+mes .@n$;
+mes "Thank you a lot! You've gained 01 Skill Point.";
+}
+close;
+} else {
+set .@item_id, 47006; // your item id required Einherjar Soul
+set .@npc_name$, strnpcinfo(1);
+set .@countsouls, countitem(47006);
+set .@exptotalsouls, 2 * .@countsouls;
+mes "[ " + .@npc_name$ + " ]";
+mes "Hello, young soul!";
+mes "Let me help you!";
+next;
+mes "[ " + .@npc_name$ + " ]";
+mes "I can exchange ^4A4AFF<ITEM>" +getitemname(.@item_id)+ "<INFO>"+.@item_id+"</INFO></ITEM>^000000  for Experience!";
+mes "Your current number of Souls is ^4A4AFF"+.@countsouls+ "^000000!";
+mes "Each Soul gives you ^4A4AFF2 Job Exp^000000!";
+next;
+mes "[ " + .@npc_name$ + " ]";
+mes "Do you want to exchange them?";
+next;
+if (select("Yes:No") - 1) end;
+if (!countitem(.@item_id)) {
+mes "[ " + .@npc_name$ + " ]";
+mes "Sorry but you need a " +getitemname(.@item_id)+ " to exchange :(";
+close;
+}
+if ( JobLevel > 9 ) {
+mes "[ " + .@npc_name$ + " ]";
+mes "Sorry but you're already Job 10.";
+close;
+}
+//set JobLevel, JobLevel + 1;
+mes "[ " + .@npc_name$ + " ]";
+mes "Select how many souls you'll want to exchange now!";
+switch(select("Input Number:My Current Souls:Not now, actually.")) {
+		case 1:
+			//mes "[ " + .@npc_name$ + " ]";
+			mes "You'll gain ^4A4AFF2^000000 Job Exp per soul.";
+			next;
+			if (select("Input!:Not now.") - 1) end;
+			input(.@numbersouls);
+			next;
+			mes "You can exchange them to gain ^4A4AFF"+.@numbersouls * 2+ "^000000 Job Exp!";
+			if (select("Confirm!:Leave.") - 1) end;
+			specialeffect2 EF_BLESSING;
+			getexp( 0, .@numbersouls * 2 );
+			set #GAIN, #GAIN + 1;
+			delitem .@item_id,.@numbersouls;
+			mes "[ " + .@npc_name$ + " ]";
+			mes "Gained ^4A4AFF"+.@numbersouls * 2+ "^000000 Job Exp!";
+			close;
+		case 2:
+			//mes "[ " + .@npc_name$ + " ]";
+			mes "You can exchange it to gain ^4A4AFF"+.@exptotalsouls+ "^000000 Job Exp!";
+			next;
+			if (select("Yes, please!:Not now.") - 1) end;
+			specialeffect2 EF_BLESSING;
+			getexp( 0, .@exptotalsouls );
+			set #GAIN, #GAIN + 1;
+			delitem .@item_id,.@countsouls;
+			mes "[ " + .@npc_name$ + " ]";
+			mes "Gained ^4A4AFF"+.@exptotalsouls+ "^000000 Job Exp!";
+			close;
+		case 3:
+			//mes "[ " + .@npc_name$ + " ]";
+			mes "Ok, see you!";
+			close;
+		}
+}
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && isbegin_quest(30002) && !isbegin_quest(7473)";
+	end;
+}

@@ -1,0 +1,60 @@
+prontera,154,177,5	script	Yumi Haruka	811,{
+	
+	mes .name$;
+	mes "Hello, i can reset an instance.";
+	mes "What instance do you want to reset?";
+	next;
+	for(.@i=0;.@i<getarraysize(.instances$);.@i+=5)
+		set .@menu$,.@menu$+.instances$[.@i]+":";
+	set .@ans,select(.@menu$)-1;
+	set .@instance$,.instances$[.@ans*5];
+	set .@qid,atoi(.instances$[(.@ans*5)+1]);
+	set .@item,atoi(.instances$[(.@ans*5)+2]);
+	set .@amt,atoi(.instances$[(.@ans*5)+3]);
+	set .@zeny,atoi(.instances$[(.@ans*5)+4]);
+	next;
+	if(checkquest(.@qid,PLAYTIME)==2 || checkquest(.@qid,PLAYTIME) < 0){
+		mes .name$;
+		mes "Eh? You don't need to reset this instance. You are already allowed to enter it.";
+		end;
+	}
+	mes .name$;
+	mes "So you want to reset ^FF0000"+.@instance$+"^000000?";
+	mes "It will cost you: ";
+	if(.@item)
+	mes ""+.@amt+"x ^0000FF"+getitemname(.@item)+"^000000";
+	if(.@zeny)
+	mes "and ^0000FF"+.@zeny+"^000000 Zeny!";
+	mes "Would you like to reset now?";
+	next;
+	if(select("Yes, Please Reset:No sorry")==2){
+		mes .name$;
+		mes "Okay, Please come at me again once you decided";
+		end;
+	}
+	close2;
+	if(.@item && countitem(.@item)<.@amt)
+		goto L_NotEnough;
+	if(.@zeny && Zeny<.@zeny)
+		goto L_NotEnough;
+	if(.@item)
+		delitem .@item,.@amt;
+	Zeny-=.@zeny;
+	erasequest .@qid;
+	message strcharinfo(0),"Instance has been Reset!";
+	end;
+
+L_NotEnough:
+	mes .name$;
+	mes "Sorry! But unfortunately, You don't have the requirements to reset the instance";
+end;
+
+OnInit:
+	// Instance Name, Quest ID, Item ID for Reset,Item Amount, Zeny Amount
+	set .name$,"[ Yumi ]";
+	setarray .instances$[0],
+		"Poring Village","12417","47010","5","100000",
+		"Orcs Memory","12059","47010","5","100000";
+end;
+	
+}

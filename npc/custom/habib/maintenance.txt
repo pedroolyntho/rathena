@@ -1,0 +1,23 @@
+-	script	Maintenance	-1,{
+
+OnTue09000:
+	announce "Server maintenance in 1 hour",0;
+	end;
+OnTue0915:
+	announce "Server maintenance in 45 mins.",0;
+	end;
+OnTue0930:
+	announce "Server maintenance in 30 mins.",0;
+	end;
+OnTue0945:
+	announce "Server maintenance in 15 mins.",0;
+	end;
+OnTue0958:
+	announce "Server maintenance in 2 mins. Please logout to prevent item loss and rollbacks.",0;
+	end;
+OnTue1000:
+	atcommand "@kickall";
+	atcommand "@mapexit";
+	end;
+
+}

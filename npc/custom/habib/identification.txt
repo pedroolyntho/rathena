@@ -1,0 +1,284 @@
+//MAGNIFIER by Ishizu-Chan
+//Modified by Anarkial
+
+mid_camp,185,259,4	script	Deckard Cain	57,{
+
+// [Set these variables]
+
+// Prices
+set @price, 60; // Price to identify one item, BEFORE finishing quest
+set @price2, 0; // Price to identify one item, AFTER quest
+
+ // Are you going to use the quest? (1 for yes, 0 for no)
+set @usequest, 1; // I have it set to give NO discounts after the quest is complete.
+
+// Will you use magnifiers after quest? (1 for yes, 0 for no)
+set @magspostq, 1; // This will only affect the script if your @price2 is GREATER than 0.
+				//Also, if you use this, it's best not to set @price2 under 40.
+
+
+
+// Price discounts
+if (@usequest == 0) {
+	if (getskilllv(224)) set @price, @price-(5+4*getskilllv(224)); //Price after Rogue's discount
+	if(getskilllv(37)) { set @price, @price-(7+2*getskilllv(37)); //Price after Merchant's discount
+	if (getskilllv(37) == 10) set @price, @price-(7+2*getskilllv(37)-1); //Price after Merchant's discount at max skill lvl.
+	}
+}
+
+// Actual Script Begins Here
+// =========================
+	
+if (ident_Q == 2) goto L_Greetings;
+if ((ident_Q == 3) && (@price2 == 0)) goto L_FreeDeck;
+if ((ident_Q == 3) && (@price2 > 0)) goto L_PaidDeck;
+else goto L_AllDeck;
+
+//What happens right after completion of quest
+L_Greetings:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "Thank you for helping me!";
+	mes "As a token of my gratitude,";
+	mes "I will identify all of your items";
+	if (@price2 == 0)
+		mes "for free from now on!";
+	else if (@price2 > 0)
+		mes "for only " + @price2 + " Zeny  from now on.";
+	next;
+	set ident_Q,3;
+	goto L_Invcheck;
+
+// If identifying is free after quest
+L_FreeDeck:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "Hello again!";
+	mes "I will identify all your items for you.";
+	next;
+	goto L_InvCheck;
+
+//If identifying costs Zeny after quest
+L_PaidDeck:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "Hello again!";
+	mes "I will identify all your items for";
+	mes "just " + @price2 + " Zeny each item.";
+	next;
+	menu "Sure.",L_InvCheck,"No thanks...",L_Bye;
+
+
+//What everybody gets before quest
+L_AllDeck:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "Hello there!";
+	mes "I can identify all your unidentified items.";
+	mes "It's " + @price + " Zeny each item.";
+	next;
+	menu "Sure.",-,"No thanks...",L_Bye;
+	
+L_InvCheck:
+	getinventorylist;
+	set @identify, 0;
+
+	for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) {
+	if (@inventorylist_identify[@i] == 0) set @identify, @identify + 1;
+	}
+
+	if (@identify == 0) goto L_Nothing;
+		else if ((ident_Q == 3) && (@price2 < 1))  goto L_Identifying;
+
+// Paying to identify, quest script or not
+		mes "^FF0000[Deckard Cain]^000000";
+		if (@identify < 2) {
+			mes "You've got one unidentified item in your inventory.";
+			if (ident_Q == 3)
+				mes "I'll identify it for " + @price2 + " Zeny.";
+			else
+				mes "I'll identify it for " + @price + " Zeny.";
+		} else {
+			mes "You've got " + @identify + " unidentified items in your inventory.";
+			if (ident_Q == 3)
+				mes "I'll identify them for " + (@identify * @price2) + " Zeny.";
+			else
+				mes "I'll identify them for " + (@identify * @price) + " Zeny.";
+		}
+		if ((ident_Q == 3) && (@magspostq == 1))
+			mes "If you've got any ^00AA00Magnifiers^000000, I'll take those instead.";
+		else if (ident_Q < 3)
+			mes "If you've got any ^00AA00Magnifiers^000000, I'll take those instead.";		
+		mes "Shall I start now?";
+		next;
+		menu "Ok, let's go!",-,"What a ripoff...",L_Bye;
+
+L_Identifying:
+	getinventorylist;
+	set @identified, 0;
+	
+	if ((ident_Q == 3) && (@price2 < 1)) goto L_FIdent;
+		else if ((ident_Q == 3) && (@price2 > 0)) goto L_PIdent2;
+
+//Paid identification before quest
+L_PIdent1:
+	for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) {
+	if (@inventorylist_identify[@i] == 0) {
+		if (countitem(611) > 0) delitem 611,1;
+			else if (Zeny < @price) goto L_NoZeny;
+			else set Zeny, Zeny - @price;
+		//delitem2 @inventorylist_id[@i],1,0,0,0,0,0,0,0;
+		//getitem @inventorylist_id[@i],1;
+		atcommand "@identifyall";
+	set @identified, @identified + 1;
+	}
+	}
+	goto L_Identified;
+	
+//Paid identification after quest
+L_PIdent2:
+	for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) {
+	if (@inventorylist_identify[@i] == 0) {
+		if ((countitem(611) > 0) && (@magspostq == 1)) delitem 611,1;
+			else if (Zeny < @price2) goto L_NoZeny;
+			else set Zeny, Zeny - @price2;
+		//delitem2 @inventorylist_id[@i],1,0,0,0,0,0,0,0;
+		//getitem @inventorylist_id[@i],1;
+		atcommand "@identifyall";
+	set @identified, @identified + 1;
+	}
+	}
+	goto L_Identified;
+	
+//Free identification
+L_FIdent:
+	for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) {
+	if (@inventorylist_identify[@i] == 0) {
+		//delitem2 @inventorylist_id[@i],1,0,0,0,0,0,0,0;
+		//getitem @inventorylist_id[@i],1;
+		atcommand "@identifyall";
+	set @identified, @identified + 1;
+	}
+	}
+
+L_Identified:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "Well, I identified everything!";
+	mes "I've identified a total of "+@identified+" items for you.";
+	mes "Bye~";
+	close;
+
+L_Nothing:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "You don't have any unidentified Items.";
+	close;
+
+L_NoZeny:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "You don't have enough Zeny.";
+	close;
+
+L_Bye:
+	mes "^FF0000[Deckard Cain]^000000";
+	mes "...";
+	close;
+
+}
+
+
+//The Quest
+mid_camp,192,273,5	script	Kashya	728,{
+
+set @prize1, 100;
+set @prize2, 100;
+set @prize3, 100;
+
+if (ident_Q == 0) goto L_NoQuest; //Char did not start quest yet.
+if (ident_Q == 1) goto L_ident_Q_1; //Char accepted quest 1.
+goto L_Finish; //Char finished all quests from npc.
+
+L_ident_Q_1:
+	mes "^FF0000[Kashya]^000000";
+	mes "Please bring:";
+	mes @prize1 + " Red Potion,";
+	mes @prize2 + " Orange Potion, and";
+	mes @prize3 + " Green Potion quickly!";
+	mes "Time is running out!";
+	next;
+	menu "I have them!",L_ident_Q_1_c,"Ok, ok, I will!",L_Hurry;
+	
+L_ident_Q_1_c:
+	if(countitem(501)<@prize1) goto L_Error1; 
+	if(countitem(502)<@prize2) goto L_Error2;
+	if(countitem(506)<@prize3) goto L_Error3;
+	delitem 501,@prize1;
+	delitem 502,@prize2;
+	delitem 506,@prize3;
+	mes "^FF0000[Kashya]^000000";
+	mes "With these items, the healer, Deckard Cain, will surely discover the cause of the illness.";
+	mes "Deckard Cain and I are truly grateful for your help, and as I understand it, he is offering a service for his thanks.";
+	next;
+	mes "You should go see him.";
+	mes "And thank you very much,";
+	mes "we will always be in your debt.";
+	set ident_Q,2; //We're putting quest up by 1   
+	close;
+
+L_NoQuest:
+	mes "^FF0000[Kashya]^000000";
+	mes "A little kid of mine has fallen very ill, and nobody here knows the cure.";
+	mes "We are researching the illness right now, and we really need your help.";
+	mes "Can you help us?";
+	next;
+	menu "Of course!",-,"Sorry, no.", L_Outrage;
+	mes "^FF0000[Kashya]^000000";
+	mes "Thank you! To research this deadly thing,";
+	mes "I'll need:";
+	mes @prize1 + " Red Potion,";
+	mes @prize2 + " Orange Potion, and";
+	mes @prize3 + " Green Potion.";
+	mes "...";
+	mes "Are you still willing to do this?";
+	next;
+	menu "Yes",-,"No", L_Outrage;
+	mes "^FF0000[Kashya]^000000";
+	mes "Thank you, thank you, thank you!";
+	emotion e_kiss;
+	mes "Well, I hope to see you back very soon, because we are quite desperate at this point,";
+	mes "And you are our only hope...";
+	set ident_Q,1;
+	close;
+	
+L_Outrage:
+	mes "^FF0000[Kashya]^000000";
+	mes "But, but, how COULD you?";
+	mes "You're killing my only child...";
+	mes "We'll just have to wait for someone else then.";
+	close;
+	
+L_Error1:
+	mes "^FF0000[Kashya]^000000";
+	mes "No, no, you need " + @prize1 + " Red Potion.";
+	close;
+
+L_Error2:
+	mes "^FF0000[Kashya]^000000";
+	mes "No, no, you need " + @prize2 + " Orange Potion.";
+	close;
+	
+L_Error3:
+	mes "^FF0000[Kashya]^000000";
+	mes "No, no, you need " + @prize3 + " Green Potion.";
+	close;
+
+L_Finish:
+	mes "^FF0000[Kashya]^000000";
+	mes "Go see ^FF0000[Deckard Cain]^000000, he has something special for you.";
+	close;
+	
+L_Hurry:
+	mes "^FF0000[Kashya]^000000";
+	mes "Ok then, please hurry.";
+	close;
+
+OnTouch:
+	if (q_intro == 0) emotion ET_SURPRISE;
+	if ((ident_Q > 0) && (ident_Q <= 1)) emotion ET_QUESTION;
+	end;
+}

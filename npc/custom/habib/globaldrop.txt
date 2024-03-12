@@ -1,0 +1,30 @@
+-	script	GlobalDrop	-1,{
+	//OnInit: for when using rare soul drop
+	//setarray .effect,	865, 861, 871, 867, 587, 112, 677;
+	//setarray .Message$,		"You have dropped a Rare Soul!";
+	//end;
+	OnNPCKillEvent:
+		//if( getmonsterinfo( killedrid,1 ) < 5 && rand(100) <= 100 ){ //individual drops for mob range lv
+		//	getmapxy(.@map$, .@x, .@y);
+		//	makeitem 47006, rand(1,5), .@map$, .@x, .@y;
+		//}else if( getmonsterinfo( killedrid,1 ) > 4 && getmonsterinfo( killedrid,1 ) < 15 && rand(100) <= 100 ){
+		//	getmapxy(.@map$, .@x, .@y);
+		//	makeitem 47006, rand(1,15), .@map$, .@x, .@y;
+		//}else if( getmonsterinfo( killedrid,1 ) > 14 && getmonsterinfo( killedrid,1 ) < 20 && rand(100) <= 100 ){
+		//	getmapxy(.@map$, .@x, .@y);
+		//	makeitem 47006, rand(1,20), .@map$, .@x, .@y;
+		//}else if( getmonsterinfo( killedrid,1 ) > 19 && rand(100) <= 100 ){
+		//	getmapxy(.@map$, .@x, .@y);
+		//	makeitem 47006, rand(1,getmonsterinfo( killedrid,1 )), .@map$, .@x, .@y;
+		//}
+		//REMOVED CONDITIONS, NOW BASED ON RANDOM from 1 TO MOB LV
+			getmapxy(.@map$, .@x, .@y);
+			makeitem 47006, rand(1,getmonsterinfo( killedrid,1 )), .@map$, .@x, .@y;
+		//if(rand(1000) == 1 ){ //0.1% //Global DROP for rare souls
+		//	getmapxy(.@map$, .@x, .@y);
+		//	makeitem 47010, 1, .@map$, .@x, .@y;
+		//	specialeffect2 .effect[.@rand-1];
+		//	dispbottom ""+.Message$[.@rand-1]+"";
+		//}
+		end;
+}

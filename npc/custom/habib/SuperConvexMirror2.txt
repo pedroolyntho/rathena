@@ -1,0 +1,70 @@
+prontera,143,165,4	script	MVP Convex Mirror	46,{
+	
+	for( .@i = 0; .@i < getarraysize( $MVP_MobID ); .@i++ ) {
+		if($MVP_Status[.@i] == 2){
+			.status$[.@i] = "^008000ALIVE^000000";
+		} else .status$[.@i] = "^ff0000DEAD^000000";
+    mes ""+getmonsterinfo($MVP_MobID[.@i],MOB_NAME)+"" + "^000000 (^008080" + $MVP_Maps$[.@i] + "^000000) "+.status$[.@i]+"";
+    }
+	
+	OnNPCKillEvent:
+	if( getmonsterinfo(killedrid, MOB_MVPEXP) > 0 ) 
+		for( set .@i,0; .@i < getarraysize($MVP_MobID); set .@i, .@i+1 )
+		{
+			if( (killedrid == $MVP_MobID[.@i]) && (strcharinfo(3) == $MVP_Maps$[.@i])) {
+				$MVP_Status[.@i] = 1;
+				$MVP_TimeStamp[.@i] = gettimetick(2);
+			}    
+		}
+	end;
+
+OnInit:
+    setarray $MVP_MobID[0],1511,1785,1785,1785,1785,1785,1630,1039,1039,
+							1873,2068,1272,1272,1719,1046,1046,1389,1112,1115,1418,
+							1871,1252,2253,2251,1768,1086,2165,1885,1832,1492,2255,
+							1734,2442,1251,2202,1688,2156,1373,1147,1147,1059,1059,1150,
+							1150,2362,1087,1190,1038,1157,1159,1623,2249,2087,1583,
+							2441,3074,1312,1751,1685,1658;
+							
+    setarray $MVP_Maps$[0],"moc_pryd06","gld_dun03","ra_fild03","ra_fild04","ve_fild01","ve_fild02","lou_dun03","gld_dun03","prt_maze03",
+							"abbey03","bra_dun02","gl_chyard","gld_dun04","abyss_03","gef_dun02","gld_dun04","gef_dun01","treasure02","pay_fild10","gon_dun03",
+							"abbey02","xmas_fild01","gld2_pay","gld2_ald","ra_san05","prt_sewb4","dic_dun03","mosk_dun03","thor_v03","ama_dun03","gld2_gef",
+							"kh_dun02","teg_dun02","xmas_dun02","iz_dun05","ayo_dun02","dew_dun01","niflheim","gld_dun02","anthell02","gld_dun02","mjolnir_04","pay_dun04",
+							"gld_dun01","moc_prydn2","gef_fild03","gef_fild10","moc_pryd04","in_sphinx5","moc_fild17","ein_dun02","gld2_prt","dic_dun02","beach_dun",
+							"teg_dun01","c_tower3_","tur_dun04","odin_tem03","jupe_core","lhz_dun02";
+							
+    setarray $MVP_ResTime[0],60,480,180,300,180,360,117,480,120,
+							720,120,60,480,180,120,480,60,120,120,95,
+							120,120,480,480,300,60,120,120,660,91,480,
+							120,120,60,120,420,120,133,480,120,480,120,60,
+							480,60,60,120,60,60,120,125,480,120,300,
+							480,120,60,480,120,120;
+						
+//Respawn only undead MVP's on server start or reload                    
+    for( set .@i,0; .@i < getarraysize($MVP_MobID); set .@i, .@i+1 )
+    {
+        //check whether MPV is alive or $MVP_Status variable is not yet set.  
+        //1 - Dead, 2 - Alive
+        if ( $MVP_Status[.@i] == 2 || $MVP_Status[.@i] == 0 || $MVP_TimeStamp[.@i] == 0  ) {  
+            //monster $MVP_maps$[.@i],0,0,"--ja--",$MVP_MobID[.@i],1;
+            $MVP_Status[.@i] = 2;
+        } else { // don't respawn MVP and wait for next spawn time
+            $MVP_Status[.@i] = 1;
+        }    
+    }
+	
+startnpctimer;
+    OnTimer60000: //check every 60 seconds
+        for( set .@i,0; .@i < getarraysize($MVP_MobID); set .@i, .@i+1 )
+        {
+            set .@time, $MVP_ResTime[.@i]*60;
+            if( ($MVP_TimeStamp[.@i] + .@time) <= gettimetick(2) && $MVP_Status[.@i] == 1 ) {
+                //monster $MVP_Maps$[.@i],0,0,"--ja--",$MVP_MobID[.@i],1;
+                //Defines last respawn
+                $MVP_TimeStamp[.@i] = gettimetick(2);
+                $MVP_Status[.@i] = 2;
+            }
+        }
+		setnpctimer 0;
+end;
+}

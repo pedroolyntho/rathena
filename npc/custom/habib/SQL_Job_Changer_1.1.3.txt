@@ -1,0 +1,304 @@
+/* SQL table
+DROP TABLE IF EXISTS `e_jobchanger`;
+
+CREATE TABLE IF NOT EXISTS `e_jobchanger` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`job` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '0',
+	`next_job` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '0',
+	`base_lv` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '0',
+	`job_lv` SMALLINT(6) UNSIGNED NULL DEFAULT '0',
+	`bonus_stpoint` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`bonus_skpoint` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+	`resetlvl` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+	`req_zeny` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`status` TINYINT(3) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+*/
+
+
+prontera,155,175,5	script	SQL Job Changer	4_F_KAFRA9,{
+	doevent "sql_job_changer_main::OnTalk";
+}
+
+// prontera,155,180,5	duplicate(SQL Job Changer)	SQL Job Changer#1	4_F_KAFRA9
+// prontera,155,180,5	duplicate(SQL Job Changer)	SQL Job Changer#2	4_F_KAFRA9
+// prontera,155,180,5	duplicate(SQL Job Changer)	SQL Job Changer#3	4_F_KAFRA9
+
+-	script	sql_job_changer_main	-1,{
+
+	function	func_AddJob	{
+		.@class = getarg(0,0);
+		.@base_lv = getarg(1,0);
+		.@job_lv = getarg(2,0);
+		.@bonus_stpoint = getarg(3,0);
+		.@bonus_skpoint = getarg(4,1);
+		.@resetlvl = getarg(5,0);
+		.@req_zeny = getarg(6,0);
+		
+		.@argcount = getargcount();
+		for (.@i = 7; .@i < .@argcount; .@i++) {
+			.@next_class = getarg(.@i,0);
+			if (.@class != .@next_class && jobname(.@next_class) != "Unknown Job") {
+				.@sql$ = "INSERT INTO `e_jobchanger` "
+						+ "(`job`,`next_job`,`base_lv`,`job_lv`,`bonus_stpoint`,`bonus_skpoint`,`resetlvl`,`req_zeny`) "
+						+ "VALUES "
+						+ "("+.@class+","+.@next_class+","+.@base_lv+","+.@job_lv+","+.@bonus_stpoint+","+.@bonus_skpoint+","+.@resetlvl+","+.@req_zeny+")";
+				query_sql(.@sql$);
+				// debugmes "[SQL Job Changer] "+jobname(.@class)+" -> "+jobname(.@next_class)+" - Added";
+			}
+			else debugmes "[SQL Job Changer] "+jobname(.@class)+" -> "+jobname(.@next_class)+" # "+.@next_class+" - Failed.";
+		}
+		// sleep 1;
+		return;
+	}
+	
+	function	func_PlatinumSkill	{
+		skill "NV_FIRSTAID", 1, SKILL_PERM;
+		
+		switch(getarg(0,0)) {
+			case Job_Novice:
+				if (Class != Job_SuperNovice)
+					skill "NV_TRICKDEAD", 1, SKILL_PERM;
+				break;
+			case Job_Swordman: 
+				skill "SM_MOVINGRECOVERY", 1, SKILL_PERM;
+				skill "SM_FATALBLOW", 1, SKILL_PERM;
+				skill "SM_AUTOBERSERK", 1, SKILL_PERM;
+				break;
+			case Job_Mage:
+				skill "MG_ENERGYCOAT", 1, SKILL_PERM;
+				break;
+			case Job_Archer:
+				skill "AC_MAKINGARROW", 1, SKILL_PERM;
+				skill "AC_CHARGEARROW", 1, SKILL_PERM;
+				break;
+			case Job_Acolyte:
+				skill "AL_HOLYLIGHT", 1, SKILL_PERM;
+				break;
+			case Job_Merchant:
+				skill "MC_CARTREVOLUTION", 1, SKILL_PERM;
+				skill "MC_CHANGECART", 1, SKILL_PERM;
+				skill "MC_LOUD", 1, SKILL_PERM;
+				break;
+			case Job_Thief:
+				skill "TF_SPRINKLESAND", 1, SKILL_PERM;
+				skill "TF_BACKSLIDING", 1, SKILL_PERM;
+				skill "TF_PICKSTONE", 1, SKILL_PERM;
+				skill "TF_THROWSTONE", 1, SKILL_PERM;
+			default: break;
+		}
+		
+		switch(getarg(1,0)) {
+			case Job_Knight:
+				skill "KN_CHARGEATK", 1, SKILL_PERM;
+				break;
+			case Job_Priest:
+				skill "PR_REDEMPTIO", 1, SKILL_PERM;
+				break;
+			case Job_Wizard:
+				skill "WZ_SIGHTBLASTER", 1, SKILL_PERM;
+				break;
+			case Job_Blacksmith:
+				skill "BS_UNFAIRLYTRICK", 1, SKILL_PERM;
+				skill "BS_GREED", 1, SKILL_PERM;
+				break;
+			case Job_Hunter:
+				skill "HT_PHANTASMIC", 1, SKILL_PERM;
+				break;
+			case Job_Assassin:
+				skill "AS_SONICACCEL", 1, SKILL_PERM;
+				skill "AS_VENOMKNIFE", 1, SKILL_PERM;
+				break;
+			case Job_Crusader:
+				skill "CR_SHRINK", 1, SKILL_PERM;
+				break;
+			case Job_Monk:
+				skill "MO_KITRANSLATION", 1, SKILL_PERM;
+				skill "MO_BALKYOUNG", 1, SKILL_PERM;
+				break;
+			case Job_Sage:
+				skill "SA_CREATECON", 1, SKILL_PERM;
+				skill "SA_ELEMENTWATER", 1, SKILL_PERM;
+				skill "SA_ELEMENTGROUND", 1, SKILL_PERM;
+				skill "SA_ELEMENTFIRE", 1, SKILL_PERM;
+				skill "SA_ELEMENTWIND", 1, SKILL_PERM;
+				break;
+			case Job_Rogue:
+				skill "RG_CLOSECONFINE", 1, SKILL_PERM;
+				break;
+			case Job_Alchemist:
+				skill "AM_BIOETHICS", 1, SKILL_PERM;
+				break;
+			case Job_Bard:
+				skill "BA_PANGVOICE", 1, SKILL_PERM;
+				break;
+			case Job_Dancer:
+				skill "DC_WINKCHARM", 1, SKILL_PERM;
+			default: break;
+		}
+		return;
+	}
+	
+	OnTalk:
+		.@sql$ = "SELECT `next_job`,`base_lv`,`job_lv`,`bonus_stpoint`,`bonus_skpoint`,`resetlvl`,`req_zeny` "
+				+ "FROM `e_jobchanger` "
+				+ "WHERE `status` = 1 "
+				+ "AND `job` = "+Class+" "
+				+ "LIMIT 100";
+				
+		query_sql(.@sql$, .@next_job, .@base_lv, .@job_lv, .@bonus_stpoint, .@bonus_skpoint, .@resetlvl, .@req_zeny);
+		.@next_job_size = getarraysize(.@next_job);
+		
+		mes "[Job Master] ^FFFFFFBy Emistry^000000";
+		if (.basic_skill_check && getskilllv("NV_BASIC") < 9) {
+			mes "Your Basic Skill aren't sufficient to continue the Job Advancement.";
+		}
+		else if (SkillPoint && .player_skillup_limit) { 
+			mes "Please clear your existing skill points.";
+			if (.skillpoint_removal) {
+				mes " ";
+				mes "Do you wish to remove these extra skill points?";
+				next;
+				if (select("Yes.","Cancel") == 1) {
+					mes "[Job Master] ^FFFFFFBy Emistry^000000";
+					mes "Extra skill points has been removed.";
+					SkillPoint = 0;
+				}
+			}
+		}
+		else if (!.@next_job_size) {
+			mes "Doesn't have any Job Advancement for you now.";
+		}
+		else {
+			if (.@next_job_size > 1) {
+				for (.@i = 0; .@i < .@next_job_size; .@i++)
+					.@menu$ = .@menu$ + jobname(.@next_job[.@i]) + ":";
+				.@i = select(.@menu$) - 1;
+			}
+			
+			if (.@base_lv[.@i] && BaseLevel < .@base_lv[.@i]) {
+				mes "It required Minimum of "+.@base_lv[.@i]+" Base Level to continue the Job Advancement.";
+			}
+			else if (.@job_lv[.@i] && JobLevel < .@job_lv[.@i]) {
+				mes "It required Minimum of "+.@job_lv[.@i]+" Job Level to continue the Job Advancement.";
+			}
+			else {
+				if  (.@req_zeny[.@i])
+					mes "Process Fee: "+F_InsertComma(.@req_zeny[.@i])+" Zeny";
+				
+				if (Zeny >= .@req_zeny[.@i])
+					if (select("Confirm, advance to "+jobname(.@next_job[.@i])+".","Cancel") == 1) {
+						mes "Starting from now, you're a "+jobname(.@next_job[.@i]);
+						
+						Zeny -= .@req_zeny[.@i];
+						jobchange .@next_job[.@i];
+						
+						if (.@resetlvl[.@i] > 0 && .@resetlvl[.@i] <= 4)
+							resetlvl .@resetlvl[.@i];
+						
+						StatusPoint += .@bonus_stpoint[.@i];
+						SkillPoint += .@bonus_skpoint[.@i];
+
+						percentheal 100,100;
+						specialeffect2 EF_ANGEL2;
+						
+						if (.platinum_skill_gain)
+							func_PlatinumSkill(BaseClass, BaseJob);
+					}
+			}
+		}
+		close;
+	
+	OnInterIfInitOnce:
+		query_sql("TRUNCATE `e_jobchanger`");
+		
+		// Add any combination that you like.
+		// AddJob(<current job>,<min. base lv>,<min. job lv>,<bonus statpoints>,<bonus skillpoints>,<resetlvl>,<required zeny>,<next job>,...,<next job>);
+		
+		func_AddJob(Job_Novice,5,10,0,0,0,0,Job_Swordman,Job_Mage,Job_Archer,Job_Bard,Job_Knight,Job_Acolyte,Job_Soul_Linker,Job_Sage);
+		
+		// func_AddJob(Job_Novice,0,10,0,99,0,0,Job_Swordman,Job_Mage,Job_Archer,Job_Acolyte,Job_Merchant,Job_Thief);
+		// func_AddJob(Job_Novice,0,10,0,1,0,0,Job_Swordman,Job_Mage,Job_Archer,Job_Acolyte,Job_Merchant,Job_Thief);
+		// func_AddJob(Job_Novice,0,10,0,1,0,0,Job_Gunslinger,Job_Ninja,Job_Taekwon);
+		// func_AddJob(Job_Novice,0,10,0,0,4,0,Job_Baby);
+		
+		// func_AddJob(Job_Baby,0,10,0,1,0,0,Job_Baby_Swordman,Job_Baby_Mage,Job_Baby_Archer,Job_Baby_Acolyte,Job_Baby_Merchant,Job_Baby_Thief);
+		
+		func_AddJob(Job_Swordman,10,20,0,0,0,0,Job_Lord_Knight,Job_Assassin_Cross);
+		func_AddJob(Job_Archer,10,20,0,0,0,0,Job_Hunter,Job_Assassin);
+		func_AddJob(Job_Bard,10,20,0,0,0,0,Job_Clown);
+		func_AddJob(Job_Mage,10,20,0,0,0,0,Job_Wizard,Job_Professor);
+		func_AddJob(Job_Knight,10,20,0,0,0,0,Job_Crusader,Job_Paladin);
+		func_AddJob(Job_Acolyte,10,20,0,0,0,0,Job_Priest,Job_Monk);
+		func_AddJob(Job_Sage,10,20,0,0,0,0,Job_Star_Gladiator,Job_High_Wizard);
+		func_AddJob(Job_Soul_Linker,10,20,0,0,0,0,Job_Star_Gladiator,Job_Soul_Reaper);
+		
+		// func_AddJob(Job_Swordman,0,40,0,1,0,0,Job_Knight,Job_Crusader);
+		// func_AddJob(Job_Mage,0,40,0,1,0,0,Job_Wizard,Job_Sage);
+		// func_AddJob(Job_Archer,0,40,0,1,0,0,Job_Hunter,Job_Bard,Job_Dancer);
+		// func_AddJob(Job_Acolyte,0,40,0,1,0,0,Job_Priest,Job_Monk);
+		// func_AddJob(Job_Merchant,0,40,0,1,0,0,Job_Blacksmith,Job_Alchemist);
+		// func_AddJob(Job_Thief,0,40,0,1,0,0,Job_Assassin,Job_Rogue);
+		// func_AddJob(Job_Gunslinger,0,40,0,1,0,0,Job_Rebellion);
+		// func_AddJob(Job_Taekwon,0,40,0,1,0,0,Job_Star_Gladiator,Job_Soul_Linker);
+		// func_AddJob(Job_Ninja,0,40,0,1,0,0,Job_Kagerou,Job_Oboro);
+		// func_AddJob(Job_SuperNovice,99,99,0,1,0,0,Job_Super_Novice_E);
+		// func_AddJob(Job_Novice,45,10,0,1,0,0,Job_SuperNovice);
+		
+		// func_AddJob(Job_Baby_Swordman,0,40,0,1,0,0,Job_Baby_Knight,Job_Baby_Crusader);
+		// func_AddJob(Job_Baby_Mage,0,40,0,1,0,0,Job_Baby_Wizard,Job_Baby_Sage);
+		// func_AddJob(Job_Baby_Archer,0,40,0,1,0,0,Job_Baby_Hunter,Job_Baby_Bard,Job_Baby_Dancer);
+		// func_AddJob(Job_Baby_Acolyte,0,40,0,1,0,0,Job_Baby_Priest,Job_Baby_Monk);
+		// func_AddJob(Job_Baby_Merchant,0,40,0,1,0,0,Job_Baby_Blacksmith,Job_Baby_Alchemist);
+		// func_AddJob(Job_Baby_Thief,0,40,0,1,0,0,Job_Baby_Assassin,Job_Baby_Rogue);
+		// func_AddJob(Job_Super_Baby,99,99,0,1,0,0,Job_Super_Baby_E);
+		// func_AddJob(Job_Baby,45,10,0,1,0,0,Job_Super_Baby);
+		
+		// func_AddJob(Job_Knight,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Crusader,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Wizard,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Sage,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Hunter,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Bard,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Dancer,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Priest,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Monk,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Monk,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Blacksmith,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Alchemist,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Assassin,99,50,0,1,1,1285000,Job_Novice_High);
+		// func_AddJob(Job_Rogue,99,50,0,1,1,1285000,Job_Novice_High);
+		
+		// func_AddJob(Job_Novice_High,0,10,0,0,1,0,Job_Swordman_High,Job_Mage_High,Job_Archer_High,Job_Acolyte_High,Job_Merchant_High,Job_Thief_High);
+		
+		// func_AddJob(Job_Swordman_High,0,50,0,1,0,0,Job_Lord_Knight,Job_Paladin);
+		// func_AddJob(Job_Mage_High,0,50,0,1,0,0,Job_High_Wizard,Job_Professor);
+		// func_AddJob(Job_Archer_High,0,50,0,1,0,0,Job_Sniper,Job_Clown,Job_Gypsy);
+		// func_AddJob(Job_Acolyte_High,0,50,0,1,0,0,Job_High_Priest,Job_Champion);
+		// func_AddJob(Job_Merchant_High,0,50,0,1,0,0,Job_Whitesmith,Job_Creator);
+		// func_AddJob(Job_Thief_High,0,50,0,1,0,0,Job_Assassin_Cross,Job_Stalker);
+		
+		// func_AddJob(Job_Lord_Knight,99,50,0,1,0,0,Job_Rune_Knight_T);
+		// func_AddJob(Job_Paladin,99,50,0,1,0,0,Job_Royal_Guard_T);
+		// func_AddJob(Job_High_Wizard,99,50,0,1,0,0,Job_Warlock_T);
+		// func_AddJob(Job_Professor,99,50,0,1,0,0,Job_Sorcerer_T);
+		// func_AddJob(Job_Sniper,99,50,0,1,0,0,Job_Ranger_T);
+		// func_AddJob(Job_Clown,99,50,0,1,0,0,Job_Minstrel_T);
+		// func_AddJob(Job_Gypsy,99,50,0,1,0,0,Job_Wanderer_T);
+		// func_AddJob(Job_High_Priest,99,50,0,1,0,0,Job_Arch_Bishop_T);
+		// func_AddJob(Job_Champion,99,50,0,1,0,0,Job_Sura_T);
+		// func_AddJob(Job_Whitesmith,99,50,0,1,0,0,Job_Mechanic_T);
+		// func_AddJob(Job_Creator,99,50,0,1,0,0,Job_Genetic_T);
+		// func_AddJob(Job_Assassin_Cross,99,50,0,1,0,0,Job_Guillotine_Cross_T);
+		// func_AddJob(Job_Stalker,99,50,0,1,0,0,Job_Shadow_Chaser_T);
+		end;
+		
+	OnInit:
+		.skillpoint_removal = 1;
+		.platinum_skill_gain = 1;
+		
+		.basic_skill_check = getbattleflag("basic_skill_check");
+		.player_skillup_limit = getbattleflag("player_skillup_limit");
+		end;
+}
